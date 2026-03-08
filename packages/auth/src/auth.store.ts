@@ -4,6 +4,7 @@
  */
 import { create } from 'zustand';
 import type { UserProfile, AuthState } from '@pompcore/types';
+import { toUserMessage } from '@pompcore/ui';
 import * as authService from './auth.service';
 
 interface AuthActions {
@@ -42,7 +43,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
       const user = await authService.signInWithEmail(email, password);
       set({ user, isLoading: false });
     } catch (e) {
-      set({ error: (e as Error).message, isLoading: false });
+      set({ error: toUserMessage(e), isLoading: false });
       throw e;
     }
   },
@@ -52,7 +53,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
     try {
       await authService.signInWithGoogle();
     } catch (e) {
-      set({ error: (e as Error).message, isLoading: false });
+      set({ error: toUserMessage(e), isLoading: false });
       throw e;
     }
   },
@@ -63,7 +64,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
       const user = await authService.signUpWithEmail(email, password, displayName);
       set({ user, isLoading: false });
     } catch (e) {
-      set({ error: (e as Error).message, isLoading: false });
+      set({ error: toUserMessage(e), isLoading: false });
       throw e;
     }
   },
@@ -73,7 +74,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
       await authService.signOut();
       set({ ...INITIAL_STATE, isLoading: false });
     } catch (e) {
-      set({ error: (e as Error).message });
+      set({ error: toUserMessage(e) });
     }
   },
 

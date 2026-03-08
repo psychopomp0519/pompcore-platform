@@ -35,8 +35,15 @@ export default function Register() {
     setIsLoading(true);
     setError(null);
 
+    const trimmedName = form.displayName.trim();
+    if (trimmedName.length < 2) {
+      setError('닉네임은 2자 이상 입력해주세요.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      await register(form.email, form.password, form.displayName);
+      await register(form.email, form.password, trimmedName);
       navigate('/');
     } catch (err) {
       const message = err instanceof Error ? err.message : '회원가입에 실패했습니다.';
@@ -109,7 +116,8 @@ export default function Register() {
               value={form.displayName}
               onChange={handleChange}
               className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
-              placeholder="닉네임을 입력하세요"
+              placeholder="닉네임을 입력하세요 (2자 이상)"
+              minLength={2}
             />
           </div>
 

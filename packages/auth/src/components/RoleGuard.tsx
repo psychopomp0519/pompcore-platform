@@ -17,11 +17,11 @@ export function RoleGuard({ permission, children, fallback }: RoleGuardProps) {
   const user = useAuthStore((s) => s.user);
 
   if (!user) {
-    return fallback ?? <div className="py-16 text-center text-slate-500">로그인이 필요합니다.</div>;
+    return fallback ?? <div className="py-16 text-center text-slate-500 dark:text-slate-400">로그인이 필요합니다.</div>;
   }
 
   if (!hasPermission(user.role, permission)) {
-    return fallback ?? <div className="py-16 text-center text-slate-500">접근 권한이 없습니다.</div>;
+    return fallback ?? <div className="py-16 text-center text-slate-500 dark:text-slate-400">접근 권한이 없습니다.</div>;
   }
 
   return <>{children}</>;

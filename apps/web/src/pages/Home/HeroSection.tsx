@@ -36,6 +36,17 @@ const HERO_SERVICES: { brandKey: 'vault' | 'quest'; name: string; IconComponent:
   },
 ];
 
+/** 별 파티클 인덱스 (렌더마다 재생성 방지) */
+const SMALL_STARS = Array.from({ length: 25 }, (_, i) => i);
+const MEDIUM_STARS = Array.from({ length: 12 }, (_, i) => i);
+const BRIGHT_STARS = [
+  { top: '8%', left: '15%' },
+  { top: '20%', left: '78%' },
+  { top: '45%', left: '92%' },
+  { top: '65%', left: '8%' },
+  { top: '80%', left: '55%' },
+];
+
 export default function HeroSection() {
   /** ServicesSection으로 스무스 스크롤 */
   const scrollToServices = () => {
@@ -95,7 +106,7 @@ export default function HeroSection() {
       {/* === 별 파티클 (다크 모드 전용) — 다양한 크기 + 밝기 === */}
       <div className="hidden dark:block absolute inset-0 pointer-events-none" aria-hidden="true">
         {/* 작은 별 (2px) */}
-        {Array.from({ length: 25 }).map((_, i) => (
+        {SMALL_STARS.map((i) => (
           <span
             key={`s-${i}`}
             className="absolute w-[2px] h-[2px] bg-white rounded-full animate-twinkle"
@@ -108,7 +119,7 @@ export default function HeroSection() {
           />
         ))}
         {/* 중간 별 (3px) */}
-        {Array.from({ length: 12 }).map((_, i) => (
+        {MEDIUM_STARS.map((i) => (
           <span
             key={`m-${i}`}
             className="absolute w-[3px] h-[3px] bg-white rounded-full animate-twinkle"
@@ -121,13 +132,7 @@ export default function HeroSection() {
           />
         ))}
         {/* 밝은 큰 별 (4px, 글로우 효과) */}
-        {[
-          { top: '8%', left: '15%' },
-          { top: '20%', left: '78%' },
-          { top: '45%', left: '92%' },
-          { top: '65%', left: '8%' },
-          { top: '80%', left: '55%' },
-        ].map((pos, i) => (
+        {BRIGHT_STARS.map((pos, i) => (
           <span
             key={`b-${i}`}
             className="absolute w-[4px] h-[4px] bg-white rounded-full animate-twinkle"

@@ -19,7 +19,11 @@ const nebulaPreset: Partial<Config> = {
         'accent-pink': { DEFAULT: '#EC4899', light: '#F9A8D4', dark: '#BE185D' },
         navy: { DEFAULT: '#2B3442', light: '#3E4C5E', dark: '#1A202C' },
         sky: { deep: '#87CEEB', mid: '#B0D4E8', light: '#D1E9F6', pale: '#E3F0F9', faint: '#EDF5FA', mist: '#F5F9FD', soft: '#F8FBFE' },
-        surface: { light: '#FAF8FF', dark: '#0C0818', 'card-light': 'rgba(255,255,255,0.8)', 'card-dark': 'rgba(30,41,59,0.5)' },
+        surface: {
+          DEFAULT: '#FAF8FF', light: '#FAF8FF', dark: '#0C0818',
+          'dark-1': '#0C0818', 'dark-2': '#110D20', 'dark-3': '#150F28',
+          card: 'rgba(255,255,255,0.8)', 'card-light': 'rgba(255,255,255,0.8)', 'card-dark': 'rgba(30,41,59,0.5)',
+        },
       },
       fontFamily: {
         sans: ['Pretendard', 'Noto Sans KR', 'system-ui', 'sans-serif'],

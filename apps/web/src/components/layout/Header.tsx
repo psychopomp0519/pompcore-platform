@@ -83,7 +83,9 @@ export default function Header() {
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
 
-          {isAuthLoading ? null : user ? (
+          {isAuthLoading ? (
+            <div className="w-[140px] h-8 rounded-lg bg-slate-200/50 dark:bg-white/5 animate-pulse" />
+          ) : user ? (
             <>
               <span className="text-sm text-slate-600 dark:text-slate-300 truncate max-w-[120px]">
                 {user.displayName ?? user.email}
@@ -134,7 +136,9 @@ export default function Header() {
               </Link>
             ))}
             <hr className="border-slate-200 dark:border-white/10 my-2" />
-            {isAuthLoading ? null : user ? (
+            {isAuthLoading ? (
+              <div className="w-full h-8 rounded-lg bg-slate-200/50 dark:bg-white/5 animate-pulse" />
+            ) : user ? (
               <>
                 <span className="text-sm text-slate-600 dark:text-slate-300 px-2 py-2 truncate">
                   {user.displayName ?? user.email}
