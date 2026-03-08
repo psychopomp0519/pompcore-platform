@@ -22,6 +22,8 @@ export function createSupabaseClient(config: SupabaseConfig): SupabaseClient {
       ...(storage ? { storage } : {}),
       persistSession: true,
       detectSessionInUrl: true,
+      autoRefreshToken: true,
+      flowType: 'pkce',
     },
   });
 

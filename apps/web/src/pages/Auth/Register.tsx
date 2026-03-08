@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { RegisterRequest } from '@pompcore/types';
 import { useAuthStore } from '@pompcore/auth';
-import { GlassCard, Button, GoogleIcon } from '@pompcore/ui';
+import { GlassCard, Button, GoogleIcon, toUserMessage } from '@pompcore/ui';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -45,8 +45,7 @@ export default function Register() {
       await register(form.email, form.password, trimmedName);
       navigate('/');
     } catch (err) {
-      const message = err instanceof Error ? err.message : '회원가입에 실패했습니다.';
-      setError(message);
+      setError(toUserMessage(err, '회원가입에 실패했습니다.'));
     } finally {
       setIsLoading(false);
     }
@@ -61,8 +60,7 @@ export default function Register() {
       await loginWithGoogle();
       /* OAuth 리다이렉트 방식 — 페이지가 자동으로 이동됨 */
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Google 로그인에 실패했습니다.';
-      setError(message);
+      setError(toUserMessage(err, 'Google 로그인에 실패했습니다.'));
       setIsGoogleLoading(false);
     }
   };
