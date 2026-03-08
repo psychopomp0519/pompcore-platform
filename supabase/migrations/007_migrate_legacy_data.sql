@@ -5,7 +5,7 @@
 -- (public.vault_*) into the new multi-schema architecture.
 --
 -- Strategy:
---   1. Copy data from public.vault_* → vault.* / core.*
+--   1. Copy data from public.vault_* → vault_app.* / core.*
 --   2. Verify row counts match
 --   3. Drop legacy tables (commented out — enable after verification)
 --
@@ -42,7 +42,7 @@ ON CONFLICT (user_id, service_id, organization_id) DO NOTHING;
 -- ============================================================
 -- Step 2: Copy vault user settings
 -- ============================================================
-INSERT INTO vault.user_settings (id, user_id, primary_currency, recurring_avg_period, tab_order, created_at, updated_at)
+INSERT INTO vault_app.user_settings (id, user_id, primary_currency, recurring_avg_period, tab_order, created_at, updated_at)
 SELECT id, user_id, primary_currency, recurring_avg_period, tab_order, created_at, updated_at
 FROM public.vault_user_settings
 ON CONFLICT (user_id) DO NOTHING;
@@ -52,97 +52,97 @@ ON CONFLICT (user_id) DO NOTHING;
 -- ============================================================
 
 -- Accounts first (many tables reference them)
-INSERT INTO vault.accounts (id, user_id, name, supported_currencies, default_currency, is_favorite, sort_order, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.accounts (id, user_id, name, supported_currencies, default_currency, is_favorite, sort_order, deleted_at, created_at, updated_at)
 SELECT id, user_id, name, supported_currencies, default_currency, is_favorite, sort_order, deleted_at, created_at, updated_at
 FROM public.vault_accounts
 ON CONFLICT (id) DO NOTHING;
 
 -- Account balances
-INSERT INTO vault.account_balances (id, account_id, currency, balance, updated_at)
+INSERT INTO vault_app.account_balances (id, account_id, currency, balance, updated_at)
 SELECT id, account_id, currency, balance, updated_at
 FROM public.vault_account_balances
 ON CONFLICT (account_id, currency) DO NOTHING;
 
 -- Categories
-INSERT INTO vault.categories (id, user_id, name, type, is_favorite, is_default, sort_order, icon, deleted_at, created_at)
+INSERT INTO vault_app.categories (id, user_id, name, type, is_favorite, is_default, sort_order, icon, deleted_at, created_at)
 SELECT id, user_id, name, type, is_favorite, is_default, sort_order, icon, deleted_at, created_at
 FROM public.vault_categories
 ON CONFLICT (id) DO NOTHING;
 
 -- Budgets
-INSERT INTO vault.budgets (id, user_id, name, target_amount, current_amount, currency, budget_type, linked_account_id, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.budgets (id, user_id, name, target_amount, current_amount, currency, budget_type, linked_account_id, deleted_at, created_at, updated_at)
 SELECT id, user_id, name, target_amount, current_amount, currency, budget_type, linked_account_id, deleted_at, created_at, updated_at
 FROM public.vault_budgets
 ON CONFLICT (id) DO NOTHING;
 
 -- Transactions
-INSERT INTO vault.transactions (id, user_id, account_id, category_id, name, type, amount, currency, transaction_date, source_type, source_id, transfer_pair_id, budget_id, budget_action, memo, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.transactions (id, user_id, account_id, category_id, name, type, amount, currency, transaction_date, source_type, source_id, transfer_pair_id, budget_id, budget_action, memo, deleted_at, created_at, updated_at)
 SELECT id, user_id, account_id, category_id, name, type, amount, currency, transaction_date, source_type, source_id, transfer_pair_id, budget_id, budget_action, memo, deleted_at, created_at, updated_at
 FROM public.vault_transactions
 ON CONFLICT (id) DO NOTHING;
 
 -- Transfers
-INSERT INTO vault.transfers (id, user_id, from_account_id, to_account_id, from_currency, to_currency, from_amount, to_amount, transfer_date, memo, deleted_at, created_at)
+INSERT INTO vault_app.transfers (id, user_id, from_account_id, to_account_id, from_currency, to_currency, from_amount, to_amount, transfer_date, memo, deleted_at, created_at)
 SELECT id, user_id, from_account_id, to_account_id, from_currency, to_currency, from_amount, to_amount, transfer_date, memo, deleted_at, created_at
 FROM public.vault_transfers
 ON CONFLICT (id) DO NOTHING;
 
 -- Recurring payments
-INSERT INTO vault.recurring_payments (id, user_id, account_id, category_id, name, type, amount, currency, start_date, interval_unit, interval_value, last_generated_date, is_active, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.recurring_payments (id, user_id, account_id, category_id, name, type, amount, currency, start_date, interval_unit, interval_value, last_generated_date, is_active, deleted_at, created_at, updated_at)
 SELECT id, user_id, account_id, category_id, name, type, amount, currency, start_date, interval_unit, interval_value, last_generated_date, is_active, deleted_at, created_at, updated_at
 FROM public.vault_recurring_payments
 ON CONFLICT (id) DO NOTHING;
 
 -- Recurring overrides
-INSERT INTO vault.recurring_overrides (id, recurring_id, occurrence_date, amount, name, is_skipped)
+INSERT INTO vault_app.recurring_overrides (id, recurring_id, occurrence_date, amount, name, is_skipped)
 SELECT id, recurring_id, occurrence_date, amount, name, is_skipped
 FROM public.vault_recurring_overrides
 ON CONFLICT (recurring_id, occurrence_date) DO NOTHING;
 
 -- Savings
-INSERT INTO vault.savings (id, user_id, linked_account_id, name, savings_type, start_date, duration_months, interest_rate, principal, installment_amount, is_tax_free, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.savings (id, user_id, linked_account_id, name, savings_type, start_date, duration_months, interest_rate, principal, installment_amount, is_tax_free, deleted_at, created_at, updated_at)
 SELECT id, user_id, linked_account_id, name, savings_type, start_date, duration_months, interest_rate, principal, installment_amount, is_tax_free, deleted_at, created_at, updated_at
 FROM public.vault_savings
 ON CONFLICT (id) DO NOTHING;
 
 -- Savings deposits
-INSERT INTO vault.savings_deposits (id, savings_id, account_id, amount, deposit_date, created_at)
+INSERT INTO vault_app.savings_deposits (id, savings_id, account_id, amount, deposit_date, created_at)
 SELECT id, savings_id, account_id, amount, deposit_date, created_at
 FROM public.vault_savings_deposits
 ON CONFLICT (id) DO NOTHING;
 
 -- Investment portfolios
-INSERT INTO vault.investment_portfolios (id, user_id, name, broker, asset_type, base_currency, linked_account_id, memo, is_favorite, sort_order, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.investment_portfolios (id, user_id, name, broker, asset_type, base_currency, linked_account_id, memo, is_favorite, sort_order, deleted_at, created_at, updated_at)
 SELECT id, user_id, name, broker, asset_type, base_currency, linked_account_id, memo, is_favorite, sort_order, deleted_at, created_at, updated_at
 FROM public.vault_investment_portfolios
 ON CONFLICT (id) DO NOTHING;
 
 -- Investment trades
-INSERT INTO vault.investment_trades (id, user_id, portfolio_id, ticker, asset_name, trade_type, quantity, price, fee, trade_date, currency, memo, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.investment_trades (id, user_id, portfolio_id, ticker, asset_name, trade_type, quantity, price, fee, trade_date, currency, memo, deleted_at, created_at, updated_at)
 SELECT id, user_id, portfolio_id, ticker, asset_name, trade_type, quantity, price, fee, trade_date, currency, memo, deleted_at, created_at, updated_at
 FROM public.vault_investment_trades
 ON CONFLICT (id) DO NOTHING;
 
 -- Investment price snapshots
-INSERT INTO vault.investment_price_snapshots (portfolio_id, ticker, current_price, currency, updated_at)
+INSERT INTO vault_app.investment_price_snapshots (portfolio_id, ticker, current_price, currency, updated_at)
 SELECT portfolio_id, ticker, current_price, currency, updated_at
 FROM public.vault_investment_price_snapshots
 ON CONFLICT (portfolio_id, ticker) DO NOTHING;
 
 -- Real estate
-INSERT INTO vault.real_estate (id, user_id, name, address, property_type, role, acquisition_date, acquisition_price, current_value, currency, linked_account_id, memo, is_favorite, sort_order, deleted_at, created_at, updated_at)
+INSERT INTO vault_app.real_estate (id, user_id, name, address, property_type, role, acquisition_date, acquisition_price, current_value, currency, linked_account_id, memo, is_favorite, sort_order, deleted_at, created_at, updated_at)
 SELECT id, user_id, name, address, property_type, role, acquisition_date, acquisition_price, current_value, currency, linked_account_id, memo, is_favorite, sort_order, deleted_at, created_at, updated_at
 FROM public.vault_real_estate
 ON CONFLICT (id) DO NOTHING;
 
 -- Real estate leases
-INSERT INTO vault.real_estate_leases (id, real_estate_id, user_id, lease_type, counterpart_name, deposit, monthly_rent, start_date, end_date, is_active, memo, created_at, updated_at)
+INSERT INTO vault_app.real_estate_leases (id, real_estate_id, user_id, lease_type, counterpart_name, deposit, monthly_rent, start_date, end_date, is_active, memo, created_at, updated_at)
 SELECT id, real_estate_id, user_id, lease_type, counterpart_name, deposit, monthly_rent, start_date, end_date, is_active, memo, created_at, updated_at
 FROM public.vault_real_estate_leases
 ON CONFLICT (id) DO NOTHING;
 
 -- Real estate expenses
-INSERT INTO vault.real_estate_expenses (id, real_estate_id, user_id, expense_type, amount, currency, expense_date, memo, deleted_at, created_at)
+INSERT INTO vault_app.real_estate_expenses (id, real_estate_id, user_id, expense_type, amount, currency, expense_date, memo, deleted_at, created_at)
 SELECT id, real_estate_id, user_id, expense_type, amount, currency, expense_date, memo, deleted_at, created_at
 FROM public.vault_real_estate_expenses
 ON CONFLICT (id) DO NOTHING;
@@ -174,9 +174,9 @@ ON CONFLICT (id) DO NOTHING;
 -- ============================================================
 -- Step 5: Verification queries (run manually)
 -- ============================================================
--- SELECT 'vault.accounts' AS tbl, count(*) FROM vault.accounts
+-- SELECT 'vault_app.accounts' AS tbl, count(*) FROM vault_app.accounts
 -- UNION ALL SELECT 'public.vault_accounts', count(*) FROM public.vault_accounts
--- UNION ALL SELECT 'vault.transactions', count(*) FROM vault.transactions
+-- UNION ALL SELECT 'vault_app.transactions', count(*) FROM vault_app.transactions
 -- UNION ALL SELECT 'public.vault_transactions', count(*) FROM public.vault_transactions;
 
 -- ============================================================

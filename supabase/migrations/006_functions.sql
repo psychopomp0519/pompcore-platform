@@ -80,32 +80,32 @@ CREATE TRIGGER set_updated_at BEFORE UPDATE ON core.organizations
 CREATE TRIGGER set_updated_at BEFORE UPDATE ON core.announcements
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
 
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.user_settings
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.user_settings
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.accounts
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.accounts
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.budgets
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.budgets
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.transactions
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.transactions
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.recurring_payments
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.recurring_payments
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.savings
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.savings
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.investment_portfolios
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.investment_portfolios
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.investment_trades
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.investment_trades
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.real_estate
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.real_estate
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
-CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault.real_estate_leases
+CREATE TRIGGER set_updated_at BEFORE UPDATE ON vault_app.real_estate_leases
   FOR EACH ROW EXECUTE FUNCTION core.set_updated_at();
 
 -- ============================================================
--- vault.adjust_balance — Atomic balance adjustment
+-- vault_app.adjust_balance — Atomic balance adjustment
 -- Used by transfer operations to avoid race conditions.
 -- ============================================================
-CREATE OR REPLACE FUNCTION vault.adjust_balance(
+CREATE OR REPLACE FUNCTION vault_app.adjust_balance(
   p_account_id UUID,
   p_currency TEXT,
   p_delta NUMERIC
@@ -113,10 +113,10 @@ CREATE OR REPLACE FUNCTION vault.adjust_balance(
 RETURNS VOID
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = vault
+SET search_path = vault_app
 AS $$
 BEGIN
-  UPDATE vault.account_balances
+  UPDATE vault_app.account_balances
   SET balance = balance + p_delta,
       updated_at = now()
   WHERE account_id = p_account_id
@@ -124,14 +124,14 @@ BEGIN
 
   -- If no row was updated, create the balance record
   IF NOT FOUND THEN
-    INSERT INTO vault.account_balances (account_id, currency, balance)
+    INSERT INTO vault_app.account_balances (account_id, currency, balance)
     VALUES (p_account_id, p_currency, p_delta);
   END IF;
 END;
 $$;
 
 -- Grant execute to authenticated users
-GRANT EXECUTE ON FUNCTION vault.adjust_balance TO authenticated;
+GRANT EXECUTE ON FUNCTION vault_app.adjust_balance TO authenticated;
 GRANT EXECUTE ON FUNCTION core.handle_new_user TO service_role;
 GRANT EXECUTE ON FUNCTION core.sync_role_to_auth TO service_role;
 GRANT EXECUTE ON FUNCTION core.set_updated_at TO authenticated;

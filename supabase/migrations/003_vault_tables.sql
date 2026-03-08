@@ -4,16 +4,16 @@
 -- Financial management service tables.
 -- Designed to be accessed via user-scoped Supabase client (RLS).
 --
--- Tables moved from public.vault_* → vault.* with prefix removed.
+-- Tables moved from public.vault_* → vault_app.* with prefix removed.
 -- This migration creates them fresh for new deployments.
 -- See 007_migrate_legacy_data.sql for existing data migration.
 -- ============================================================
 
 -- ============================================================
--- vault.user_settings
+-- vault_app.user_settings
 -- Per-user Vault preferences.
 -- ============================================================
-CREATE TABLE vault.user_settings (
+CREATE TABLE vault_app.user_settings (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   primary_currency    TEXT        NOT NULL DEFAULT 'KRW',
@@ -26,10 +26,10 @@ CREATE TABLE vault.user_settings (
 );
 
 -- ============================================================
--- vault.accounts
+-- vault_app.accounts
 -- Bank/brokerage accounts with multi-currency support.
 -- ============================================================
-CREATE TABLE vault.accounts (
+CREATE TABLE vault_app.accounts (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name                TEXT        NOT NULL,
@@ -43,15 +43,15 @@ CREATE TABLE vault.accounts (
 );
 
 CREATE INDEX idx_vault_accounts_user
-  ON vault.accounts(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.accounts(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.account_balances
+-- vault_app.account_balances
 -- Per-currency balance for each account.
 -- ============================================================
-CREATE TABLE vault.account_balances (
+CREATE TABLE vault_app.account_balances (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id      UUID        NOT NULL REFERENCES vault.accounts(id) ON DELETE CASCADE,
+  account_id      UUID        NOT NULL REFERENCES vault_app.accounts(id) ON DELETE CASCADE,
   currency        TEXT        NOT NULL,
   balance         NUMERIC(20,4) NOT NULL DEFAULT 0,
   updated_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -59,10 +59,10 @@ CREATE TABLE vault.account_balances (
 );
 
 -- ============================================================
--- vault.categories
+-- vault_app.categories
 -- Income/expense categories per user.
 -- ============================================================
-CREATE TABLE vault.categories (
+CREATE TABLE vault_app.categories (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id         UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name            TEXT        NOT NULL,
@@ -76,13 +76,13 @@ CREATE TABLE vault.categories (
 );
 
 CREATE INDEX idx_vault_categories_user
-  ON vault.categories(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.categories(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.budgets
+-- vault_app.budgets
 -- Expense budgets (virtual envelopes or linked to real accounts).
 -- ============================================================
-CREATE TABLE vault.budgets (
+CREATE TABLE vault_app.budgets (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name                TEXT        NOT NULL,
@@ -91,24 +91,24 @@ CREATE TABLE vault.budgets (
   currency            TEXT        NOT NULL DEFAULT 'KRW',
   budget_type         TEXT        NOT NULL DEFAULT 'virtual'
                                   CHECK (budget_type IN ('virtual', 'actual')),
-  linked_account_id   UUID        REFERENCES vault.accounts(id),
+  linked_account_id   UUID        REFERENCES vault_app.accounts(id),
   deleted_at          TIMESTAMPTZ,
   created_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at          TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_vault_budgets_user
-  ON vault.budgets(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.budgets(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.transactions
+-- vault_app.transactions
 -- Financial transaction records (income/expense).
 -- ============================================================
-CREATE TABLE vault.transactions (
+CREATE TABLE vault_app.transactions (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  account_id          UUID        NOT NULL REFERENCES vault.accounts(id),
-  category_id         UUID        REFERENCES vault.categories(id),
+  account_id          UUID        NOT NULL REFERENCES vault_app.accounts(id),
+  category_id         UUID        REFERENCES vault_app.categories(id),
   name                TEXT        NOT NULL,
   type                TEXT        NOT NULL CHECK (type IN ('income', 'expense')),
   amount              NUMERIC(20,4) NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE vault.transactions (
                                   CHECK (source_type IN ('manual', 'transfer', 'recurring', 'savings')),
   source_id           UUID,
   transfer_pair_id    UUID,
-  budget_id           UUID        REFERENCES vault.budgets(id),
+  budget_id           UUID        REFERENCES vault_app.budgets(id),
   budget_action       TEXT        CHECK (budget_action IN ('deposit', 'withdraw')),
   memo                TEXT,
   deleted_at          TIMESTAMPTZ,
@@ -127,21 +127,21 @@ CREATE TABLE vault.transactions (
 );
 
 CREATE INDEX idx_vault_transactions_user_date
-  ON vault.transactions(user_id, transaction_date) WHERE deleted_at IS NULL;
+  ON vault_app.transactions(user_id, transaction_date) WHERE deleted_at IS NULL;
 CREATE INDEX idx_vault_transactions_account
-  ON vault.transactions(account_id) WHERE deleted_at IS NULL;
+  ON vault_app.transactions(account_id) WHERE deleted_at IS NULL;
 CREATE INDEX idx_vault_transactions_category
-  ON vault.transactions(category_id) WHERE deleted_at IS NULL;
+  ON vault_app.transactions(category_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.transfers
+-- vault_app.transfers
 -- Account-to-account transfers (generates 2 linked transactions).
 -- ============================================================
-CREATE TABLE vault.transfers (
+CREATE TABLE vault_app.transfers (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  from_account_id     UUID        NOT NULL REFERENCES vault.accounts(id),
-  to_account_id       UUID        NOT NULL REFERENCES vault.accounts(id),
+  from_account_id     UUID        NOT NULL REFERENCES vault_app.accounts(id),
+  to_account_id       UUID        NOT NULL REFERENCES vault_app.accounts(id),
   from_currency       TEXT        NOT NULL,
   to_currency         TEXT        NOT NULL,
   from_amount         NUMERIC(20,4) NOT NULL,
@@ -153,14 +153,14 @@ CREATE TABLE vault.transfers (
 );
 
 -- ============================================================
--- vault.recurring_payments
+-- vault_app.recurring_payments
 -- Scheduled income/expense templates.
 -- ============================================================
-CREATE TABLE vault.recurring_payments (
+CREATE TABLE vault_app.recurring_payments (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  account_id          UUID        NOT NULL REFERENCES vault.accounts(id),
-  category_id         UUID        REFERENCES vault.categories(id),
+  account_id          UUID        NOT NULL REFERENCES vault_app.accounts(id),
+  category_id         UUID        REFERENCES vault_app.categories(id),
   name                TEXT        NOT NULL,
   type                TEXT        NOT NULL CHECK (type IN ('income', 'expense')),
   amount              NUMERIC(20,4) NOT NULL,
@@ -176,16 +176,16 @@ CREATE TABLE vault.recurring_payments (
 );
 
 CREATE INDEX idx_vault_recurring_user
-  ON vault.recurring_payments(user_id)
+  ON vault_app.recurring_payments(user_id)
   WHERE deleted_at IS NULL AND is_active = true;
 
 -- ============================================================
--- vault.recurring_overrides
+-- vault_app.recurring_overrides
 -- Per-occurrence customizations for recurring payments.
 -- ============================================================
-CREATE TABLE vault.recurring_overrides (
+CREATE TABLE vault_app.recurring_overrides (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  recurring_id    UUID        NOT NULL REFERENCES vault.recurring_payments(id) ON DELETE CASCADE,
+  recurring_id    UUID        NOT NULL REFERENCES vault_app.recurring_payments(id) ON DELETE CASCADE,
   occurrence_date DATE        NOT NULL,
   amount          NUMERIC(20,4),
   name            TEXT,
@@ -194,13 +194,13 @@ CREATE TABLE vault.recurring_overrides (
 );
 
 -- ============================================================
--- vault.savings
+-- vault_app.savings
 -- Savings products (fixed deposit, installment, free savings).
 -- ============================================================
-CREATE TABLE vault.savings (
+CREATE TABLE vault_app.savings (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  linked_account_id   UUID        REFERENCES vault.accounts(id),
+  linked_account_id   UUID        REFERENCES vault_app.accounts(id),
   name                TEXT        NOT NULL,
   savings_type        TEXT        NOT NULL
                                   CHECK (savings_type IN ('fixed_deposit', 'installment', 'free_savings', 'housing_subscription')),
@@ -216,26 +216,26 @@ CREATE TABLE vault.savings (
 );
 
 CREATE INDEX idx_vault_savings_user
-  ON vault.savings(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.savings(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.savings_deposits
+-- vault_app.savings_deposits
 -- Deposit records for free savings accounts.
 -- ============================================================
-CREATE TABLE vault.savings_deposits (
+CREATE TABLE vault_app.savings_deposits (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  savings_id      UUID        NOT NULL REFERENCES vault.savings(id) ON DELETE CASCADE,
-  account_id      UUID        REFERENCES vault.accounts(id),
+  savings_id      UUID        NOT NULL REFERENCES vault_app.savings(id) ON DELETE CASCADE,
+  account_id      UUID        REFERENCES vault_app.accounts(id),
   amount          NUMERIC(20,4) NOT NULL,
   deposit_date    DATE        NOT NULL DEFAULT CURRENT_DATE,
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 -- ============================================================
--- vault.investment_portfolios
+-- vault_app.investment_portfolios
 -- Investment accounts (brokerage, crypto exchange).
 -- ============================================================
-CREATE TABLE vault.investment_portfolios (
+CREATE TABLE vault_app.investment_portfolios (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name                TEXT        NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE vault.investment_portfolios (
   asset_type          TEXT        NOT NULL DEFAULT 'mixed'
                                   CHECK (asset_type IN ('stock_kr', 'stock_us', 'crypto', 'mixed')),
   base_currency       TEXT        NOT NULL DEFAULT 'KRW',
-  linked_account_id   UUID        REFERENCES vault.accounts(id) ON DELETE SET NULL,
+  linked_account_id   UUID        REFERENCES vault_app.accounts(id) ON DELETE SET NULL,
   memo                TEXT,
   is_favorite         BOOLEAN     NOT NULL DEFAULT false,
   sort_order          INTEGER     NOT NULL DEFAULT 0,
@@ -253,16 +253,16 @@ CREATE TABLE vault.investment_portfolios (
 );
 
 CREATE INDEX idx_vault_inv_portfolios_user
-  ON vault.investment_portfolios(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.investment_portfolios(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.investment_trades
+-- vault_app.investment_trades
 -- Buy/sell/dividend records.
 -- ============================================================
-CREATE TABLE vault.investment_trades (
+CREATE TABLE vault_app.investment_trades (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id         UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  portfolio_id    UUID        NOT NULL REFERENCES vault.investment_portfolios(id) ON DELETE CASCADE,
+  portfolio_id    UUID        NOT NULL REFERENCES vault_app.investment_portfolios(id) ON DELETE CASCADE,
   ticker          TEXT        NOT NULL,
   asset_name      TEXT        NOT NULL,
   trade_type      TEXT        NOT NULL CHECK (trade_type IN ('buy', 'sell', 'dividend')),
@@ -278,16 +278,16 @@ CREATE TABLE vault.investment_trades (
 );
 
 CREATE INDEX idx_vault_inv_trades_portfolio
-  ON vault.investment_trades(portfolio_id) WHERE deleted_at IS NULL;
+  ON vault_app.investment_trades(portfolio_id) WHERE deleted_at IS NULL;
 CREATE INDEX idx_vault_inv_trades_user
-  ON vault.investment_trades(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.investment_trades(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.investment_price_snapshots
+-- vault_app.investment_price_snapshots
 -- User-entered current prices (UPSERT pattern).
 -- ============================================================
-CREATE TABLE vault.investment_price_snapshots (
-  portfolio_id    UUID        NOT NULL REFERENCES vault.investment_portfolios(id) ON DELETE CASCADE,
+CREATE TABLE vault_app.investment_price_snapshots (
+  portfolio_id    UUID        NOT NULL REFERENCES vault_app.investment_portfolios(id) ON DELETE CASCADE,
   ticker          TEXT        NOT NULL,
   current_price   NUMERIC     NOT NULL DEFAULT 0,
   currency        TEXT        NOT NULL,
@@ -296,10 +296,10 @@ CREATE TABLE vault.investment_price_snapshots (
 );
 
 -- ============================================================
--- vault.real_estate
+-- vault_app.real_estate
 -- Property holdings (owner or tenant).
 -- ============================================================
-CREATE TABLE vault.real_estate (
+CREATE TABLE vault_app.real_estate (
   id                  UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id             UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   name                TEXT        NOT NULL,
@@ -312,7 +312,7 @@ CREATE TABLE vault.real_estate (
   acquisition_price   NUMERIC,
   current_value       NUMERIC,
   currency            TEXT        NOT NULL DEFAULT 'KRW',
-  linked_account_id   UUID        REFERENCES vault.accounts(id) ON DELETE SET NULL,
+  linked_account_id   UUID        REFERENCES vault_app.accounts(id) ON DELETE SET NULL,
   memo                TEXT,
   is_favorite         BOOLEAN     NOT NULL DEFAULT false,
   sort_order          INTEGER     NOT NULL DEFAULT 0,
@@ -322,15 +322,15 @@ CREATE TABLE vault.real_estate (
 );
 
 CREATE INDEX idx_vault_real_estate_user
-  ON vault.real_estate(user_id) WHERE deleted_at IS NULL;
+  ON vault_app.real_estate(user_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
--- vault.real_estate_leases
+-- vault_app.real_estate_leases
 -- Rental/lease contracts.
 -- ============================================================
-CREATE TABLE vault.real_estate_leases (
+CREATE TABLE vault_app.real_estate_leases (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  real_estate_id  UUID        NOT NULL REFERENCES vault.real_estate(id) ON DELETE CASCADE,
+  real_estate_id  UUID        NOT NULL REFERENCES vault_app.real_estate(id) ON DELETE CASCADE,
   user_id         UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   lease_type      TEXT        NOT NULL DEFAULT 'monthly'
                               CHECK (lease_type IN ('jeonse', 'monthly', 'commercial')),
@@ -346,15 +346,15 @@ CREATE TABLE vault.real_estate_leases (
 );
 
 CREATE INDEX idx_vault_re_leases_property
-  ON vault.real_estate_leases(real_estate_id);
+  ON vault_app.real_estate_leases(real_estate_id);
 
 -- ============================================================
--- vault.real_estate_expenses
+-- vault_app.real_estate_expenses
 -- Property expenses (maintenance, tax, repair, etc.).
 -- ============================================================
-CREATE TABLE vault.real_estate_expenses (
+CREATE TABLE vault_app.real_estate_expenses (
   id              UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  real_estate_id  UUID        NOT NULL REFERENCES vault.real_estate(id) ON DELETE CASCADE,
+  real_estate_id  UUID        NOT NULL REFERENCES vault_app.real_estate(id) ON DELETE CASCADE,
   user_id         UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   expense_type    TEXT        NOT NULL DEFAULT 'other'
                               CHECK (expense_type IN ('maintenance','tax','repair','insurance','loan_interest','other')),
@@ -367,10 +367,10 @@ CREATE TABLE vault.real_estate_expenses (
 );
 
 CREATE INDEX idx_vault_re_expenses_property
-  ON vault.real_estate_expenses(real_estate_id) WHERE deleted_at IS NULL;
+  ON vault_app.real_estate_expenses(real_estate_id) WHERE deleted_at IS NULL;
 
 -- ============================================================
 -- Table permissions
 -- ============================================================
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA vault TO authenticated;
-GRANT ALL ON ALL TABLES IN SCHEMA vault TO service_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA vault_app TO authenticated;
+GRANT ALL ON ALL TABLES IN SCHEMA vault_app TO service_role;

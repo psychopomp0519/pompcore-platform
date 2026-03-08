@@ -154,23 +154,23 @@ CREATE POLICY "inquiries_update" ON core.inquiries
 -- VAULT SCHEMA
 -- ████████████████████████████████████████████████████████████
 
-ALTER TABLE vault.user_settings ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.accounts ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.account_balances ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.categories ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.budgets ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.transactions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.transfers ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.recurring_payments ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.recurring_overrides ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.savings ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.savings_deposits ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.investment_portfolios ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.investment_trades ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.investment_price_snapshots ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.real_estate ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.real_estate_leases ENABLE ROW LEVEL SECURITY;
-ALTER TABLE vault.real_estate_expenses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.user_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.accounts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.account_balances ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.budgets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.transactions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.transfers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.recurring_payments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.recurring_overrides ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.savings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.savings_deposits ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.investment_portfolios ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.investment_trades ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.investment_price_snapshots ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.real_estate ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.real_estate_leases ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vault_app.real_estate_expenses ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================
 -- Pattern A: Direct user_id ownership
@@ -183,56 +183,56 @@ ALTER TABLE vault.real_estate_expenses ENABLE ROW LEVEL SECURITY;
 -- Helper: generates standard CRUD policies for user_id-owned tables
 -- (Supabase SQL doesn't support loops, so we write them out)
 
--- vault.user_settings
-CREATE POLICY "own_data" ON vault.user_settings
+-- vault_app.user_settings
+CREATE POLICY "own_data" ON vault_app.user_settings
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.accounts
-CREATE POLICY "own_data" ON vault.accounts
+-- vault_app.accounts
+CREATE POLICY "own_data" ON vault_app.accounts
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.categories
-CREATE POLICY "own_data" ON vault.categories
+-- vault_app.categories
+CREATE POLICY "own_data" ON vault_app.categories
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.budgets
-CREATE POLICY "own_data" ON vault.budgets
+-- vault_app.budgets
+CREATE POLICY "own_data" ON vault_app.budgets
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.transactions
-CREATE POLICY "own_data" ON vault.transactions
+-- vault_app.transactions
+CREATE POLICY "own_data" ON vault_app.transactions
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.transfers
-CREATE POLICY "own_data" ON vault.transfers
+-- vault_app.transfers
+CREATE POLICY "own_data" ON vault_app.transfers
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.recurring_payments
-CREATE POLICY "own_data" ON vault.recurring_payments
+-- vault_app.recurring_payments
+CREATE POLICY "own_data" ON vault_app.recurring_payments
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.savings
-CREATE POLICY "own_data" ON vault.savings
+-- vault_app.savings
+CREATE POLICY "own_data" ON vault_app.savings
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.investment_portfolios
-CREATE POLICY "own_data" ON vault.investment_portfolios
+-- vault_app.investment_portfolios
+CREATE POLICY "own_data" ON vault_app.investment_portfolios
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.investment_trades
-CREATE POLICY "own_data" ON vault.investment_trades
+-- vault_app.investment_trades
+CREATE POLICY "own_data" ON vault_app.investment_trades
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.real_estate
-CREATE POLICY "own_data" ON vault.real_estate
+-- vault_app.real_estate
+CREATE POLICY "own_data" ON vault_app.real_estate
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.real_estate_leases
-CREATE POLICY "own_data" ON vault.real_estate_leases
+-- vault_app.real_estate_leases
+CREATE POLICY "own_data" ON vault_app.real_estate_leases
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- vault.real_estate_expenses
-CREATE POLICY "own_data" ON vault.real_estate_expenses
+-- vault_app.real_estate_expenses
+CREATE POLICY "own_data" ON vault_app.real_estate_expenses
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
 -- ============================================================
@@ -241,36 +241,36 @@ CREATE POLICY "own_data" ON vault.real_estate_expenses
 --   savings_deposits, investment_price_snapshots
 -- ============================================================
 
--- vault.account_balances (check account owner)
-CREATE POLICY "own_via_account" ON vault.account_balances
+-- vault_app.account_balances (check account owner)
+CREATE POLICY "own_via_account" ON vault_app.account_balances
   FOR ALL USING (
-    EXISTS (SELECT 1 FROM vault.accounts WHERE id = account_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.accounts WHERE id = account_id AND user_id = auth.uid())
   ) WITH CHECK (
-    EXISTS (SELECT 1 FROM vault.accounts WHERE id = account_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.accounts WHERE id = account_id AND user_id = auth.uid())
   );
 
--- vault.recurring_overrides (check recurring owner)
-CREATE POLICY "own_via_recurring" ON vault.recurring_overrides
+-- vault_app.recurring_overrides (check recurring owner)
+CREATE POLICY "own_via_recurring" ON vault_app.recurring_overrides
   FOR ALL USING (
-    EXISTS (SELECT 1 FROM vault.recurring_payments WHERE id = recurring_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.recurring_payments WHERE id = recurring_id AND user_id = auth.uid())
   ) WITH CHECK (
-    EXISTS (SELECT 1 FROM vault.recurring_payments WHERE id = recurring_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.recurring_payments WHERE id = recurring_id AND user_id = auth.uid())
   );
 
--- vault.savings_deposits (check savings owner)
-CREATE POLICY "own_via_savings" ON vault.savings_deposits
+-- vault_app.savings_deposits (check savings owner)
+CREATE POLICY "own_via_savings" ON vault_app.savings_deposits
   FOR ALL USING (
-    EXISTS (SELECT 1 FROM vault.savings WHERE id = savings_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.savings WHERE id = savings_id AND user_id = auth.uid())
   ) WITH CHECK (
-    EXISTS (SELECT 1 FROM vault.savings WHERE id = savings_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.savings WHERE id = savings_id AND user_id = auth.uid())
   );
 
--- vault.investment_price_snapshots (check portfolio owner)
-CREATE POLICY "own_via_portfolio" ON vault.investment_price_snapshots
+-- vault_app.investment_price_snapshots (check portfolio owner)
+CREATE POLICY "own_via_portfolio" ON vault_app.investment_price_snapshots
   FOR ALL USING (
-    EXISTS (SELECT 1 FROM vault.investment_portfolios WHERE id = portfolio_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.investment_portfolios WHERE id = portfolio_id AND user_id = auth.uid())
   ) WITH CHECK (
-    EXISTS (SELECT 1 FROM vault.investment_portfolios WHERE id = portfolio_id AND user_id = auth.uid())
+    EXISTS (SELECT 1 FROM vault_app.investment_portfolios WHERE id = portfolio_id AND user_id = auth.uid())
   );
 
 -- ████████████████████████████████████████████████████████████
