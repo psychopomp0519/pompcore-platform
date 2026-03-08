@@ -175,7 +175,7 @@ PompCore uses a **layered context architecture**. Minimize unnecessary context e
 
 Do NOT invent or introduce any of the following unless the user explicitly requests it:
 - new services beyond the defined ecosystem (PompCore, Vault, Forge, Quest, Academy)
-- new shared packages beyond the defined set (ui, auth, theme, types, utils, sdk)
+- new shared packages beyond the defined set (ui, auth, types, sdk)
 - new architecture layers or patterns not present in the current codebase
 - new domain models or data entities not described in existing specs
 

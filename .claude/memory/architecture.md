@@ -11,6 +11,7 @@ packages/ui       — shared UI components (Button, GlassCard, Modal, ConfirmDia
 packages/auth     — auth service (re-exports from @pompcore/types)
 packages/sdk      — API SDK
 services/api      — Hono API server
+supabase/         — DB migrations + edge functions
 ```
 
 ## Dependency Direction

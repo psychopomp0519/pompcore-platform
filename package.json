@@ -10,7 +10,10 @@
     "clean": "turbo clean",
     "typecheck": "turbo typecheck",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:deps": "npm run --prefix packages/types build && npm run --prefix packages/ui build && npm run --prefix packages/auth build && npm run --prefix packages/sdk build",
+    "build:web": "npm run build:deps && npm run --prefix apps/web build",
+    "build:vault": "npm run build:deps && npm run --prefix apps/vault build"
   },
   "devDependencies": {
     "tsup": "^8.5.1",

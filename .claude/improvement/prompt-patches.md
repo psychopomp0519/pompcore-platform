@@ -15,10 +15,10 @@ Small, targeted instruction changes that improve future AI performance. Each pat
 ## Entries
 
 ### PP-001: Fix monorepo package list in CLAUDE.md
-- Target: CLAUDE.md → Monorepo Rules
+- Target: CLAUDE.md → Monorepo Rules + Structural Integrity Guard
 - Problem: Lists packages/theme, packages/utils (don't exist). Missing packages/sdk (exists).
 - Patch: Replace package list with actual workspace packages: ui, auth, types, sdk
-- Status: **applied**
+- Status: **applied** (Monorepo Rules + Structural Integrity Guard 모두 수정 완료)
 
 ### PP-002: Add ownership lookup table to CLAUDE.md
 - Target: CLAUDE.md → Monorepo Rules (after existing list)
