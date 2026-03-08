@@ -23,11 +23,14 @@ export default function Callback() {
     if (code) {
       /* PKCE 플로우: code → 세션 교환 */
       supabase.auth.exchangeCodeForSession(code)
-        .then(({ error: err }) => {
+        .then(({ data, error: err }) => {
           if (err) {
-            setError(toUserMessage(err, '인증 처리에 실패했습니다.'));
-          } else {
+            console.error('[OAuth Callback] Code exchange failed:', err.message);
+            setError(`${toUserMessage(err, '인증 처리에 실패했습니다.')} (${err.message})`);
+          } else if (data.session) {
             navigate('/', { replace: true });
+          } else {
+            setError('세션을 확인할 수 없습니다. 다시 로그인해주세요.');
           }
         });
     } else if (accessToken) {

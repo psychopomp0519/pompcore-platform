@@ -24,11 +24,14 @@ export function CallbackPage(): React.ReactNode {
 
     if (code) {
       supabase.auth.exchangeCodeForSession(code)
-        .then(({ error: err }) => {
+        .then(({ data, error: err }) => {
           if (err) {
-            setError(toUserMessage(err, '인증 처리에 실패했습니다.'));
-          } else {
+            console.error('[OAuth Callback] Code exchange failed:', err.message);
+            setError(`${toUserMessage(err, '인증 처리에 실패했습니다.')} (${err.message})`);
+          } else if (data.session) {
             navigate(ROUTES.DASHBOARD, { replace: true });
+          } else {
+            setError('세션을 확인할 수 없습니다. 다시 로그인해주세요.');
           }
         });
     } else if (accessToken) {
