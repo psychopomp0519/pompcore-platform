@@ -3,6 +3,11 @@ name: code-verifier
 description: 코드 검증 및 수정 스킬. 사용자가 "검증해줘", "코드 리뷰", "확인해봐", "점검해줘" 등 명시적으로 요청할 때만 실행한다. 코드를 작성하거나 수정한 직후라도 사용자가 요청하지 않으면 실행하지 않는다.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: user explicitly requests code verification ("검증해줘", "코드 리뷰", "확인해봐")
+- **Do not load**: normal code writing, planning, documentation work
+
 # Code Verifier — 코드 자동 검증 및 수정
 
 ## 개요

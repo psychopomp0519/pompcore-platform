@@ -8,6 +8,11 @@ description: >
   Claude Code 환경에서 동작하도록 설계되었다.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: after code changes that affect project documentation, explicit doc update requests
+- **Do not load**: reading code, answering questions, planning without implementation
+
 # Project Docs 스킬
 
 코딩 작업 중 프로젝트 문서를 두 레벨(개요 + 상세)로 자동 유지·관리한다.

@@ -6,6 +6,11 @@ metadata:
   argument-hint: "[diagram description or requirements]"
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: user requests a diagram, flowchart, ER diagram, or visual documentation
+- **Do not load**: code writing, debugging, feature implementation, reviews
+
 # Mermaid Diagram Generator
 
 Generate high-quality Mermaid diagram code based on user requirements.

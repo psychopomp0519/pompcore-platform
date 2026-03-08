@@ -3,6 +3,11 @@ name: error-tracking
 description: Add Sentry v8 error tracking and performance monitoring to your project services. Use this skill when adding error handling, creating new controllers, instrumenting cron jobs, or tracking database performance. ALL ERRORS MUST BE CAPTURED TO SENTRY - no exceptions.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: adding error handling, creating controllers/routes, instrumenting monitoring
+- **Do not load**: UI work, schema design, documentation, feature planning
+
 # your project Sentry Integration Skill
 
 ## Purpose
@@ -344,32 +349,18 @@ When adding Sentry to new code:
 - [ ] Tested error handling paths
 - [ ] For cron jobs: instrument.ts imported first
 
-## Key Files
+## Key Files (PompCore)
 
-### Form Service
-- `/blog-api/src/instrument.ts` - Sentry initialization
-- `/blog-api/src/workflow/utils/sentryHelper.ts` - Workflow errors
-- `/blog-api/src/utils/databasePerformance.ts` - DB monitoring
-- `/blog-api/src/controllers/BaseController.ts` - Controller base
+### Web App
+- `apps/web/src/instrument.ts` - Sentry initialization (create when needed)
+- `apps/web/src/utils/sentryHelper.ts` - Error capture helpers
 
-### Email Service
-- `/notifications/src/instrument.ts` - Sentry initialization
-- `/notifications/src/utils/EmailSentryHelper.ts` - Email errors
-- `/notifications/src/controllers/BaseController.ts` - Controller base
+### Vault App
+- `apps/vault/src/instrument.ts` - Sentry initialization (create when needed)
+- `apps/vault/src/utils/sentryHelper.ts` - Error capture helpers
 
-### Configuration
-- `/blog-api/config.ini` - Form service config
-- `/notifications/config.ini` - Email service config
-- `/sentry.ini` - Shared Sentry config
+### API Service
+- `services/api/src/instrument.ts` - Sentry initialization (create when needed)
+- `services/api/src/middleware/errorHandler.ts` - Error handling middleware
 
-## Documentation
-
-- Full implementation: `/dev/active/email-sentry-integration/`
-- Form service docs: `/blog-api/docs/sentry-integration.md`
-- Email service docs: `/notifications/docs/sentry-integration.md`
-
-## Related Skills
-
-- Use **database-verification** before database operations
-- Use **workflow-builder** for workflow error context
-- Use **database-scripts** for database error handling
+Note: These files are planned paths. Create them when Sentry integration is implemented.

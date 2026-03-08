@@ -3,6 +3,11 @@ name: plan-first
 description: 모든 지시를 수행하기 전에 반드시 "조사 → 계획 → 확인 → 실행" 워크플로우를 따르는 스킬. 사용자의 지시를 받으면 바로 실행하지 않고, 먼저 프로젝트 파일과 코드 구조를 파악하고, 부족한 정보는 웹 검색으로 보충하고, 불명확한 점은 사용자에게 질문하여 확인한 뒤, 수행 계획을 세워 사용자의 승인을 받고 나서 실행한다. 코딩, 문서 작성, 분석, 리서치, 디자인, 설정 변경 등 모든 종류의 작업에 적용한다. 사용자가 어떤 작업을 요청하든 이 스킬을 반드시 사용해야 한다. "만들어줘", "수정해줘", "분석해줘", "작성해줘", "해줘" 등 실행을 요구하는 모든 지시에 적용된다. 단, "이게 뭐야?", "설명해줘" 같은 단순 질문이나 가벼운 대화에는 적용하지 않는다.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: any execution task ("만들어줘", "수정해줘", "분석해줘", "해줘")
+- **Do not load**: simple questions ("이게 뭐야?"), concept explanations, casual conversation
+
 # Plan First — 조사 → 계획 → 확인 → 실행
 
 ## 개요

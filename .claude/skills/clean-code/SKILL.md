@@ -5,6 +5,11 @@ description: >
   TypeScript/JavaScript에 최적화되어 있으며 다른 언어에도 동일한 원칙을 적용한다.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: writing new code, modifying existing code, code review
+- **Do not load**: reading docs, planning architecture, discussing product requirements
+
 # Clean Code Skill
 
 코드를 작성하거나 수정할 때 항상 아래 5가지 원칙을 전부 적용한다.

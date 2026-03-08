@@ -5,6 +5,13 @@ allowed-tools: Bash(cat:*), Bash(awk:*), Bash(grep:*), Bash(sort:*), Bash(xargs:
 model: sonnet
 ---
 
+<!-- Context Loading Reminder:
+1. Load core context (CLAUDE.md + context/core.md)
+2. Load only relevant skills for the target service
+3. Do not load unrelated service contexts
+Example: API route testing → core + relevant service skill only
+-->
+
 ## Context
 
 Changed route files this session (auto-generated):

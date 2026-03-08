@@ -7,6 +7,11 @@ metadata:
   version: "1.0.0"
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: React component optimization, bundle size reduction, data fetching patterns
+- **Do not load**: non-React backend work, documentation, database design, architecture planning
+
 # Vercel React Best Practices
 
 Comprehensive performance optimization guide for React and Next.js applications, maintained by Vercel. Contains 57 rules across 8 categories, prioritized by impact to guide automated refactoring and code generation.

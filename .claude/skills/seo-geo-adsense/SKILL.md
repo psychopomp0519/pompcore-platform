@@ -7,6 +7,11 @@ description: >
   콘텐츠 전략, 기술적 SEO, 광고 배치, E-E-A-T 개선, 구조화 데이터, AI 검색 최적화 등을 포괄한다.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: SEO optimization, AdSense setup, GEO/AI-citation optimization, search ranking work
+- **Do not load**: internal app features, backend logic, database design, code reviews
+
 # SEO / GEO / AdSense 최적화 스킬
 
 이 스킬은 세 가지 핵심 축을 중심으로 사이트 수익과 검색 가시성을 높이는 방법을 안내한다.

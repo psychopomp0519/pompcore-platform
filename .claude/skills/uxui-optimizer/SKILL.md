@@ -3,6 +3,11 @@ name: uxui-optimizer
 description: UX/UI 최적화 스킬. UI 컴포넌트, 화면, 앱, 웹사이트의 UX/UI를 개선하거나 검토할 때 사용한다. 국내외 주요 디자인 시스템의 원칙을 종합하여 적용한다.
 ---
 
+## Context Activation Rule
+This skill should only be loaded when the task directly requires it.
+- **Load**: UX/UI review, accessibility audit, design system compliance check
+- **Do not load**: backend work, database schema, documentation-only tasks, SEO work
+
 # UX/UI 최적화 스킬
 
 ## 참고 디자인 시스템

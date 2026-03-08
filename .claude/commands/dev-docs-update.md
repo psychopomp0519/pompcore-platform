@@ -3,6 +3,13 @@ description: Update dev documentation before context compaction
 argument-hint: Optional - specific context or tasks to focus on (leave empty for comprehensive update)
 ---
 
+<!-- Context Loading Reminder:
+1. Load core context (CLAUDE.md + context/core.md)
+2. Load only relevant skills for the active task
+3. Do not load unrelated service contexts
+Example: Context save → core + active task domain skill only
+-->
+
 We're approaching context limits. Please update the development documentation to ensure seamless continuation after context reset.
 
 ## Required Updates
