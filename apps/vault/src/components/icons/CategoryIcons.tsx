@@ -1,17 +1,17 @@
 /**
  * @file CategoryIcons.tsx
- * @description 카테고리용 아이콘 매핑 시스템
+ * @description 카테고리용 아이콘 매핑 시스템 — @pompcore/ui 공유 아이콘 사용
  * @module components/icons/CategoryIcons
  */
 
 import type { ReactNode } from 'react';
+import type { IconProps } from '@pompcore/ui';
 import {
   IconCoin, IconBanknote, IconGift, IconArrowDown, IconTrendUp,
   IconUtensils, IconBus, IconCart, IconHouse, IconSmartphone,
   IconMedical, IconFilm, IconBook, IconArrowUp, IconCoffee,
-  IconGamepad, IconPlane,
-} from './UIIcons';
-import { IconBank, IconGem, IconTag } from './NavIcons';
+  IconGamepad, IconPlane, IconBank, IconGem, IconTag,
+} from '@pompcore/ui';
 
 // ============================================================
 // 아이콘 레지스트리
@@ -20,7 +20,7 @@ import { IconBank, IconGem, IconTag } from './NavIcons';
 interface CategoryIconEntry {
   key: string;
   label: string;
-  component: (props: { className?: string }) => ReactNode;
+  component: React.ComponentType<IconProps>;
 }
 
 /** 수입 카테고리 아이콘 */
@@ -52,7 +52,7 @@ export const EXPENSE_ICON_SET: CategoryIconEntry[] = [
 ];
 
 /** 전체 아이콘 맵 (키 → 컴포넌트) */
-const ALL_ICONS = new Map<string, (props: { className?: string }) => ReactNode>();
+const ALL_ICONS = new Map<string, React.ComponentType<IconProps>>();
 [...INCOME_ICON_SET, ...EXPENSE_ICON_SET].forEach((entry) => {
   ALL_ICONS.set(entry.key, entry.component);
 });

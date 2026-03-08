@@ -21,8 +21,8 @@ import * as txService from '../services/transaction.service';
 import * as annService from '../services/announcement.service';
 import * as recurringService from '../services/recurring.service';
 import { getNextOccurrence } from '../utils/recurringCalculator';
-import { IconMegaphone, IconChart, IconBank } from '../components/icons/NavIcons';
-import { IconPlus, IconTransfer } from '../components/icons/UIIcons';
+import { IconMegaphone, IconChart, IconBank } from '@pompcore/ui';
+import { IconPlus, IconTransfer } from '@pompcore/ui';
 
 // ============================================================
 // 상수

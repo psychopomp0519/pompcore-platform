@@ -11,7 +11,7 @@ import { useUiStore } from '../../stores/uiStore';
 import {
   IconHome, IconBank, IconReceipt, IconRepeat, IconGem,
   IconWallet, IconChart, IconMegaphone, IconChat, IconSettings, IconTrash,
-} from '../icons/NavIcons';
+} from '@pompcore/ui';
 
 // ============================================================
 // 네비게이션 항목

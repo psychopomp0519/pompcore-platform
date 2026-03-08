@@ -10,8 +10,7 @@ import { useUiStore } from '../../stores/uiStore';
 import { useAuthStore } from '../../stores/authStore';
 import { signOut } from '../../services/auth.service';
 import { ROUTES } from '../../constants/routes';
-import { IconUser, IconArrowLeft } from '../icons/NavIcons';
-import { ThemeToggle } from '../common/ThemeToggle';
+import { IconUser, IconArrowLeft, ThemeToggle } from '@pompcore/ui';
 
 // ============================================================
 // Header 컴포넌트

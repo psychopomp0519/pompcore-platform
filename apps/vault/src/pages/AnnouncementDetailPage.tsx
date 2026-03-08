@@ -10,7 +10,7 @@ import { useAuthStore } from '../stores/authStore';
 import type { Announcement, AnnouncementComment } from '../types/announcement.types';
 import * as announcementService from '../services/announcement.service';
 import { GlassCard, LoadingSpinner, toUserMessage } from '@pompcore/ui';
-import { IconHeartFilled, IconHeartOutline } from '../components/icons/UIIcons';
+import { IconHeartFilled, IconHeartOutline } from '@pompcore/ui';
 
 // ============================================================
 // AnnouncementDetailPage

@@ -10,7 +10,7 @@ import type { Inquiry } from '../types/inquiry.types';
 import { INQUIRY_STATUS_LABELS, INQUIRY_RATING_LABELS } from '../types/inquiry.types';
 import * as inquiryService from '../services/inquiry.service';
 import { GlassCard, Modal, LoadingSpinner, EmptyState, toUserMessage } from '@pompcore/ui';
-import { IconChat } from '../components/icons/NavIcons';
+import { IconChat } from '@pompcore/ui';
 
 // ============================================================
 // InquiriesPage

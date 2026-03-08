@@ -9,8 +9,8 @@ import type { Savings } from '../../types/savings.types';
 import { SAVINGS_TYPE_LABELS } from '../../types/savings.types';
 import { GlassCard } from '../common/GlassCard';
 import { formatCurrency } from '../../utils/currency';
-import { IconBank } from '../icons/NavIcons';
-import { IconCoin, IconPiggyBank, IconHouse } from '../icons/UIIcons';
+import { IconBank } from '@pompcore/ui';
+import { IconCoin, IconPiggyBank, IconHouse } from '@pompcore/ui';
 import {
   calculateFixedDepositInterest,
   calculateInstallmentInterest,

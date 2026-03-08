@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CategoryManager } from '../components/categories/CategoryManager';
 import { ROUTES } from '../constants/routes';
-import { IconArrowLeft } from '../components/icons/NavIcons';
+import { IconArrowLeft } from '@pompcore/ui';
 
 /** 카테고리 관리 페이지 */
 export function SettingsCategoriesPage(): ReactNode {

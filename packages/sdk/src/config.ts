@@ -28,8 +28,12 @@ export function createAppConfig(app: AppIdentity): AppConfig {
 
   const isConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
+  /** localhost 환경에서는 쿠키 도메인을 설정하지 않음 (브라우저가 외부 도메인 쿠키를 차단) */
+  const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  const effectiveDomain = isLocalhost ? undefined : (sharedDomain || undefined);
+
   if (isConfigured) {
-    createSupabaseClient({ url: supabaseUrl, anonKey: supabaseAnonKey, sharedDomain: sharedDomain || undefined });
+    createSupabaseClient({ url: supabaseUrl, anonKey: supabaseAnonKey, sharedDomain: effectiveDomain });
   }
 
   if (apiUrl) {

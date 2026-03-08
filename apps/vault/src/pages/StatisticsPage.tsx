@@ -17,7 +17,7 @@ import {
 } from '../services/statistics.service';
 import type { Transaction } from '../types/transaction.types';
 import { LoadingSpinner, EmptyState, toUserMessage } from '@pompcore/ui';
-import { IconChart } from '../components/icons/NavIcons';
+import { IconChart } from '@pompcore/ui';
 import { IncomeExpenseChart } from '../components/statistics/IncomeExpenseChart';
 import { AssetTrendChart } from '../components/statistics/AssetTrendChart';
 import { CategoryBreakdownChart } from '../components/statistics/CategoryBreakdownChart';

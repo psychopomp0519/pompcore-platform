@@ -14,7 +14,7 @@ import { TOAST_DURATION_MS } from '../constants/ui';
 import {
   IconBank, IconReceipt, IconRepeat, IconGem, IconWallet,
   IconChart, IconMegaphone, IconHome, IconArrowLeft,
-} from '../components/icons/NavIcons';
+} from '@pompcore/ui';
 
 // ============================================================
 // 상수

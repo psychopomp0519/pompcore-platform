@@ -19,7 +19,7 @@ import {
 } from '../services/auth.service';
 import { ROUTES } from '../constants/routes';
 import { TOAST_DURATION_MS } from '../constants/ui';
-import { IconArrowLeft } from '../components/icons/NavIcons';
+import { IconArrowLeft } from '@pompcore/ui';
 
 // ============================================================
 // SettingsProfilePage

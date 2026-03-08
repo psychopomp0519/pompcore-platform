@@ -11,7 +11,7 @@ import { GlassCard } from '@pompcore/ui';
 import {
   IconUser, IconPhone, IconTag, IconSliders,
   IconPalette, IconDocument, IconUsers, IconChevronRight,
-} from '../components/icons/NavIcons';
+} from '@pompcore/ui';
 
 // ============================================================
 // 메뉴 항목

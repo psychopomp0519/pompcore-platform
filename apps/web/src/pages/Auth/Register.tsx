@@ -8,8 +8,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { RegisterRequest } from '@pompcore/types';
 import { useAuthStore } from '@pompcore/auth';
-import { GlassCard, Button } from '@pompcore/ui';
-import { GoogleIcon } from '../../components/icons/Icons';
+import { GlassCard, Button, GoogleIcon } from '@pompcore/ui';
 
 export default function Register() {
   const navigate = useNavigate();

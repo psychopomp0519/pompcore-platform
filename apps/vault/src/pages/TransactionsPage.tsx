@@ -17,7 +17,7 @@ import { TransactionForm } from '../components/transactions/TransactionForm';
 import { TransactionList } from '../components/transactions/TransactionList';
 import { formatCurrency } from '../utils/currency';
 import { getCurrentMonthPeriod, getToday } from '../utils/date';
-import { IconReceipt } from '../components/icons/NavIcons';
+import { IconReceipt } from '@pompcore/ui';
 
 // ============================================================
 // TransactionsPage

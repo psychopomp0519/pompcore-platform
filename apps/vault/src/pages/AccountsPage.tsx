@@ -16,7 +16,7 @@ import { AccountForm } from '../components/accounts/AccountForm';
 import { TransferDialog } from '../components/accounts/TransferDialog';
 import { BalanceEditDialog } from '../components/accounts/BalanceEditDialog';
 import { formatCurrency } from '../utils/currency';
-import { IconBank } from '../components/icons/NavIcons';
+import { IconBank } from '@pompcore/ui';
 
 // ============================================================
 // AccountsPage

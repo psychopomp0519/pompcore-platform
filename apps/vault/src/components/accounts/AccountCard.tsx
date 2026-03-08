@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 import type { Account } from '../../types/account.types';
 import { GlassCard } from '../common/GlassCard';
 import { formatCurrency } from '../../utils/currency';
-import { IconBank } from '../icons/NavIcons';
+import { IconBank } from '@pompcore/ui';
 
 // ============================================================
 // 타입

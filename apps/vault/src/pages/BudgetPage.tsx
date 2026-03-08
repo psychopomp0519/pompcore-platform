@@ -13,7 +13,7 @@ import { Modal, ConfirmDialog, LoadingSpinner, EmptyState, Button } from '@pompc
 import { BudgetCard } from '../components/budget/BudgetCard';
 import { BudgetForm } from '../components/budget/BudgetForm';
 import { formatCurrency } from '../utils/currency';
-import { IconChart } from '../components/icons/NavIcons';
+import { IconChart } from '@pompcore/ui';
 
 // ============================================================
 // BudgetPage

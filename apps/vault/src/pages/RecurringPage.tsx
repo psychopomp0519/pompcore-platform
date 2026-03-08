@@ -16,7 +16,7 @@ import { RecurringForm } from '../components/recurring/RecurringForm';
 import { formatCurrency } from '../utils/currency';
 import { getDailyAverage, getDaysUntilNext } from '../utils/recurringCalculator';
 import { INTERVAL_LABELS, type IntervalUnit } from '../constants/intervals';
-import { IconRepeat } from '../components/icons/NavIcons';
+import { IconRepeat } from '@pompcore/ui';
 
 // ============================================================
 // 상수

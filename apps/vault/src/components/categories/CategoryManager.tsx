@@ -15,7 +15,7 @@ import { LoadingSpinner } from '../common/LoadingSpinner';
 import { EmptyState } from '../common/EmptyState';
 import { CategoryForm } from './CategoryForm';
 import { CategoryItem } from './CategoryItem';
-import { IconArrowDown, IconArrowUp } from '../icons/UIIcons';
+import { IconArrowDown, IconArrowUp } from '@pompcore/ui';
 
 // ============================================================
 // 상수

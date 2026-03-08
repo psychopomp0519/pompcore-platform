@@ -13,7 +13,7 @@ import { ROUTES } from '../constants/routes';
 import { CURRENCIES } from '../constants/currencies';
 import { INTERVAL_LABELS } from '../constants/intervals';
 import { TOAST_DURATION_MS } from '../constants/ui';
-import { IconArrowLeft } from '../components/icons/NavIcons';
+import { IconArrowLeft } from '@pompcore/ui';
 
 // ============================================================
 // 상수

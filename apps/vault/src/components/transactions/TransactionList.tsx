@@ -10,7 +10,7 @@ import type { Category } from '../../types/category.types';
 import type { Account } from '../../types/account.types';
 import { formatCurrency } from '../../utils/currency';
 import { formatShortDate, getToday } from '../../utils/date';
-import { IconTransfer, IconArrowDown, IconArrowUp } from '../icons/UIIcons';
+import { IconTransfer, IconArrowDown, IconArrowUp } from '@pompcore/ui';
 import { renderCategoryIcon } from '../icons/CategoryIcons';
 
 // ============================================================

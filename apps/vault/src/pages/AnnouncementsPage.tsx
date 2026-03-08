@@ -10,8 +10,8 @@ import { useAuthStore } from '../stores/authStore';
 import type { Announcement, AnnouncementFormData } from '../types/announcement.types';
 import * as announcementService from '../services/announcement.service';
 import { GlassCard, Modal, ConfirmDialog, LoadingSpinner, EmptyState, toUserMessage } from '@pompcore/ui';
-import { IconMegaphone } from '../components/icons/NavIcons';
-import { IconHeartFilled } from '../components/icons/UIIcons';
+import { IconMegaphone } from '@pompcore/ui';
+import { IconHeartFilled } from '@pompcore/ui';
 
 // ============================================================
 // AnnouncementsPage

@@ -19,6 +19,38 @@ export { LoadingSpinner } from './components/LoadingSpinner';
 export { PasswordStrengthBar } from './components/PasswordStrengthBar';
 
 // ============================================================
+// Icons — RPG 판타지 테마 (Nebula Design System)
+// ============================================================
+
+export type { IconProps } from './components/icons';
+export { svgDefaults } from './components/icons';
+export { VaultIcon, QuestIcon, AcademyIcon, ForgeIcon, PompCoreIcon } from './components/icons';
+export {
+  // 방향/네비게이션
+  IconArrowUp, IconArrowDown, IconArrowLeft, IconChevronRight,
+  // 액션/상태
+  IconPlus, IconCheck, IconClose, IconSearch, IconFilter,
+  // 커뮤니케이션
+  IconBell, IconMegaphone, IconChat,
+  // 사용자/계정
+  IconUser, IconUsers,
+  // 시스템/UI
+  IconSettings, IconTrash, IconDocument, IconTag, IconSliders, IconTransfer,
+  IconHome, IconPhone, IconDevice, IconPuzzle, IconProtect, IconCelebration, IconWrench,
+  IconPalette, IconCode, IconRepeat,
+  // 감정/피드백
+  IconHeartFilled, IconHeartOutline, IconSparkle,
+  // 기타
+  IconLink, IconShield, IconKey, IconTarget, IconRocket, IconTrendUp, IconClipboard,
+  // 금융/Vault 도메인
+  IconCoin, IconBank, IconReceipt, IconGem, IconWallet, IconChart,
+  IconUtensils, IconBus, IconCart, IconHouse, IconSmartphone, IconMedical,
+  IconFilm, IconBook, IconCoffee, IconGamepad, IconPlane, IconGift,
+  IconBanknote, IconPiggyBank, IconInvestment, IconRealEstate,
+} from './components/icons';
+export { GoogleIcon, GitHubIcon, DiscordIcon } from './components/icons';
+
+// ============================================================
 // Stores
 // ============================================================
 

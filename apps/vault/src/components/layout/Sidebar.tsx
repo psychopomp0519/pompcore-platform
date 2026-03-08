@@ -13,7 +13,7 @@ import {
   IconHome, IconBank, IconReceipt, IconRepeat, IconGem,
   IconWallet, IconChart, IconMegaphone, IconChat, IconSettings, IconTrash,
   IconInvestment, IconRealEstate,
-} from '../icons/NavIcons';
+} from '@pompcore/ui';
 
 // ============================================================
 // 네비게이션 항목

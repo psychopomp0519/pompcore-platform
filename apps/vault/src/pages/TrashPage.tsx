@@ -14,7 +14,7 @@ import {
   type TrashItem,
 } from '../services/trash.service';
 import { GlassCard, ConfirmDialog, LoadingSpinner, EmptyState, toUserMessage } from '@pompcore/ui';
-import { IconBank, IconTag, IconReceipt, IconRepeat, IconGem, IconWallet, IconTrash } from '../components/icons/NavIcons';
+import { IconBank, IconTag, IconReceipt, IconRepeat, IconGem, IconWallet, IconTrash } from '@pompcore/ui';
 
 // ============================================================
 // 타입 아이콘 매핑

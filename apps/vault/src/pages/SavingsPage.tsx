@@ -14,8 +14,8 @@ import { Modal, ConfirmDialog, LoadingSpinner, EmptyState, Button } from '@pompc
 import { SavingsCard } from '../components/savings/SavingsCard';
 import { SavingsForm } from '../components/savings/SavingsForm';
 import { getToday } from '../utils/date';
-import { IconBank } from '../components/icons/NavIcons';
-import { IconCoin, IconPiggyBank, IconHouse } from '../components/icons/UIIcons';
+import { IconBank } from '@pompcore/ui';
+import { IconCoin, IconPiggyBank, IconHouse } from '@pompcore/ui';
 
 // ============================================================
 // SavingsPage

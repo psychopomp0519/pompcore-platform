@@ -13,7 +13,7 @@ import { useSettingsStore } from '../../stores/settingsStore';
 import {
   IconHome, IconBank, IconReceipt, IconRepeat, IconChart,
   IconGem, IconWallet, IconMegaphone,
-} from '../icons/NavIcons';
+} from '@pompcore/ui';
 
 // ============================================================
 // 타입

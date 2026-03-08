@@ -7,8 +7,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@pompcore/auth';
-import { Button } from '@pompcore/ui';
-import ThemeToggle from '../common/ThemeToggle';
+import { Button, ThemeToggle } from '@pompcore/ui';
 import pompcoreLogo from '../../assets/logos/pompcorelogo.svg';
 import { PompCoreLogo } from '../common/BrandText';
 
