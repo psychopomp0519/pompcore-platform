@@ -37,7 +37,7 @@ const NAV_ITEMS: NavItem[] = [
   { path: ROUTES.REAL_ESTATE, label: '부동산', icon: IconRealEstate },
   { path: ROUTES.ANNOUNCEMENTS, label: '공지사항', icon: IconMegaphone },
   { path: ROUTES.INQUIRIES, label: '문의', icon: IconChat },
-  { path: ROUTES.SETTINGS, label: '설정', icon: IconSettings },
+  { path: ROUTES.TRASH, label: '휴지통', icon: IconTrash },
 ];
 
 // ============================================================
@@ -80,7 +80,7 @@ export function Sidebar(): ReactNode {
       </div>
 
       {/* 네비게이션 */}
-      <nav aria-label="사이드바 네비게이션" className="flex-1 overflow-y-auto p-3">
+      <nav aria-label="사이드바 네비게이션" className="flex-1 overflow-y-auto p-3 scrollbar-hide">
         <ul className="space-y-1">
           {NAV_ITEMS.map((item) => (
             <li key={item.path}>
@@ -98,15 +98,15 @@ export function Sidebar(): ReactNode {
         </ul>
       </nav>
 
-      {/* 하단 휴지통 링크 */}
+      {/* 하단 설정 링크 (고정) */}
       <div className="border-t border-navy/10 p-3 dark:border-white/10">
         <NavLink
-          to={ROUTES.TRASH}
+          to={ROUTES.SETTINGS}
           className={getNavLinkClass}
-          {...(!isExpanded ? { title: '휴지통' } : {})}
+          {...(!isExpanded ? { title: '설정' } : {})}
         >
-          <IconTrash className="h-5 w-5 shrink-0" />
-          {isExpanded && <span>휴지통</span>}
+          <IconSettings className="h-5 w-5 shrink-0" />
+          {isExpanded && <span>설정</span>}
         </NavLink>
       </div>
     </aside>
