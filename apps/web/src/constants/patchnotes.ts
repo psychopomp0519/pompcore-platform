@@ -36,6 +36,25 @@ export const CHANGE_TYPE_CONFIG: Record<
 /** 패치노트 목록 (최신순) */
 export const PATCH_NOTES: PatchNote[] = [
   {
+    version: '0.5.0',
+    date: '2026-03-08',
+    summary: '모노레포 통합 마이그레이션 + OAuth 수정 + 공유 패키지 구축',
+    changes: [
+      { type: 'added', description: 'pnpm + Turborepo 모노레포 통합 (Web + Vault + Forge)' },
+      { type: 'added', description: '@pompcore/ui 공유 패키지 (Nebula 디자인 시스템, 공통 컴포넌트)' },
+      { type: 'added', description: '@pompcore/auth 공유 패키지 (SSO, 쿠키 세션, PKCE 플로우)' },
+      { type: 'added', description: '@pompcore/types 공유 타입 패키지' },
+      { type: 'added', description: '@pompcore/sdk 플랫폼 설정 팩토리' },
+      { type: 'added', description: 'OAuth 전용 콜백 페이지 (/auth/callback) — Web, Vault 모두 적용' },
+      { type: 'added', description: 'Vault 서비스 정식 출시 (vault.pompcore.cc)' },
+      { type: 'fixed', description: 'Google OAuth 로그인 실패 — PKCE 코드 이중 교환 문제 해결' },
+      { type: 'fixed', description: '로그인 오류 메시지 한국어 미적용 수정 (toUserMessage 적용)' },
+      { type: 'fixed', description: '쿠키 저장소 4KB 초과 — 하이브리드 스토리지(localStorage + SSO 마커) 전환' },
+      { type: 'changed', description: 'detectSessionInUrl: false로 변경하여 명시적 콜백 처리' },
+      { type: 'changed', description: 'Vault 프로젝트 상태 출시 예정 → 서비스 중 전환' },
+    ],
+  },
+  {
     version: '0.4.0',
     date: '2026-03-05',
     summary: 'Nebula 테마 디자인 리뉴얼 + 팀원 모집 시스템',

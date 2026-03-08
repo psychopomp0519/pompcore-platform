@@ -15,7 +15,8 @@ export const PROJECTS: Project[] = [
     longDescription:
       '수입과 지출을 게임 감성으로 기록하고 분석하는 스마트 가계부. 예산 설정과 초과 알림, 시각적 리포트로 재정 상태를 파악하고, 절약 목표 달성 시 경험치와 배지를 획득하세요.',
     icon: 'vault',
-    status: 'coming_soon',
+    status: 'active',
+    url: 'https://vault.pompcore.cc',
     category: 'finance',
     categoryLabel: 'FINANCE · 스마트 가계부',
     accentColor: 'text-emerald-600 dark:text-emerald-400',

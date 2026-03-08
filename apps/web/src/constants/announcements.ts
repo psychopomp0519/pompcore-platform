@@ -48,6 +48,23 @@ export const ANNOUNCEMENT_CATEGORY_CONFIG: Record<
 /** 공지사항 목록 (최신순) */
 export const ANNOUNCEMENTS: Announcement[] = [
   {
+    id: 'ann-005',
+    title: 'Vault (스마트 가계부) 정식 출시',
+    date: '2026-03-08',
+    category: 'update',
+    content:
+      'PompCore의 첫 번째 서비스 Vault가 정식 출시되었습니다! vault.pompcore.cc에서 게임 감성의 스마트 가계부를 만나보세요. 수입/지출 관리, 예산 설정, 통계 분석 등 다양한 기능을 이용할 수 있습니다.',
+    pinned: true,
+  },
+  {
+    id: 'ann-004',
+    title: 'PompCore 모노레포 통합 및 인증 시스템 개선 (v0.5.0)',
+    date: '2026-03-08',
+    category: 'update',
+    content:
+      'PompCore 플랫폼이 모노레포 구조로 통합되었습니다. 공유 패키지(@pompcore/ui, @pompcore/auth, @pompcore/types)를 통해 서비스 간 일관된 경험을 제공합니다. Google OAuth 로그인 안정성이 개선되었으며, PKCE 기반 보안 인증 플로우가 적용되었습니다.',
+  },
+  {
     id: 'ann-003',
     title: '패치노트 및 공지사항 페이지 오픈',
     date: '2026-03-04',
