@@ -33,7 +33,7 @@ export async function signUpWithEmail(email: string, password: string, displayNa
 export async function signInWithGoogle(): Promise<void> {
   const { error } = await getSupabase().auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.origin },
+    options: { redirectTo: `${window.location.origin}/auth/callback` },
   });
   if (error) throw error;
 }
@@ -84,7 +84,7 @@ export async function getLinkedIdentities(): Promise<LinkedIdentity[]> {
 export async function linkGoogleAccount(): Promise<void> {
   const { error } = await getSupabase().auth.linkIdentity({
     provider: 'google',
-    options: { redirectTo: window.location.origin },
+    options: { redirectTo: `${window.location.origin}/auth/callback` },
   });
   if (error) throw error;
 }

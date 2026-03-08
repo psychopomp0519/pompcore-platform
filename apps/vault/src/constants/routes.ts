@@ -9,6 +9,7 @@ export const ROUTES = {
   DASHBOARD: '/',
   LOGIN: '/login',
   REGISTER: '/register',
+  AUTH_CALLBACK: '/auth/callback',
   ACCOUNTS: '/accounts',
   TRANSACTIONS: '/transactions',
   RECURRING: '/recurring',

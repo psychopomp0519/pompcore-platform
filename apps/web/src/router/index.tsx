@@ -13,6 +13,7 @@ import PatchNotes from '../pages/PatchNotes/PatchNotes';
 import Announcements from '../pages/Announcements/Announcements';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import Callback from '../pages/Auth/Callback';
 import Recruit from '../pages/Recruit/Recruit';
 import RecruitAdmin from '../pages/Recruit/RecruitAdmin';
 import ProjectOverview from '../pages/Internal/ProjectOverview';
@@ -57,5 +58,9 @@ export const router = createBrowserRouter([
   {
     path: '/auth/register',
     element: <Layout><Register /></Layout>,
+  },
+  {
+    path: '/auth/callback',
+    element: <Layout><Callback /></Layout>,
   },
 ]);

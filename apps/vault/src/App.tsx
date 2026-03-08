@@ -22,6 +22,9 @@ const LoginPage = lazy(() =>
 const RegisterPage = lazy(() =>
   import('./pages/RegisterPage').then((m) => ({ default: m.RegisterPage })),
 );
+const CallbackPage = lazy(() =>
+  import('./pages/CallbackPage').then((m) => ({ default: m.CallbackPage })),
+);
 const SettingsCategoriesPage = lazy(() =>
   import('./pages/SettingsCategoriesPage').then((m) => ({ default: m.SettingsCategoriesPage })),
 );
@@ -114,6 +117,7 @@ export function App(): React.ReactNode {
           {/* 공개 라우트 */}
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+          <Route path={ROUTES.AUTH_CALLBACK} element={<CallbackPage />} />
 
           {/* 인증 필요 라우트 (AppShell 레이아웃 적용) */}
           <Route element={<ProtectedRoute />}>
