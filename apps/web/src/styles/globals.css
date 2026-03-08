@@ -1,0 +1,48 @@
+/**
+ * PompCore Web — App-specific styles
+ * Base styles imported via @pompcore/ui/styles/base.css in main.tsx
+ */
+
+/* App accent color (Violet) */
+:root {
+  --color-app-accent: 124 58 237;
+}
+
+/* ============================================================
+   Fullpage scroll system (web landing only)
+   ============================================================ */
+
+.fullpage-wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Fullpage navigation dots */
+.fullpage-nav {
+  @apply fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-3;
+}
+
+.fullpage-dot {
+  @apply h-2.5 w-2.5 rounded-full bg-slate-300 transition-all duration-300 hover:bg-brand;
+}
+
+.fullpage-dot-active {
+  @apply h-3 w-3 bg-brand shadow-glow;
+}
+
+/* ============================================================
+   Theme transition
+   ============================================================ */
+
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease !important;
+}

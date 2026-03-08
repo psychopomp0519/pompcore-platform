@@ -1,0 +1,9 @@
+/**
+ * Vault — App-specific styles
+ * Base styles imported via @pompcore/ui/styles/base.css in main.tsx
+ */
+
+/* App accent color (Green) */
+:root {
+  --color-app-accent: 16 185 129;
+}

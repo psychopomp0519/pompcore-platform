@@ -1,0 +1,60 @@
+/**
+ * @file LoadingSpinner.tsx
+ * @description 로딩 스피너 컴포넌트
+ * @module components/common/LoadingSpinner
+ */
+
+import type { ReactNode } from 'react';
+
+// ============================================================
+// 타입
+// ============================================================
+
+interface LoadingSpinnerProps {
+  /** 스피너 크기 */
+  size?: 'sm' | 'md' | 'lg';
+  /** 전체 화면 중앙 배치 */
+  fullScreen?: boolean;
+}
+
+// ============================================================
+// 상수
+// ============================================================
+
+const SIZE_MAP = {
+  sm: 'h-5 w-5 border-2',
+  md: 'h-8 w-8 border-4',
+  lg: 'h-12 w-12 border-4',
+} as const;
+
+// ============================================================
+// LoadingSpinner
+// ============================================================
+
+/** 로딩 스피너 */
+export function LoadingSpinner({
+  size = 'md',
+  fullScreen = false,
+}: LoadingSpinnerProps): ReactNode {
+  const spinner = (
+    <div
+      className={`animate-spin rounded-full border-vault-color border-t-transparent ${SIZE_MAP[size]}`}
+      role="status"
+      aria-label="로딩 중"
+    />
+  );
+
+  if (fullScreen) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        {spinner}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center py-8">
+      {spinner}
+    </div>
+  );
+}

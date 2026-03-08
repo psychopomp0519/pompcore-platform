@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Base Styles - Vault Nebula Theme
+   ============================================================ */
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+    font-family: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply m-0 min-h-screen font-sans antialiased bg-surface text-slate-900 transition-colors duration-300;
+    word-break: keep-all;
+  }
+
+  .dark body {
+    background-color: #0C0818;
+    color: #e2e8f0;
+  }
+
+  p, li, dd {
+    line-height: 1.75;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-vault-color;
+  }
+}
+
+/* ============================================================
+   Component Styles
+   ============================================================ */
+
+@layer components {
+  /* 스킵 네비게이션 - 접근성 */
+  .skip-nav {
+    @apply absolute -top-full left-4 z-[100] px-4 py-2 rounded-b-lg
+      bg-vault-color text-white text-sm font-medium focus:top-0 transition-all;
+  }
+
+  /* 카드 컴포넌트 */
+  .card {
+    @apply bg-white border border-slate-200 rounded-2xl shadow-card transition-all duration-300;
+  }
+  .card:hover {
+    @apply shadow-card-hover;
+  }
+  .dark .card {
+    @apply bg-surface-card-dark backdrop-blur-[16px] border-white/10 shadow-glass;
+  }
+
+  /* 글래스모피즘 */
+  .glass {
+    @apply bg-surface-card backdrop-blur-[16px] border border-slate-200 rounded-2xl;
+  }
+  .dark .glass {
+    @apply bg-surface-card-dark border-white/10;
+  }
+
+  /* 텍스트 그라디언트 */
+  .text-gradient {
+    @apply bg-gradient-to-r from-[#9B59B6] via-[#D4A017] to-[#E0598B] bg-clip-text text-transparent;
+  }
+  .dark .text-gradient {
+    @apply from-[#E0C0FF] via-[#FFD700] to-[#FF90D0];
+  }
+
+  /* 호버 리프트 효과 */
+  .hover-lift {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-card-hover;
+  }
+  .dark .hover-lift {
+    @apply hover:shadow-glow;
+  }
+}
+
+/* ============================================================
+   Section Divider
+   ============================================================ */
+
+.section-divider-gradient {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 5%,
+    rgba(124, 58, 237, 0.2) 30%,
+    rgba(255, 215, 0, 0.12) 50%,
+    rgba(124, 58, 237, 0.2) 70%,
+    transparent 95%
+  );
+}
+
+/* ============================================================
+   Theme Transition Animation
+   ============================================================ */
+
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 500ms ease,
+              color 500ms ease,
+              border-color 500ms ease,
+              box-shadow 500ms ease,
+              fill 500ms ease,
+              stroke 500ms ease !important;
+}
+
+/* ============================================================
+   Reduced Motion - 접근성: 모션 감소 선호
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

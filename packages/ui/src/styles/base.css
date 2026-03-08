@@ -1,0 +1,108 @@
+/**
+ * @pompcore/ui — Shared base styles (Nebula theme)
+ *
+ * Apps import this BEFORE their own globals.css:
+ *   @import '@pompcore/ui/styles/base.css';
+ *
+ * Apps must define --color-app-accent in their own :root.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Base layer
+   ============================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface-light text-slate-800 font-sans;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  :lang(ko) {
+    line-height: 1.75;
+  }
+
+  .dark body {
+    @apply bg-surface-dark text-slate-200;
+  }
+
+  /* Accessibility: keyboard focus */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2;
+    outline-color: rgb(var(--color-app-accent));
+    outline-style: solid;
+  }
+
+  /* Skip navigation */
+  .skip-nav {
+    @apply absolute -top-10 left-0 z-50 px-4 py-2 text-white transition-all duration-200;
+    background-color: rgb(var(--color-app-accent));
+  }
+  .skip-nav:focus {
+    @apply top-0;
+  }
+}
+
+/* ============================================================
+   Component layer
+   ============================================================ */
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white/80 shadow-card backdrop-blur-[16px] transition-all duration-300;
+  }
+  .dark .card {
+    @apply border-slate-700 bg-slate-800/50 shadow-glass;
+  }
+
+  .glass {
+    @apply rounded-2xl border border-white/20 bg-white/10 shadow-glass backdrop-blur-[16px];
+  }
+  .dark .glass {
+    @apply border-white/10 bg-white/5;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #7C3AED, #A855F7);
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-card-hover;
+  }
+
+  .section-divider {
+    @apply mx-auto h-px w-2/3;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
+  }
+}
+
+/* ============================================================
+   Accessibility: reduced motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
