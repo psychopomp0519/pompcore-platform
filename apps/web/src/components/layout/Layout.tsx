@@ -24,7 +24,7 @@ export default function Layout({ children }: LayoutProps) {
         본문 바로가기
       </a>
       <Header />
-      <main id="main-content" className={`flex-1 pt-20 ${isHome ? 'overflow-hidden' : ''}`} role="main">
+      <main id="main-content" className={`flex-1 ${isHome ? 'overflow-hidden' : 'pt-20'}`} role="main">
         {children}
       </main>
       {!isHome && <Footer />}
