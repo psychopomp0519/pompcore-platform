@@ -1,10 +1,10 @@
 /**
  * @file announcement.service.ts
- * @description 공지사항 CRUD 서비스
+ * @description 공지사항 CRUD 서비스 (core 스키마)
  * @module services/announcement
  */
 
-import { supabase } from './supabase';
+import { supabase, coreSchema } from './supabase';
 import type {
   DbAnnouncement,
   DbAnnouncementInsert,
@@ -19,10 +19,13 @@ import { mapDbToAnnouncement, mapDbToComment } from '../types/announcement.types
 // 테이블 이름
 // ============================================================
 
-const TABLE = 'vault_announcements';
-const COMMENT_TABLE = 'vault_announcement_comments';
-const LIKE_TABLE = 'vault_announcement_likes';
-const SETTINGS_TABLE = 'vault_user_settings';
+/** core 스키마 테이블 */
+const TABLE = 'announcements';
+const COMMENT_TABLE = 'announcement_comments';
+const LIKE_TABLE = 'announcement_likes';
+
+/** vault_app 스키마 테이블 (작성자명 조회용) */
+const SETTINGS_TABLE = 'user_settings';
 
 // ============================================================
 // 공지사항 조회
@@ -30,7 +33,7 @@ const SETTINGS_TABLE = 'vault_user_settings';
 
 /** 공지사항 목록 조회 (고정 상단 + 최신순, 삭제된 항목 제외) */
 export async function fetchAnnouncements(): Promise<Announcement[]> {
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(TABLE)
     .select('*')
     .is('deleted_at', null)
@@ -44,7 +47,7 @@ export async function fetchAnnouncements(): Promise<Announcement[]> {
 
 /** 공지사항 상세 조회 (삭제된 항목 제외) */
 export async function fetchAnnouncement(id: string): Promise<Announcement> {
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(TABLE)
     .select('*')
     .eq('id', id)
@@ -72,7 +75,7 @@ export async function createAnnouncement(
     pin_order: form.pinOrder,
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(TABLE)
     .insert(insert)
     .select()
@@ -94,7 +97,7 @@ export async function updateAnnouncement(
   if (updates.isPinned !== undefined) dbUpdate.is_pinned = updates.isPinned;
   if (updates.pinOrder !== undefined) dbUpdate.pin_order = updates.pinOrder;
 
-  const { error } = await supabase
+  const { error } = await coreSchema()
     .from(TABLE)
     .update(dbUpdate)
     .eq('id', id);
@@ -104,7 +107,7 @@ export async function updateAnnouncement(
 
 /** 공지사항 소프트 삭제 (deleted_at 설정) */
 export async function deleteAnnouncement(id: string): Promise<void> {
-  const { error } = await supabase
+  const { error } = await coreSchema()
     .from(TABLE)
     .update({ deleted_at: new Date().toISOString() })
     .eq('id', id);
@@ -118,7 +121,7 @@ export async function deleteAnnouncement(id: string): Promise<void> {
 
 /** 댓글 조회 (작성자명 포함) */
 export async function fetchComments(announcementId: string): Promise<AnnouncementComment[]> {
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(COMMENT_TABLE)
     .select('*')
     .eq('announcement_id', announcementId)
@@ -129,7 +132,7 @@ export async function fetchComments(announcementId: string): Promise<Announcemen
   const comments = data as DbAnnouncementComment[];
   const userIds = [...new Set(comments.map((c) => c.user_id))];
 
-  /** 작성자 display_name 매핑 */
+  /** 작성자 display_name 매핑 (vault_app 스키마) */
   const nameMap = new Map<string, string>();
   if (userIds.length > 0) {
     const { data: settings } = await supabase
@@ -159,7 +162,7 @@ export async function createComment(
     content,
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(COMMENT_TABLE)
     .insert(insert)
     .select()
@@ -171,7 +174,7 @@ export async function createComment(
 
 /** 댓글 삭제 */
 export async function deleteComment(commentId: string): Promise<void> {
-  const { error } = await supabase
+  const { error } = await coreSchema()
     .from(COMMENT_TABLE)
     .delete()
     .eq('id', commentId);
@@ -188,7 +191,7 @@ export async function checkLiked(
   announcementId: string,
   userId: string,
 ): Promise<boolean> {
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(LIKE_TABLE)
     .select('announcement_id')
     .eq('announcement_id', announcementId)
@@ -207,7 +210,7 @@ export async function toggleLike(
   const isLiked = await checkLiked(announcementId, userId);
 
   if (isLiked) {
-    await supabase
+    await coreSchema()
       .from(LIKE_TABLE)
       .delete()
       .eq('announcement_id', announcementId)
@@ -216,7 +219,7 @@ export async function toggleLike(
     return false;
   }
 
-  await supabase
+  await coreSchema()
     .from(LIKE_TABLE)
     .insert({ announcement_id: announcementId, user_id: userId });
 

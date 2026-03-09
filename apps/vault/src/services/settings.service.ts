@@ -14,7 +14,7 @@ import { mapDbToSettings } from '../types/settings.types';
 // 테이블 이름
 // ============================================================
 
-const TABLE = 'vault_user_settings';
+const TABLE = 'user_settings';
 
 // ============================================================
 // 조회

@@ -21,8 +21,8 @@ import { createTransactionsBatch } from './transaction.service';
 // 테이블 이름
 // ============================================================
 
-const TABLE = 'vault_recurring_payments';
-const OVERRIDES_TABLE = 'vault_recurring_overrides';
+const TABLE = 'recurring_payments';
+const OVERRIDES_TABLE = 'recurring_overrides';
 
 // ============================================================
 // 조회

@@ -28,9 +28,9 @@ import type {
 // 테이블 이름
 // ============================================================
 
-const TABLE_PROPERTY = 'vault_real_estate';
-const TABLE_LEASE = 'vault_real_estate_leases';
-const TABLE_EXPENSE = 'vault_real_estate_expenses';
+const TABLE_PROPERTY = 'real_estate';
+const TABLE_LEASE = 'real_estate_leases';
+const TABLE_EXPENSE = 'real_estate_expenses';
 
 // ============================================================
 // 매퍼

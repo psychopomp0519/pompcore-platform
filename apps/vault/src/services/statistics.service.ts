@@ -40,10 +40,10 @@ export interface AccountBalanceInfo {
 // 테이블 이름
 // ============================================================
 
-const TX_TABLE = 'vault_transactions';
-const ACCOUNT_TABLE = 'vault_accounts';
-const BALANCE_TABLE = 'vault_account_balances';
-const CATEGORY_TABLE = 'vault_categories';
+const TX_TABLE = 'transactions';
+const ACCOUNT_TABLE = 'accounts';
+const BALANCE_TABLE = 'account_balances';
+const CATEGORY_TABLE = 'categories';
 
 // ============================================================
 // 조회 함수

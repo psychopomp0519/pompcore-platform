@@ -20,12 +20,12 @@ export interface TrashItem {
 
 /** 소프트 삭제 테이블 매핑 */
 const TRASH_TABLES = [
-  { table: 'vault_accounts', type: 'account' as const, nameField: 'name' },
-  { table: 'vault_categories', type: 'category' as const, nameField: 'name' },
-  { table: 'vault_transactions', type: 'transaction' as const, nameField: 'name' },
-  { table: 'vault_recurring_payments', type: 'recurring' as const, nameField: 'name' },
-  { table: 'vault_savings', type: 'savings' as const, nameField: 'name' },
-  { table: 'vault_budgets', type: 'budget' as const, nameField: 'name' },
+  { table: 'accounts', type: 'account' as const, nameField: 'name' },
+  { table: 'categories', type: 'category' as const, nameField: 'name' },
+  { table: 'transactions', type: 'transaction' as const, nameField: 'name' },
+  { table: 'recurring_payments', type: 'recurring' as const, nameField: 'name' },
+  { table: 'savings', type: 'savings' as const, nameField: 'name' },
+  { table: 'budgets', type: 'budget' as const, nameField: 'name' },
 ] as const;
 
 /** 타입 라벨 */

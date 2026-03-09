@@ -11,6 +11,8 @@ interface AppIdentity {
   version: string;
   brandColor: string;
   brandColorLight?: string;
+  /** Supabase 기본 DB 스키마 (미지정 시 'public') */
+  dbSchema?: string;
 }
 
 export interface AppConfig {
@@ -33,7 +35,7 @@ export function createAppConfig(app: AppIdentity): AppConfig {
   const effectiveDomain = isLocalhost ? undefined : (sharedDomain || undefined);
 
   if (isConfigured) {
-    createSupabaseClient({ url: supabaseUrl, anonKey: supabaseAnonKey, sharedDomain: effectiveDomain });
+    createSupabaseClient({ url: supabaseUrl, anonKey: supabaseAnonKey, sharedDomain: effectiveDomain, dbSchema: app.dbSchema });
   }
 
   if (apiUrl) {

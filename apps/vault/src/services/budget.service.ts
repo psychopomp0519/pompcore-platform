@@ -13,7 +13,7 @@ import { mapDbToBudget } from '../types/budget.types';
 // 테이블 이름
 // ============================================================
 
-const TABLE = 'vault_budgets';
+const TABLE = 'budgets';
 
 // ============================================================
 // 조회

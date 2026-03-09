@@ -21,10 +21,10 @@ import { mapDbToAccount } from '../types/account.types';
 // 테이블 이름
 // ============================================================
 
-const ACCOUNTS_TABLE = 'vault_accounts';
-const BALANCES_TABLE = 'vault_account_balances';
-const TRANSFERS_TABLE = 'vault_transfers';
-const TRANSACTIONS_TABLE = 'vault_transactions';
+const ACCOUNTS_TABLE = 'accounts';
+const BALANCES_TABLE = 'account_balances';
+const TRANSFERS_TABLE = 'transfers';
+const TRANSACTIONS_TABLE = 'transactions';
 
 // ============================================================
 // 조회

@@ -14,6 +14,7 @@ createAppConfig({
   version: '1.1.1',
   brandColor: '#10B981',
   brandColorLight: '#34D399',
+  dbSchema: 'vault_app',
 });
 
 createRoot(document.getElementById('root')!).render(

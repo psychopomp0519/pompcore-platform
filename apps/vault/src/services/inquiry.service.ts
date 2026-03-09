@@ -1,10 +1,10 @@
 /**
  * @file inquiry.service.ts
- * @description 문의 CRUD 서비스
+ * @description 문의 CRUD 서비스 (core 스키마)
  * @module services/inquiry
  */
 
-import { supabase } from './supabase';
+import { supabase, coreSchema } from './supabase';
 import type { DbInquiry, DbInquiryInsert, DbInquiryUpdate } from '../types/database.types';
 import type { Inquiry, InquiryFormData } from '../types/inquiry.types';
 import { mapDbToInquiry } from '../types/inquiry.types';
@@ -13,7 +13,8 @@ import { mapDbToInquiry } from '../types/inquiry.types';
 // 테이블 / 스토리지
 // ============================================================
 
-const TABLE = 'vault_inquiries';
+/** core 스키마 테이블 */
+const TABLE = 'inquiries';
 const STORAGE_BUCKET = 'inquiry-screenshots';
 
 /** 스크린샷 만료 기간 (일) */
@@ -36,7 +37,7 @@ const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 
 /** 내 문의 목록 조회 */
 export async function fetchMyInquiries(userId: string): Promise<Inquiry[]> {
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(TABLE)
     .select('*')
     .eq('user_id', userId)
@@ -48,7 +49,7 @@ export async function fetchMyInquiries(userId: string): Promise<Inquiry[]> {
 
 /** 전체 문의 조회 (관리자용) */
 export async function fetchAllInquiries(): Promise<Inquiry[]> {
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(TABLE)
     .select('*')
     .order('created_at', { ascending: false });
@@ -79,7 +80,7 @@ export async function createInquiry(
       : null,
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await coreSchema()
     .from(TABLE)
     .insert(insert)
     .select()
@@ -104,7 +105,7 @@ export async function respondToInquiry(
     status: 'answered',
   };
 
-  const { error } = await supabase
+  const { error } = await coreSchema()
     .from(TABLE)
     .update(update)
     .eq('id', inquiryId);
@@ -123,7 +124,7 @@ export async function rateInquiry(
 ): Promise<void> {
   const update: DbInquiryUpdate = { user_rating: rating };
 
-  const { error } = await supabase
+  const { error } = await coreSchema()
     .from(TABLE)
     .update(update)
     .eq('id', inquiryId);
@@ -135,7 +136,7 @@ export async function rateInquiry(
 // 스크린샷 업로드
 // ============================================================
 
-/** 스크린샷 업로드 (Supabase Storage) */
+/** 스크린샷 업로드 (Supabase Storage — 스키마 무관) */
 export async function uploadScreenshot(
   userId: string,
   file: File,

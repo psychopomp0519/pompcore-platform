@@ -13,7 +13,7 @@ import { mapDbToTransaction } from '../types/transaction.types';
 // 테이블 이름
 // ============================================================
 
-const TABLE = 'vault_transactions';
+const TABLE = 'transactions';
 
 // ============================================================
 // 조회

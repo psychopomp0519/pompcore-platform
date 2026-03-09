@@ -25,9 +25,9 @@ import type {
 // 테이블 이름 상수
 // ============================================================
 
-const PORTFOLIO_TABLE = 'vault_investment_portfolios' as const;
-const TRADE_TABLE = 'vault_investment_trades' as const;
-const SNAPSHOT_TABLE = 'vault_investment_price_snapshots' as const;
+const PORTFOLIO_TABLE = 'investment_portfolios' as const;
+const TRADE_TABLE = 'investment_trades' as const;
+const SNAPSHOT_TABLE = 'investment_price_snapshots' as const;
 
 // ============================================================
 // 포트폴리오 조회

@@ -13,7 +13,7 @@ import { getSupabase } from '@pompcore/auth';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 /**
- * Supabase 클라이언트 지연 프록시
+ * Supabase 클라이언트 지연 프록시 (기본 스키마: vault_app)
  *
  * 모듈 import 시점이 아닌 실제 프로퍼티 접근 시점에 getSupabase()를 호출한다.
  * main.tsx의 createAppConfig()이 먼저 실행된 후 서비스 코드가 동작하므로
@@ -24,6 +24,17 @@ export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
     return Reflect.get(getSupabase(), prop, receiver);
   },
 });
+
+/**
+ * core 스키마 접근용 헬퍼
+ *
+ * announcements, inquiries 등 core 스키마 테이블 조회 시 사용.
+ * 사용법: coreSchema().from('announcements')
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function coreSchema(): ReturnType<SupabaseClient['schema']> {
+  return getSupabase().schema('core') as ReturnType<SupabaseClient['schema']>;
+}
 
 /** Supabase 환경변수가 올바르게 설정되었는지 여부 */
 export const isSupabaseConfigured = Boolean(

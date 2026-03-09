@@ -19,8 +19,8 @@ import { mapDbToSavings } from '../types/savings.types';
 // 테이블 이름
 // ============================================================
 
-const TABLE = 'vault_savings';
-const DEPOSITS_TABLE = 'vault_savings_deposits';
+const TABLE = 'savings';
+const DEPOSITS_TABLE = 'savings_deposits';
 
 // ============================================================
 // 조회
