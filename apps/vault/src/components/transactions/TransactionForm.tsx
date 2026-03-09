@@ -231,7 +231,7 @@ export function TransactionForm({
           <option value="">선택 안 함</option>
           {filteredCategories.map((cat) => (
             <option key={cat.id} value={cat.id}>
-              {cat.icon ? `${cat.icon} ` : ''}{cat.isFavorite ? '★ ' : ''}{cat.name}
+              {cat.isFavorite ? '★ ' : ''}{cat.name}
             </option>
           ))}
         </select>

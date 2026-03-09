@@ -13,6 +13,7 @@ import { getNextOccurrence, getDaysUntilNext, getAverageByPeriod } from '../../u
 import { formatShortDate } from '../../utils/date';
 import { INTERVAL_LABELS } from '../../constants/intervals';
 import type { IntervalUnit } from '../../constants/intervals';
+import { renderCategoryIcon } from '../icons/CategoryIcons';
 
 // ============================================================
 // 타입
@@ -52,7 +53,9 @@ export function RecurringCard({
     <div className={`rounded-xl bg-white/60 p-3 backdrop-blur-sm dark:bg-white/5 ${!payment.isActive ? 'opacity-50' : ''}`}>
       <div className="flex items-start gap-3">
         {/* 아이콘 */}
-        <span className="text-lg">{category?.icon ?? '📅'}</span>
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center text-vault-color">
+          {renderCategoryIcon(category?.icon, 'h-5 w-5')}
+        </span>
 
         {/* 메인 정보 */}
         <div className="min-w-0 flex-1">

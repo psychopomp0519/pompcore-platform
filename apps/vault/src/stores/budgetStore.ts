@@ -43,7 +43,7 @@ export const useBudgetStore = create<BudgetState & BudgetActions>()((set) => ({
       const budgets = await budgetService.fetchBudgets(userId);
       set({ budgets, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      set({ error: toUserMessage(err), isLoading: false });
     }
   },
 

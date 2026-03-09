@@ -64,7 +64,7 @@ export const useRecurringStore = create<RecurringState & RecurringActions>()((se
       const payments = await recurringService.fetchRecurringPayments(userId);
       set({ payments, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      set({ error: toUserMessage(err), isLoading: false });
     }
   },
 

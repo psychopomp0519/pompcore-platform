@@ -34,7 +34,7 @@ export function AppShell(): React.ReactNode {
       <div className="flex flex-1 flex-col">
         <Header />
 
-        <main id="main-content" className="flex-1 overflow-y-auto p-4 pb-20 tablet:p-5 tablet:pb-5 desktop:p-6 desktop:pb-6">
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 pb-24 tablet:p-5 tablet:pb-5 desktop:p-6 desktop:pb-6">
           <Outlet />
         </main>
       </div>

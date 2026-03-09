@@ -69,7 +69,7 @@ export const useSavingsStore = create<SavingsState & SavingsActions>()((set, get
       const savingsList = await savingsService.fetchSavings(userId);
       set({ savingsList, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      set({ error: toUserMessage(err), isLoading: false });
     }
   },
 

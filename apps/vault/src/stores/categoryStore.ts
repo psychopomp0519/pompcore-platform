@@ -76,7 +76,7 @@ export const useCategoryStore = create<CategoryState & CategoryActions>()((set, 
       const categories = await categoryService.fetchCategories(userId);
       set({ categories, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      set({ error: toUserMessage(err), isLoading: false });
     }
   },
 
@@ -136,7 +136,7 @@ export const useCategoryStore = create<CategoryState & CategoryActions>()((set, 
         categories: state.categories.map((c) =>
           c.id === categoryId ? { ...c, isFavorite: !newValue } : c,
         ),
-        error: (err as Error).message,
+        error: toUserMessage(err),
       }));
     }
   },

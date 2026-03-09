@@ -29,11 +29,21 @@ export default function Header() {
   const isAuthLoading = useAuthStore((s) => s.isLoading);
   const logout = useAuthStore((s) => s.logout);
 
-  /** 스크롤 감지하여 헤더 배경 변경 */
+  /** 스크롤 감지하여 헤더 배경 변경 (rAF throttle) */
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    let rafId = 0;
+    const handleScroll = (): void => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 20);
+        rafId = 0;
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   /** 페이지 이동 시 모바일 메뉴 닫기 */

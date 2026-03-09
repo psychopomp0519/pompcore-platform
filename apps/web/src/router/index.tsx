@@ -17,6 +17,7 @@ import Callback from '../pages/Auth/Callback';
 import Recruit from '../pages/Recruit/Recruit';
 import RecruitAdmin from '../pages/Recruit/RecruitAdmin';
 import ProjectOverview from '../pages/Internal/ProjectOverview';
+import NotFound from '../pages/NotFound/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -62,5 +63,9 @@ export const router = createBrowserRouter([
   {
     path: '/auth/callback',
     element: <Layout><Callback /></Layout>,
+  },
+  {
+    path: '*',
+    element: <Layout><NotFound /></Layout>,
   },
 ]);

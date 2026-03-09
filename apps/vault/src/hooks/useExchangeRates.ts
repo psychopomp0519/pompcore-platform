@@ -39,7 +39,7 @@ export function useExchangeRates(baseCurrency: string): UseExchangeRatesResult {
     let cancelled = false;
     fetchExchangeRates(baseCurrency)
       .then((r) => { if (!cancelled) { setRates(r); setIsLoading(false); } })
-      .catch(() => { if (!cancelled) setIsLoading(false); /* 1:1 비율 유지 */ });
+      .catch((err) => { if (!cancelled) { console.error('[useExchangeRates] 환율 로드 실패:', err); setIsLoading(false); } });
     /** cleanup: 통화 변경 시 다음 요청 전에 로딩 상태 재설정 */
     return () => { cancelled = true; setIsLoading(true); };
   }, [baseCurrency]);

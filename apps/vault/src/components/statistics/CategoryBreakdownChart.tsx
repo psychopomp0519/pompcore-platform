@@ -51,9 +51,7 @@ function aggregateByCategory(
     .sort(([, a], [, b]) => b - a)
     .map(([catId, amount]) => {
       const info = categoryMap.get(catId);
-      const label = info
-        ? `${info.icon ? info.icon + ' ' : ''}${info.name}`
-        : '미분류';
+      const label = info ? info.name : '미분류';
       return { id: label, label, value: amount };
     });
 }
@@ -85,7 +83,7 @@ export function CategoryBreakdownChart({
       <div style={{ height: CHART_HEIGHT }}>
         <ResponsivePie
           data={data}
-          margin={{ top: 20, right: 80, bottom: 20, left: 80 }}
+          margin={{ top: 20, right: 100, bottom: 20, left: 100 }}
           innerRadius={0.5}
           padAngle={1}
           cornerRadius={4}

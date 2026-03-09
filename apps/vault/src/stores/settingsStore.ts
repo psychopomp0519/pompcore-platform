@@ -43,7 +43,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()((set, 
       const settings = await settingsService.fetchSettings(userId);
       set({ settings, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      set({ error: toUserMessage(err), isLoading: false });
     }
   },
 

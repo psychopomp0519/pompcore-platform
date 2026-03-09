@@ -15,8 +15,12 @@ function AnnouncementCard({ announcement }: { announcement: Announcement }) {
 
   return (
     <article
-      className="card p-4 sm:p-6 rounded-2xl cursor-pointer transition-all duration-200"
+      role="button"
+      tabIndex={0}
+      className="card p-4 sm:p-6 rounded-2xl cursor-pointer transition-all duration-200 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none"
       onClick={() => setIsExpanded(!isExpanded)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsExpanded(!isExpanded); } }}
+      aria-expanded={isExpanded}
     >
       <div className="flex items-start gap-4">
         {/* 카테고리 아이콘 */}

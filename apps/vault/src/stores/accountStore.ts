@@ -65,7 +65,7 @@ export const useAccountStore = create<AccountState & AccountActions>()((set, get
       const accounts = await accountService.fetchAccounts(userId);
       set({ accounts, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      set({ error: toUserMessage(err), isLoading: false });
     }
   },
 
@@ -133,7 +133,7 @@ export const useAccountStore = create<AccountState & AccountActions>()((set, get
         accounts: state.accounts.map((a) =>
           a.id === accountId ? { ...a, isFavorite: !newValue } : a,
         ),
-        error: (err as Error).message,
+        error: toUserMessage(err),
       }));
     }
   },

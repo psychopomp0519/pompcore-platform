@@ -6,6 +6,7 @@
 
 import type { ReactNode } from 'react';
 import type { Category } from '../../types/category.types';
+import { renderCategoryIcon } from '../icons/CategoryIcons';
 
 // ============================================================
 // 타입
@@ -42,7 +43,9 @@ export function CategoryItem({
   return (
     <div className="flex items-center gap-3 rounded-xl bg-white/60 px-3 py-2.5 backdrop-blur-sm dark:bg-white/5">
       {/* 아이콘 */}
-      <span className="text-xl">{category.icon ?? '📂'}</span>
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center text-vault-color">
+        {renderCategoryIcon(category.icon, 'h-5 w-5')}
+      </span>
 
       {/* 이름 + 배지 */}
       <div className="flex min-w-0 flex-1 items-center gap-2">

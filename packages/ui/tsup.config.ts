@@ -6,5 +6,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: true,
-  external: ['react', 'react-dom', 'react-router-dom', 'zustand'],
+  external: ['react', 'react-dom', 'react-router-dom', 'zustand', '@pompcore/types'],
 });

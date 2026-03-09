@@ -11,6 +11,7 @@ import {
   IconUtensils, IconBus, IconCart, IconHouse, IconSmartphone,
   IconMedical, IconFilm, IconBook, IconArrowUp, IconCoffee,
   IconGamepad, IconPlane, IconBank, IconGem, IconTag,
+  IconShield, IconPiggyBank, IconUsers,
 } from '@pompcore/ui';
 
 // ============================================================
@@ -57,21 +58,60 @@ const ALL_ICONS = new Map<string, React.ComponentType<IconProps>>();
   ALL_ICONS.set(entry.key, entry.component);
 });
 
+/**
+ * 레거시 lucide 아이콘 이름 → 내부 키 매핑
+ * DB에 "UtensilsCrossed", "Car" 등 lucide 이름이 저장된 경우 대응
+ */
+const LEGACY_ICON_ALIASES: Record<string, React.ComponentType<IconProps>> = {
+  UtensilsCrossed: IconUtensils,
+  Car: IconBus,
+  Home: IconHouse,
+  Smartphone: IconSmartphone,
+  Shirt: IconTag,
+  Heart: IconMedical,
+  Music: IconFilm,
+  GraduationCap: IconBook,
+  Users: IconUsers,
+  Shield: IconShield,
+  PiggyBank: IconPiggyBank,
+  MoreHorizontal: IconTag,
+  Coins: IconCoin,
+  Banknote: IconBanknote,
+  Gift: IconGift,
+  Building2: IconBank,
+  TrendingUp: IconTrendUp,
+  ArrowDownCircle: IconArrowDown,
+};
+
 // ============================================================
 // 렌더러
 // ============================================================
 
-/** 카테고리 아이콘 키로 SVG 아이콘 렌더링 (이전 이모지 값은 기본 아이콘으로 폴백) */
+/** 카테고리 아이콘 키로 SVG 아이콘 렌더링 (레거시 lucide 이름 + 이모지 폴백 지원) */
 export function renderCategoryIcon(iconKey: string | null | undefined, className?: string): ReactNode {
+  const cls = className ?? 'h-5 w-5';
+
   if (!iconKey) {
-    return <IconTag className={className ?? 'h-5 w-5'} />;
+    return <IconTag className={cls} />;
   }
 
+  /* 1. 정규 아이콘 키 (utensils, bus, ...) */
   const Component = ALL_ICONS.get(iconKey);
   if (Component) {
-    return <Component className={className ?? 'h-5 w-5'} />;
+    return <Component className={cls} />;
   }
 
-  /* 이전 이모지 값 폴백: 기본 아이콘 표시 */
-  return <IconTag className={className ?? 'h-5 w-5'} />;
+  /* 2. 레거시 lucide 이름 (UtensilsCrossed, Car, ...) */
+  const Legacy = LEGACY_ICON_ALIASES[iconKey];
+  if (Legacy) {
+    return <Legacy className={cls} />;
+  }
+
+  /* 3. 이모지 값 — 텍스트로 표시 */
+  if (/\p{Emoji}/u.test(iconKey)) {
+    return <span className="text-base leading-none">{iconKey}</span>;
+  }
+
+  /* 4. 알 수 없는 값 — 기본 아이콘 */
+  return <IconTag className={cls} />;
 }
