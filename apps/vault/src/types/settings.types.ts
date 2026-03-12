@@ -20,6 +20,7 @@ export interface UserSettings {
   displayName: string | null;
   avatarUrl: string | null;
   birthday: string | null;
+  notificationEnabled: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -51,6 +52,7 @@ export function mapDbToSettings(row: DbUserSettings): UserSettings {
     displayName: row.display_name,
     avatarUrl: row.avatar_url,
     birthday: row.birthday,
+    notificationEnabled: row.notification_enabled,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

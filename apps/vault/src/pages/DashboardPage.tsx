@@ -5,6 +5,7 @@
  */
 
 import { useState, useEffect, useMemo, useCallback, useRef, type ReactNode } from 'react';
+import { AdUnit } from '@pompcore/ui';
 
 /** 캐시 유효 시간 (ms) — 60초 이내 재방문 시 재로드 방지 */
 const CACHE_TTL_MS = 60_000;
@@ -29,6 +30,8 @@ import * as investmentService from '../services/investment.service';
 import * as realEstateService from '../services/realEstate.service';
 import { getNextOccurrence } from '../utils/recurringCalculator';
 import { computeHoldings, enrichHoldingsWithPnL } from '../utils/investmentCalculator';
+import { useNotificationGenerator } from '../hooks/useNotificationGenerator';
+import { AttendanceCard } from '../components/attendance/AttendanceCard';
 import { IconMegaphone, IconChart, IconBank, IconInvestment, IconRealEstate } from '@pompcore/ui';
 import { IconPlus, IconTransfer } from '@pompcore/ui';
 
@@ -46,6 +49,7 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 /** 대시보드 페이지 */
 export function DashboardPage(): ReactNode {
+  useNotificationGenerator();
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const { accounts, loadAccounts } = useAccountStore();
@@ -438,12 +442,18 @@ export function DashboardPage(): ReactNode {
         </GlassCard>
       )}
 
+      {/* 출석체크 */}
+      <AttendanceCard />
+
       {/* 퀵 액션 */}
       <div className="grid grid-cols-3 gap-3">
         <QuickAction icon={<IconPlus className="h-5 w-5" />} label="거래 추가" onClick={() => navigate(ROUTES.TRANSACTIONS)} />
         <QuickAction icon={<IconTransfer className="h-5 w-5" />} label="이체" onClick={() => navigate(ROUTES.ACCOUNTS)} />
         <QuickAction icon={<IconChart className="h-5 w-5" />} label="통계" onClick={() => navigate(ROUTES.STATISTICS)} />
       </div>
+
+      {/* 광고 — 퀵 액션 하단 */}
+      <AdUnit slot="DASH_BOTTOM" format="horizontal" className="mt-4" />
     </div>
   );
 }

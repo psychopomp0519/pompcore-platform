@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
+Disallow: /dashboard
+Disallow: /accounts
+Disallow: /transactions
+Disallow: /recurring
+Disallow: /savings
+Disallow: /budget
+Disallow: /statistics
+Disallow: /settings
+Disallow: /trash
+Disallow: /auth/callback
 
-Sitemap: https://vault.pompcore.com/sitemap.xml
+Sitemap: https://vault.pompcore.cc/sitemap.xml

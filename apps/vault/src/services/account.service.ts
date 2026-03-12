@@ -80,6 +80,9 @@ export async function createAccount(
     supported_currencies: form.supportedCurrencies,
     is_favorite: form.isFavorite,
     sort_order: sortOrder,
+    account_type: form.accountType,
+    credit_limit: form.creditLimit,
+    billing_day: form.billingDay,
   };
 
   const { data: account, error: accError } = await supabase
@@ -121,6 +124,9 @@ export async function updateAccount(
   if (updates.defaultCurrency !== undefined) dbUpdate.default_currency = updates.defaultCurrency;
   if (updates.supportedCurrencies !== undefined) dbUpdate.supported_currencies = updates.supportedCurrencies;
   if (updates.isFavorite !== undefined) dbUpdate.is_favorite = updates.isFavorite;
+  if (updates.accountType !== undefined) dbUpdate.account_type = updates.accountType;
+  if (updates.creditLimit !== undefined) dbUpdate.credit_limit = updates.creditLimit;
+  if (updates.billingDay !== undefined) dbUpdate.billing_day = updates.billingDay;
 
   const { error } = await supabase
     .from(ACCOUNTS_TABLE)

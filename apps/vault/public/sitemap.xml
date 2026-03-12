@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vault.pompcore.com/</loc>
+    <loc>https://vault.pompcore.cc/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://vault.pompcore.com/login</loc>
+    <loc>https://vault.pompcore.cc/login</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://vault.pompcore.com/register</loc>
+    <loc>https://vault.pompcore.cc/register</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

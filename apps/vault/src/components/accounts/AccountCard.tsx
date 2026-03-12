@@ -8,6 +8,7 @@ import { memo, type ReactNode } from 'react';
 import type { Account } from '../../types/account.types';
 import { GlassCard } from '../common/GlassCard';
 import { formatCurrency } from '../../utils/currency';
+import { ACCOUNT_TYPE_LABELS } from '../../types/account.types';
 import { IconBank } from '@pompcore/ui';
 
 // ============================================================
@@ -49,6 +50,11 @@ function AccountCardInner({
           <h3 className="font-display text-base font-bold text-navy dark:text-gray-100">
             {account.name}
           </h3>
+          {account.accountType !== 'bank' && (
+            <span className="rounded-full bg-vault-color/10 px-1.5 py-0.5 text-[10px] font-medium text-vault-color">
+              {ACCOUNT_TYPE_LABELS[account.accountType]}
+            </span>
+          )}
           {account.isFavorite && (
             <span className="text-xs text-amber-500">★</span>
           )}
@@ -135,7 +141,44 @@ function AccountCardInner({
           })
         )}
       </div>
+
+      {/* 신용카드: 한도 대비 사용률 */}
+      {account.accountType === 'credit_card' && account.creditLimit != null && account.creditLimit > 0 && (
+        <CreditUsageBar account={account} />
+      )}
     </GlassCard>
+  );
+}
+
+/** 신용카드 한도 사용률 바 */
+function CreditUsageBar({ account }: { account: Account }): ReactNode {
+  const totalUsed = account.balances.reduce((sum, b) => sum + Math.abs(b.balance), 0);
+  const limit = account.creditLimit ?? 0;
+  const usageRate = limit > 0 ? Math.min((totalUsed / limit) * 100, 100) : 0;
+  const isHigh = usageRate >= 80;
+
+  return (
+    <div className="mt-3 space-y-1">
+      <div className="flex items-center justify-between text-[10px]">
+        <span className="text-navy/50 dark:text-gray-400">
+          사용 {formatCurrency(totalUsed, account.defaultCurrency)} / 한도 {formatCurrency(limit, account.defaultCurrency)}
+        </span>
+        <span className={isHigh ? 'font-bold text-red-500' : 'text-navy/50 dark:text-gray-400'}>
+          {usageRate.toFixed(0)}%
+        </span>
+      </div>
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-navy/10 dark:bg-white/10">
+        <div
+          className={`h-full rounded-full transition-all ${isHigh ? 'bg-red-500' : 'bg-vault-color'}`}
+          style={{ width: `${usageRate}%` }}
+        />
+      </div>
+      {account.billingDay && (
+        <div className="text-[10px] text-navy/40 dark:text-gray-500">
+          결제일: 매월 {account.billingDay}일
+        </div>
+      )}
+    </div>
   );
 }
 

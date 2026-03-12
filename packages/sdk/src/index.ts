@@ -5,3 +5,4 @@
 
 export { createAppConfig, type AppConfig } from './config';
 export * from './api-client';
+export { initAnalytics, trackEvent, trackPageView } from './analytics';

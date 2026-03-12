@@ -40,6 +40,7 @@ export type {
   DbRealEstateLease, DbRealEstateLeaseInsert, DbRealEstateLeaseUpdate,
   DbRealEstateExpense, DbRealEstateExpenseInsert,
   TransactionSourceType, BudgetAction, DbIntervalUnit, SavingsType, BudgetType,
+  AccountType,
   AssetType, TradeType, PropertyType, RealEstateRole, LeaseType, ExpenseType,
   CreateAccountInput, CreateTransactionInput, TransactionFilters,
 } from './vault.types';

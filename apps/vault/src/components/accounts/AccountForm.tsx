@@ -6,7 +6,8 @@
 
 import { useState, memo, type ReactNode, type FormEvent } from 'react';
 import { Button } from '@pompcore/ui';
-import type { AccountFormData } from '../../types/account.types';
+import type { AccountFormData, AccountType } from '../../types/account.types';
+import { ACCOUNT_TYPE_LABELS } from '../../types/account.types';
 import { CURRENCIES, CURRENCY_CODES, DEFAULT_CURRENCY } from '../../constants/currencies';
 
 // ============================================================
@@ -38,7 +39,15 @@ function AccountFormInner({
     initialData?.supportedCurrencies ?? [DEFAULT_CURRENCY],
   );
   const [isFavorite, setIsFavorite] = useState(initialData?.isFavorite ?? false);
+  const [accountType, setAccountType] = useState<AccountType>(initialData?.accountType ?? 'bank');
+  const [creditLimit, setCreditLimit] = useState<string>(
+    initialData?.creditLimit != null ? String(initialData.creditLimit) : '',
+  );
+  const [billingDay, setBillingDay] = useState<string>(
+    initialData?.billingDay != null ? String(initialData.billingDay) : '',
+  );
 
+  const isCreditCard = accountType === 'credit_card';
   const isEditing = initialData !== undefined;
 
   function handleCurrencyToggle(code: string): void {
@@ -61,6 +70,9 @@ function AccountFormInner({
       defaultCurrency,
       supportedCurrencies: selectedCurrencies,
       isFavorite,
+      accountType,
+      creditLimit: isCreditCard && creditLimit ? Number(creditLimit) : null,
+      billingDay: isCreditCard && billingDay ? Number(billingDay) : null,
     });
   }
 
@@ -82,6 +94,58 @@ function AccountFormInner({
           autoFocus
         />
       </div>
+
+      {/* 계좌 유형 */}
+      <div>
+        <label htmlFor="account-type" className="mb-1.5 block text-xs font-medium text-navy/60 dark:text-gray-400">
+          계좌 유형
+        </label>
+        <select
+          id="account-type"
+          value={accountType}
+          onChange={(e) => setAccountType(e.target.value as AccountType)}
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+        >
+          {(Object.keys(ACCOUNT_TYPE_LABELS) as AccountType[]).map((type) => (
+            <option key={type} value={type}>{ACCOUNT_TYPE_LABELS[type]}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* 신용카드 전용 필드 */}
+      {isCreditCard && (
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label htmlFor="credit-limit" className="mb-1.5 block text-xs font-medium text-navy/60 dark:text-gray-400">
+              신용 한도
+            </label>
+            <input
+              id="credit-limit"
+              type="number"
+              value={creditLimit}
+              onChange={(e) => setCreditLimit(e.target.value)}
+              placeholder="0"
+              min={0}
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="billing-day" className="mb-1.5 block text-xs font-medium text-navy/60 dark:text-gray-400">
+              결제일
+            </label>
+            <input
+              id="billing-day"
+              type="number"
+              value={billingDay}
+              onChange={(e) => setBillingDay(e.target.value)}
+              placeholder="25"
+              min={1}
+              max={31}
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            />
+          </div>
+        </div>
+      )}
 
       {/* 지원 통화 */}
       <div>

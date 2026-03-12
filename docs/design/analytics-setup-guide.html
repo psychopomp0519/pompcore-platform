@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PompCore — Analytics & AdSense 설정 가이드</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: #0C0818;
+    color: #E5E7EB;
+    line-height: 1.75;
+    padding: 40px 24px;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 {
+    font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 8px;
+    background: linear-gradient(90deg, #7C3AED, #A855F7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { text-align: center; color: #9CA3AF; font-size: 14px; margin-bottom: 48px; }
+  .section {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px; padding: 32px; margin-bottom: 24px;
+  }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .section-num {
+    width: 36px; height: 36px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: white;
+  }
+  .section-title { font-size: 20px; font-weight: 800; color: #F9FAFB; }
+  .section-desc { font-size: 14px; color: #9CA3AF; margin-bottom: 16px; }
+
+  .step { margin-bottom: 16px; padding-left: 20px; border-left: 2px solid rgba(255,255,255,0.06); }
+  .step-num { font-size: 12px; font-weight: 700; color: #A855F7; margin-bottom: 4px; }
+  .step-title { font-size: 15px; font-weight: 700; color: #F9FAFB; margin-bottom: 4px; }
+  .step-body { font-size: 14px; color: #D1D5DB; }
+  .step-body a { color: #A855F7; text-decoration: none; }
+  .step-body a:hover { text-decoration: underline; }
+
+  .code-block {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 16px; margin: 12px 0; font-family: monospace;
+    font-size: 13px; color: #34D399; overflow-x: auto; white-space: pre;
+  }
+  .env-key { color: #60A5FA; }
+  .env-val { color: #FCD34D; }
+  .env-comment { color: #6B7280; }
+
+  .warn {
+    background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 12px; padding: 12px 16px; margin: 12px 0;
+    font-size: 13px; color: #FCD34D;
+  }
+  .info {
+    background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15);
+    border-radius: 12px; padding: 12px 16px; margin: 12px 0;
+    font-size: 13px; color: #93C5FD;
+  }
+  .success {
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15);
+    border-radius: 12px; padding: 12px 16px; margin: 12px 0;
+    font-size: 13px; color: #6EE7B7;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th { text-align: left; padding: 8px 12px; font-size: 12px; color: #6B7280; border-bottom: 1px solid rgba(255,255,255,0.06); text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 10px 12px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  td code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #34D399; }
+
+  .domain-tag {
+    display: inline-block; padding: 2px 10px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; margin-right: 4px;
+  }
+  .domain-web { background: rgba(124,58,237,0.15); color: #A855F7; }
+  .domain-vault { background: rgba(16,185,129,0.15); color: #34D399; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Analytics & AdSense Setup Guide</h1>
+<p class="subtitle">PompCore 출시를 위한 분석 도구 및 수익화 연동 가이드</p>
+
+<!-- ============ 개요 ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">개요 — 연동할 서비스</div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>서비스</th><th>목적</th><th>환경변수</th><th>ID 형식</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Microsoft Clarity</strong></td>
+        <td>히트맵, 세션 리플레이</td>
+        <td><code>VITE_CLARITY_ID</code></td>
+        <td>영문+숫자 (예: <code>abc123def</code>)</td>
+      </tr>
+      <tr>
+        <td><strong>Google Analytics 4</strong></td>
+        <td>트래픽 분석, 유입 경로</td>
+        <td><code>VITE_GA_MEASUREMENT_ID</code></td>
+        <td><code>G-XXXXXXXXXX</code></td>
+      </tr>
+      <tr>
+        <td><strong>Google AdSense</strong></td>
+        <td>디스플레이 광고 수익</td>
+        <td><code>VITE_ADSENSE_CLIENT</code></td>
+        <td><code>ca-pub-XXXXXXXXXXXXXXXX</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info">모든 서비스는 환경변수 기반 조건부 활성화. 값이 비어있으면 자동으로 비활성화됩니다.</div>
+</div>
+
+<!-- ============ 1. Clarity ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num" style="background: linear-gradient(135deg, #3B82F6, #06B6D4);">1</div>
+    <div class="section-title">Microsoft Clarity 설정</div>
+  </div>
+  <p class="section-desc">사용자 행동 분석 (히트맵, 세션 리플레이, 분노 클릭 감지)</p>
+
+  <div class="step">
+    <div class="step-num">STEP 1</div>
+    <div class="step-title">Clarity 프로젝트 생성</div>
+    <div class="step-body">
+      <a href="https://clarity.microsoft.com/" target="_blank">clarity.microsoft.com</a>에 접속하여 Microsoft 계정으로 로그인<br>
+      → "Add new project" 클릭
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 2</div>
+    <div class="step-title">프로젝트 2개 생성</div>
+    <div class="step-body">
+      <span class="domain-tag domain-web">pompcore.cc</span> 메인 사이트용 프로젝트<br>
+      <span class="domain-tag domain-vault">vault.pompcore.cc</span> Vault용 프로젝트<br><br>
+      각 프로젝트 생성 시 사이트 URL에 해당 도메인을 입력
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 3</div>
+    <div class="step-title">프로젝트 ID 복사</div>
+    <div class="step-body">
+      Settings → Overview에서 <strong>Project ID</strong>를 복사<br>
+      (영문+숫자 조합, 예: <code>abc123def</code>)
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 4</div>
+    <div class="step-title">.env에 입력</div>
+    <div class="step-body">
+      <div class="code-block"><span class="env-comment"># 두 앱이 같은 ID를 써도 되고, 별도 프로젝트면 각각 .env에 설정</span>
+<span class="env-key">VITE_CLARITY_ID</span>=<span class="env-val">your_clarity_project_id</span></div>
+    </div>
+  </div>
+
+  <div class="warn">⚠️ Clarity는 18세 미만 사용자를 대상으로 하는 사이트에서 사용할 수 없습니다.</div>
+
+  <div class="success">✅ Clarity는 기본적으로 민감한 콘텐츠(입력란, 숫자, 이메일)를 자동 마스킹합니다.</div>
+</div>
+
+<!-- ============ 2. GA4 ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num" style="background: linear-gradient(135deg, #F97316, #FB923C);">2</div>
+    <div class="section-title">Google Analytics 4 설정</div>
+  </div>
+  <p class="section-desc">트래픽 추적, 유입 경로 분석, 전환 퍼널</p>
+
+  <div class="step">
+    <div class="step-num">STEP 1</div>
+    <div class="step-title">GA4 속성 생성</div>
+    <div class="step-body">
+      <a href="https://analytics.google.com/" target="_blank">analytics.google.com</a>에 접속<br>
+      → 관리(톱니바퀴) → 속성 만들기 → "PompCore" 속성 생성
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 2</div>
+    <div class="step-title">데이터 스트림 2개 추가</div>
+    <div class="step-body">
+      관리 → 데이터 스트림 → "웹" 선택<br>
+      <span class="domain-tag domain-web">https://pompcore.cc</span> 스트림 이름: "PompCore Web"<br>
+      <span class="domain-tag domain-vault">https://vault.pompcore.cc</span> 스트림 이름: "PompCore Vault"<br><br>
+      <strong>같은 속성(Property) 아래 2개 스트림</strong>을 만들면 통합 분석 가능
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 3</div>
+    <div class="step-title">측정 ID 복사</div>
+    <div class="step-body">
+      각 스트림의 세부정보에서 <strong>측정 ID</strong>를 복사<br>
+      형식: <code>G-XXXXXXXXXX</code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 4</div>
+    <div class="step-title">.env에 입력</div>
+    <div class="step-body">
+      <div class="code-block"><span class="env-key">VITE_GA_MEASUREMENT_ID</span>=<span class="env-val">G-XXXXXXXXXX</span></div>
+      <div class="info">💡 두 앱이 같은 속성의 서로 다른 스트림이라면, 같은 측정 ID를 공유할 수 있습니다. 또는 각각 다른 ID를 사용해도 됩니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3. AdSense ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num" style="background: linear-gradient(135deg, #FBBF24, #FCD34D); color: #1F2937;">3</div>
+    <div class="section-title">Google AdSense 설정</div>
+  </div>
+  <p class="section-desc">디스플레이 광고 수익화 (수동 배치 방식)</p>
+
+  <div class="step">
+    <div class="step-num">STEP 1</div>
+    <div class="step-title">AdSense 계정 생성 및 사이트 등록</div>
+    <div class="step-body">
+      <a href="https://www.google.com/adsense/" target="_blank">google.com/adsense</a>에 접속<br>
+      → Google 계정으로 로그인 → 사이트 URL: <code>pompcore.cc</code> 입력<br>
+      → 약관 동의 후 계정 생성
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 2</div>
+    <div class="step-title">사이트 소유권 확인</div>
+    <div class="step-body">
+      AdSense가 제공하는 코드를 사이트 &lt;head&gt;에 추가하여 소유권 확인<br>
+      (이 구현에서 자동으로 처리됩니다)
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 3</div>
+    <div class="step-title">게시자 ID 복사</div>
+    <div class="step-body">
+      계정 → 계정 정보에서 <strong>게시자 ID</strong>를 확인<br>
+      형식: <code>ca-pub-XXXXXXXXXXXXXXXX</code> (16자리 숫자)
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 4</div>
+    <div class="step-title">광고 단위 생성</div>
+    <div class="step-body">
+      광고 → 광고 단위 별 → <strong>디스플레이 광고</strong> 선택<br>
+      → 광고 단위 이름 입력 (예: "PompCore-Footer")<br>
+      → 생성 후 <strong>data-ad-slot</strong> 번호를 메모
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 5</div>
+    <div class="step-title">.env에 입력</div>
+    <div class="step-body">
+      <div class="code-block"><span class="env-key">VITE_ADSENSE_CLIENT</span>=<span class="env-val">ca-pub-XXXXXXXXXXXXXXXX</span></div>
+    </div>
+  </div>
+
+  <div class="warn">⚠️ AdSense 승인에는 며칠~몇 주가 소요될 수 있습니다. 코드는 미리 삽입해두고, 승인 후 자동으로 광고가 표시됩니다.</div>
+
+  <div class="info">💡 PompCore는 <strong>수동 배치</strong> 방식을 사용합니다. 사용자의 핵심 기능 이용을 방해하지 않는 위치(푸터, 섹션 사이 등)에만 광고를 배치합니다.</div>
+</div>
+
+<!-- ============ 최종 .env ============ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">최종 .env 파일 형태</div>
+  </div>
+  <div class="code-block"><span class="env-comment"># Analytics (optional)</span>
+<span class="env-key">VITE_CLARITY_ID</span>=<span class="env-val">abc123def</span>
+<span class="env-key">VITE_GA_MEASUREMENT_ID</span>=<span class="env-val">G-XXXXXXXXXX</span>
+
+<span class="env-comment"># Monetization (optional)</span>
+<span class="env-key">VITE_ADSENSE_CLIENT</span>=<span class="env-val">ca-pub-XXXXXXXXXXXXXXXX</span></div>
+  <div class="success">✅ 모든 값은 선택 사항입니다. 비워두면 해당 서비스가 비활성화됩니다.</div>
+</div>
+
+</div>
+</body>
+</html>

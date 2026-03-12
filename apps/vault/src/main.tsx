@@ -4,7 +4,7 @@
  */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createAppConfig } from '@pompcore/sdk';
+import { createAppConfig, initAnalytics } from '@pompcore/sdk';
 import { ErrorBoundary } from '@pompcore/ui';
 import { App } from './App';
 import './index.css';
@@ -16,6 +16,8 @@ createAppConfig({
   brandColorLight: '#34D399',
   dbSchema: 'vault_app',
 });
+
+initAnalytics({ clarityId: 'vun32tee3t', gaMeasurementId: 'G-JMLMTDJTZC', adsenseClient: 'ca-pub-6384728543319981' });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

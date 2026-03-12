@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PompCore — 서비스 컬러 팔레트 제안</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0C0818;
+    color: #E5E7EB;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #7C3AED, #A855F7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    text-align: center;
+    color: #9CA3AF;
+    font-size: 14px;
+    margin-bottom: 48px;
+  }
+
+  /* Service Card */
+  .service-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(12px);
+  }
+  .service-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .service-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
+  }
+  .service-name {
+    font-size: 24px;
+    font-weight: 800;
+    color: #F9FAFB;
+  }
+  .service-sub {
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  .service-motif {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 4px;
+  }
+
+  /* Color Swatches */
+  .color-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .swatch-group {
+    flex: 1;
+  }
+  .swatch-group label {
+    display: block;
+    font-size: 11px;
+    color: #6B7280;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .swatch {
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-end;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .gradient-bar {
+    height: 48px;
+    border-radius: 12px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  /* Usage Examples */
+  .usage-section {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .usage-btn {
+    padding: 8px 20px;
+    border-radius: 12px;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+  }
+  .usage-outline {
+    padding: 7px 19px;
+    border-radius: 12px;
+    border: 1.5px solid;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .usage-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .usage-text {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* Dark/Light Preview */
+  .preview-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .preview-card {
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+  .preview-card.dark {
+    background: #110D20;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .preview-card.light {
+    background: #F0F4FF;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .preview-card .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .preview-card.dark .label { color: #6B7280; }
+  .preview-card.light .label { color: #9CA3AF; }
+  .preview-card .title {
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .preview-card .desc {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .preview-card.light .desc { color: #6B7280; }
+  .preview-card.dark .desc { color: #9CA3AF; }
+
+  /* Summary Table */
+  .summary-section {
+    margin-top: 48px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .summary-section h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #F9FAFB;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6B7280;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: middle;
+  }
+  .color-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>PompCore Service Color Palette</h1>
+  <p class="subtitle">서비스별 고유 컬러 제안 — RPG 세계관 모티프 기반</p>
+
+  <!-- ============ PompCore ============ -->
+  <div class="service-card">
+    <div class="service-header">
+      <div class="service-icon" style="background: linear-gradient(135deg, #7C3AED, #A855F7);">P</div>
+      <div>
+        <div class="service-name">PompCore</div>
+        <div class="service-sub" style="color: #A855F7;">일상을 플레이하다</div>
+        <div class="service-motif">모티프: 성운, 마법 에너지 · 마나의 흐름</div>
+      </div>
+    </div>
+    <div class="color-row">
+      <div class="swatch-group">
+        <label>Primary</label>
+        <div class="swatch" style="background: #7C3AED;">#7C3AED</div>
+      </div>
+      <div class="swatch-group">
+        <label>Light</label>
+        <div class="swatch" style="background: #A855F7;">#A855F7</div>
+      </div>
+      <div class="swatch-group">
+        <label>Deep</label>
+        <div class="swatch" style="background: #6D28D9;">#6D28D9</div>
+      </div>
+    </div>
+    <div class="gradient-bar" style="background: linear-gradient(90deg, #7C3AED, #A855F7);">
+      Gradient: Violet → Purple
+    </div>
+    <div class="usage-section">
+      <button class="usage-btn" style="background: #7C3AED;">버튼</button>
+      <button class="usage-outline" style="border-color: #7C3AED; color: #A855F7;">아웃라인</button>
+      <span class="usage-badge" style="background: rgba(124,58,237,0.15); color: #A855F7;">플랫폼</span>
+      <span class="usage-text" style="color: #A855F7;">텍스트 강조</span>
+    </div>
+    <div class="preview-row">
+      <div class="preview-card dark">
+        <div class="label">Dark Mode</div>
+        <div class="title" style="color: #A855F7;">PompCore</div>
+        <div class="desc">일상을 플레이하다</div>
+      </div>
+      <div class="preview-card light">
+        <div class="label">Light Mode</div>
+        <div class="title" style="color: #7C3AED;">PompCore</div>
+        <div class="desc">일상을 플레이하다</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Vault ============ -->
+  <div class="service-card">
+    <div class="service-header">
+      <div class="service-icon" style="background: linear-gradient(135deg, #10B981, #06D6A0);">V</div>
+      <div>
+        <div class="service-name">Vault</div>
+        <div class="service-sub" style="color: #34D399;">모험가의 금고</div>
+        <div class="service-motif">모티프: 보물, 에메랄드 · 재화의 수호</div>
+      </div>
+    </div>
+    <div class="color-row">
+      <div class="swatch-group">
+        <label>Primary</label>
+        <div class="swatch" style="background: #10B981;">#10B981</div>
+      </div>
+      <div class="swatch-group">
+        <label>Light</label>
+        <div class="swatch" style="background: #06D6A0;">#06D6A0</div>
+      </div>
+      <div class="swatch-group">
+        <label>Deep</label>
+        <div class="swatch" style="background: #059669;">#059669</div>
+      </div>
+    </div>
+    <div class="gradient-bar" style="background: linear-gradient(90deg, #10B981, #06D6A0);">
+      Gradient: Emerald → Teal
+    </div>
+    <div class="usage-section">
+      <button class="usage-btn" style="background: #10B981;">버튼</button>
+      <button class="usage-outline" style="border-color: #10B981; color: #34D399;">아웃라인</button>
+      <span class="usage-badge" style="background: rgba(16,185,129,0.15); color: #34D399;">금융</span>
+      <span class="usage-text" style="color: #34D399;">텍스트 강조</span>
+    </div>
+    <div class="preview-row">
+      <div class="preview-card dark">
+        <div class="label">Dark Mode</div>
+        <div class="title" style="color: #34D399;">Vault</div>
+        <div class="desc">모험가의 금고</div>
+      </div>
+      <div class="preview-card light">
+        <div class="label">Light Mode</div>
+        <div class="title" style="color: #10B981;">Vault</div>
+        <div class="desc">모험가의 금고</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Quest ============ -->
+  <div class="service-card">
+    <div class="service-header">
+      <div class="service-icon" style="background: linear-gradient(135deg, #3B82F6, #06B6D4);">Q</div>
+      <div>
+        <div class="service-name">Quest</div>
+        <div class="service-sub" style="color: #60A5FA;">일상이 곧 모험</div>
+        <div class="service-motif">모티프: 하늘, 나침반 · 모험의 지평선</div>
+      </div>
+    </div>
+    <div class="color-row">
+      <div class="swatch-group">
+        <label>Primary</label>
+        <div class="swatch" style="background: #3B82F6;">#3B82F6</div>
+      </div>
+      <div class="swatch-group">
+        <label>Light</label>
+        <div class="swatch" style="background: #06B6D4;">#06B6D4</div>
+      </div>
+      <div class="swatch-group">
+        <label>Deep</label>
+        <div class="swatch" style="background: #2563EB;">#2563EB</div>
+      </div>
+    </div>
+    <div class="gradient-bar" style="background: linear-gradient(90deg, #3B82F6, #06B6D4);">
+      Gradient: Blue → Cyan
+    </div>
+    <div class="usage-section">
+      <button class="usage-btn" style="background: #3B82F6;">버튼</button>
+      <button class="usage-outline" style="border-color: #3B82F6; color: #60A5FA;">아웃라인</button>
+      <span class="usage-badge" style="background: rgba(59,130,246,0.15); color: #60A5FA;">일정</span>
+      <span class="usage-text" style="color: #60A5FA;">텍스트 강조</span>
+    </div>
+    <div class="preview-row">
+      <div class="preview-card dark">
+        <div class="label">Dark Mode</div>
+        <div class="title" style="color: #60A5FA;">Quest</div>
+        <div class="desc">일상이 곧 모험</div>
+      </div>
+      <div class="preview-card light">
+        <div class="label">Light Mode</div>
+        <div class="title" style="color: #3B82F6;">Quest</div>
+        <div class="desc">일상이 곧 모험</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Forge ============ -->
+  <div class="service-card">
+    <div class="service-header">
+      <div class="service-icon" style="background: linear-gradient(135deg, #F97316, #FB923C);">F</div>
+      <div>
+        <div class="service-name">Forge</div>
+        <div class="service-sub" style="color: #FB923C;">의지의 대장간</div>
+        <div class="service-motif">모티프: 불꽃, 대장간 · 용광로의 단련</div>
+      </div>
+    </div>
+    <div class="color-row">
+      <div class="swatch-group">
+        <label>Primary</label>
+        <div class="swatch" style="background: #F97316;">#F97316</div>
+      </div>
+      <div class="swatch-group">
+        <label>Light</label>
+        <div class="swatch" style="background: #FB923C;">#FB923C</div>
+      </div>
+      <div class="swatch-group">
+        <label>Deep</label>
+        <div class="swatch" style="background: #EA580C;">#EA580C</div>
+      </div>
+    </div>
+    <div class="gradient-bar" style="background: linear-gradient(90deg, #F97316, #FB923C);">
+      Gradient: Orange → Amber
+    </div>
+    <div class="usage-section">
+      <button class="usage-btn" style="background: #F97316;">버튼</button>
+      <button class="usage-outline" style="border-color: #F97316; color: #FB923C;">아웃라인</button>
+      <span class="usage-badge" style="background: rgba(249,115,22,0.15); color: #FB923C;">자기관리</span>
+      <span class="usage-text" style="color: #FB923C;">텍스트 강조</span>
+    </div>
+    <div class="preview-row">
+      <div class="preview-card dark">
+        <div class="label">Dark Mode</div>
+        <div class="title" style="color: #FB923C;">Forge</div>
+        <div class="desc">의지의 대장간</div>
+      </div>
+      <div class="preview-card light">
+        <div class="label">Light Mode</div>
+        <div class="title" style="color: #F97316;">Forge</div>
+        <div class="desc">의지의 대장간</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Academy ============ -->
+  <div class="service-card">
+    <div class="service-header">
+      <div class="service-icon" style="background: linear-gradient(135deg, #FBBF24, #FCD34D);">A</div>
+      <div>
+        <div class="service-name">Academy</div>
+        <div class="service-sub" style="color: #FCD34D;">지식의 길드홀</div>
+        <div class="service-motif">모티프: 마법서, 양피지 · 고대의 지혜</div>
+      </div>
+    </div>
+    <div class="color-row">
+      <div class="swatch-group">
+        <label>Primary</label>
+        <div class="swatch" style="background: #FBBF24; color: #1F2937;">#FBBF24</div>
+      </div>
+      <div class="swatch-group">
+        <label>Light</label>
+        <div class="swatch" style="background: #FCD34D; color: #1F2937;">#FCD34D</div>
+      </div>
+      <div class="swatch-group">
+        <label>Deep</label>
+        <div class="swatch" style="background: #F59E0B; color: #1F2937;">#F59E0B</div>
+      </div>
+    </div>
+    <div class="gradient-bar" style="background: linear-gradient(90deg, #FBBF24, #FCD34D); color: #1F2937;">
+      Gradient: Amber → Gold
+    </div>
+    <div class="usage-section">
+      <button class="usage-btn" style="background: #FBBF24; color: #1F2937;">버튼</button>
+      <button class="usage-outline" style="border-color: #FBBF24; color: #FCD34D;">아웃라인</button>
+      <span class="usage-badge" style="background: rgba(251,191,36,0.15); color: #FCD34D;">교육</span>
+      <span class="usage-text" style="color: #FCD34D;">텍스트 강조</span>
+    </div>
+    <div class="preview-row">
+      <div class="preview-card dark">
+        <div class="label">Dark Mode</div>
+        <div class="title" style="color: #FCD34D;">Academy</div>
+        <div class="desc">지식의 길드홀</div>
+      </div>
+      <div class="preview-card light">
+        <div class="label">Light Mode</div>
+        <div class="title" style="color: #F59E0B;">Academy</div>
+        <div class="desc">지식의 길드홀</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Summary ============ -->
+  <div class="summary-section">
+    <h2>Summary</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>서비스</th>
+          <th>서브네임</th>
+          <th>Primary</th>
+          <th>Light</th>
+          <th>Deep</th>
+          <th>모티프</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PompCore</strong></td>
+          <td>일상을 플레이하다</td>
+          <td><span class="color-dot" style="background:#7C3AED;"></span>#7C3AED</td>
+          <td><span class="color-dot" style="background:#A855F7;"></span>#A855F7</td>
+          <td><span class="color-dot" style="background:#6D28D9;"></span>#6D28D9</td>
+          <td>성운, 마나</td>
+        </tr>
+        <tr>
+          <td><strong>Vault</strong></td>
+          <td>모험가의 금고</td>
+          <td><span class="color-dot" style="background:#10B981;"></span>#10B981</td>
+          <td><span class="color-dot" style="background:#06D6A0;"></span>#06D6A0</td>
+          <td><span class="color-dot" style="background:#059669;"></span>#059669</td>
+          <td>보물, 에메랄드</td>
+        </tr>
+        <tr>
+          <td><strong>Quest</strong></td>
+          <td>일상이 곧 모험</td>
+          <td><span class="color-dot" style="background:#3B82F6;"></span>#3B82F6</td>
+          <td><span class="color-dot" style="background:#06B6D4;"></span>#06B6D4</td>
+          <td><span class="color-dot" style="background:#2563EB;"></span>#2563EB</td>
+          <td>하늘, 나침반</td>
+        </tr>
+        <tr>
+          <td><strong>Forge</strong></td>
+          <td>의지의 대장간</td>
+          <td><span class="color-dot" style="background:#F97316;"></span>#F97316</td>
+          <td><span class="color-dot" style="background:#FB923C;"></span>#FB923C</td>
+          <td><span class="color-dot" style="background:#EA580C;"></span>#EA580C</td>
+          <td>불꽃, 대장간</td>
+        </tr>
+        <tr>
+          <td><strong>Academy</strong></td>
+          <td>지식의 길드홀</td>
+          <td><span class="color-dot" style="background:#FBBF24;"></span>#FBBF24</td>
+          <td><span class="color-dot" style="background:#FCD34D;"></span>#FCD34D</td>
+          <td><span class="color-dot" style="background:#F59E0B;"></span>#F59E0B</td>
+          <td>마법서, 양피지</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

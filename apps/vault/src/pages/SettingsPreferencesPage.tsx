@@ -6,6 +6,7 @@
 
 import { useState, useEffect, type ReactNode, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AdUnit } from '@pompcore/ui';
 import { useAuthStore } from '../stores/authStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { GlassCard, LoadingSpinner } from '@pompcore/ui';
@@ -29,7 +30,7 @@ const AVG_PERIOD_OPTIONS: ('day' | 'week' | 'month' | 'year')[] = ['day', 'week'
 export function SettingsPreferencesPage(): ReactNode {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
-  const { settings, isLoading, error, loadSettings, updatePreferences, clearError } = useSettingsStore();
+  const { settings, isLoading, error, loadSettings, updatePreferences, updateNotificationEnabled, clearError } = useSettingsStore();
 
   const [currencyOverride, setCurrencyOverride] = useState<string | null>(null);
   const [periodOverride, setPeriodOverride] = useState<('day' | 'week' | 'month' | 'year') | null>(null);
@@ -123,6 +124,39 @@ export function SettingsPreferencesPage(): ReactNode {
             </p>
           </div>
 
+          {/* 알림 */}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-xs font-medium text-navy/60 dark:text-gray-400">알림</span>
+              <p className="mt-0.5 text-xs text-navy/40 dark:text-gray-500">
+                예산 초과, 정기결제 예정 등의 알림을 받습니다.
+              </p>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={settings?.notificationEnabled ?? true}
+              onClick={() => {
+                if (!user?.id) return;
+                const next = !(settings?.notificationEnabled ?? true);
+                updateNotificationEnabled(user.id, next);
+              }}
+              className={[
+                'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full transition-colors',
+                (settings?.notificationEnabled ?? true)
+                  ? 'bg-vault-color'
+                  : 'bg-navy/20 dark:bg-white/20',
+              ].join(' ')}
+            >
+              <span
+                className={[
+                  'pointer-events-none inline-block h-5 w-5 translate-y-0.5 rounded-full bg-white shadow-sm transition-transform',
+                  (settings?.notificationEnabled ?? true) ? 'translate-x-5.5' : 'translate-x-0.5',
+                ].join(' ')}
+              />
+            </button>
+          </div>
+
           {/* 저장 */}
           <div className="flex items-center justify-end gap-3 pt-2">
             {saved && <span className="text-xs text-vault-color">저장됨</span>}
@@ -135,6 +169,9 @@ export function SettingsPreferencesPage(): ReactNode {
           </div>
         </form>
       </GlassCard>
+
+      {/* 광고 — 설정 하단 */}
+      <AdUnit slot="SETTINGS_BOTTOM" format="rectangle" className="mt-6" />
     </div>
   );
 }

@@ -6,20 +6,20 @@
 import type { Project } from '@pompcore/types';
 import vaultLogo from '../assets/logos/vaultlogo.svg';
 import questLogo from '../assets/logos/questlogo.svg';
-import { BRAND, BRAND_LIGHT, EMERALD, EMERALD_LIGHT } from './colors';
+import { BLUE, CYAN, EMERALD, EMERALD_LIGHT } from './colors';
 
 export const PROJECTS: Project[] = [
   {
     id: 'vault',
     name: 'Vault',
-    description: '게임 감성으로 재정을 관리하고, 절약 목표를 달성하세요.',
+    description: '당신의 재화를 수호하는 모험가의 금고.',
     longDescription:
       '수입과 지출을 게임 감성으로 기록하고 분석하는 스마트 가계부. 예산 설정과 초과 알림, 시각적 리포트로 재정 상태를 파악하고, 절약 목표 달성 시 경험치와 배지를 획득하세요.',
     icon: 'vault',
     status: 'active',
     url: 'https://vault.pompcore.cc',
     category: 'finance',
-    categoryLabel: 'FINANCE · 스마트 가계부',
+    categoryLabel: 'FINANCE · 모험가의 금고',
     accentColor: 'text-emerald-600 dark:text-emerald-400',
     accentGradient: 'from-emerald-500 to-teal-500',
     accentGradientCSS: `linear-gradient(90deg, ${EMERALD}, ${EMERALD_LIGHT})`,
@@ -35,16 +35,16 @@ export const PROJECTS: Project[] = [
   {
     id: 'quest',
     name: 'Quest',
-    description: '할 일을 퀘스트처럼 클리어하고, 레벨업하세요.',
+    description: '일상이 곧 모험. 오늘의 퀘스트를 수락하라.',
     longDescription:
       '할 일과 일정을 RPG 퀘스트처럼 관리하는 서비스. 일정 완료 시 경험치를 획득하고 레벨업하세요. 캘린더, 루틴 트래커(데일리 퀘스트), 리마인더를 한 곳에서 관리합니다.',
     icon: 'quest',
     status: 'coming_soon',
     category: 'productivity',
-    categoryLabel: 'PRODUCTIVITY · 일정 관리',
+    categoryLabel: 'PRODUCTIVITY · 일상이 곧 모험',
     accentColor: 'text-blue-600 dark:text-blue-400',
     accentGradient: 'from-blue-500 to-cyan-500',
-    accentGradientCSS: `linear-gradient(90deg, ${BRAND}, ${BRAND_LIGHT})`,
+    accentGradientCSS: `linear-gradient(90deg, ${BLUE}, ${CYAN})`,
     logoSrc: questLogo,
     features: ['경험치 & 레벨업', '캘린더 통합', '루틴 트래커 (데일리 퀘스트)', '리마인더 & 알림'],
     stats: [

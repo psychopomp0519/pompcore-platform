@@ -4,7 +4,17 @@
  * @module types/account
  */
 
-import type { DbAccount, DbAccountBalance } from './database.types';
+import type { DbAccount, DbAccountBalance, AccountType } from './database.types';
+
+export type { AccountType } from './database.types';
+
+/** 계좌 유형 한국어 라벨 */
+export const ACCOUNT_TYPE_LABELS: Record<AccountType, string> = {
+  bank: '은행 계좌',
+  credit_card: '신용카드',
+  savings: '저축 계좌',
+  investment: '투자 계좌',
+};
 
 // ============================================================
 // 통장 클라이언트 타입
@@ -28,6 +38,9 @@ export interface Account {
   defaultCurrency: string;
   isFavorite: boolean;
   sortOrder: number;
+  accountType: AccountType;
+  creditLimit: number | null;
+  billingDay: number | null;
   createdAt: string;
   updatedAt: string;
   balances: AccountBalance[];
@@ -43,6 +56,9 @@ export interface AccountFormData {
   defaultCurrency: string;
   supportedCurrencies: string[];
   isFavorite: boolean;
+  accountType: AccountType;
+  creditLimit: number | null;
+  billingDay: number | null;
 }
 
 /** 이체 폼 데이터 */
@@ -82,6 +98,9 @@ export function mapDbToAccount(row: DbAccount, balances: DbAccountBalance[]): Ac
     defaultCurrency: row.default_currency,
     isFavorite: row.is_favorite,
     sortOrder: row.sort_order,
+    accountType: row.account_type,
+    creditLimit: row.credit_limit,
+    billingDay: row.billing_day,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     balances: balances.map(mapDbToBalance),

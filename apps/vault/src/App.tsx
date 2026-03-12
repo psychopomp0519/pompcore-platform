@@ -58,6 +58,21 @@ const SettingsMenuPage = lazy(() =>
 const SettingsPreferencesPage = lazy(() =>
   import('./pages/SettingsPreferencesPage').then((m) => ({ default: m.SettingsPreferencesPage })),
 );
+const SettingsThemePage = lazy(() =>
+  import('./pages/SettingsThemePage').then((m) => ({ default: m.SettingsThemePage })),
+);
+const SettingsCreditsPage = lazy(() =>
+  import('./pages/SettingsCreditsPage').then((m) => ({ default: m.SettingsCreditsPage })),
+);
+const SettingsFriendsPage = lazy(() =>
+  import('./pages/SettingsFriendsPage').then((m) => ({ default: m.SettingsFriendsPage })),
+);
+const InviteAcceptPage = lazy(() =>
+  import('./pages/InviteAcceptPage').then((m) => ({ default: m.InviteAcceptPage })),
+);
+const SharedViewPage = lazy(() =>
+  import('./pages/SharedViewPage').then((m) => ({ default: m.SharedViewPage })),
+);
 const AnnouncementsPage = lazy(() =>
   import('./pages/AnnouncementsPage').then((m) => ({ default: m.AnnouncementsPage })),
 );
@@ -134,6 +149,11 @@ export function App(): React.ReactNode {
             <Route path={ROUTES.SETTINGS_MENU} element={<SettingsMenuPage />} />
             <Route path={ROUTES.SETTINGS_CATEGORIES} element={<SettingsCategoriesPage />} />
             <Route path={ROUTES.SETTINGS_PREFERENCES} element={<SettingsPreferencesPage />} />
+            <Route path={ROUTES.SETTINGS_THEME} element={<SettingsThemePage />} />
+            <Route path={ROUTES.SETTINGS_CREDITS} element={<SettingsCreditsPage />} />
+            <Route path={ROUTES.SETTINGS_FRIENDS} element={<SettingsFriendsPage />} />
+            <Route path={ROUTES.INVITE_ACCEPT} element={<InviteAcceptPage />} />
+            <Route path={ROUTES.SHARED_VIEW} element={<SharedViewPage />} />
             <Route path={ROUTES.ANNOUNCEMENTS} element={<AnnouncementsPage />} />
             <Route path={ROUTES.ANNOUNCEMENT_DETAIL} element={<AnnouncementDetailPage />} />
             <Route path={ROUTES.INQUIRIES} element={<InquiriesPage />} />

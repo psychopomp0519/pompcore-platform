@@ -6,6 +6,7 @@
 
 import { useMemo } from 'react';
 import { useThemeStore } from '@pompcore/ui';
+import { useThemePrefsStore } from '../../stores/themePrefsStore';
 
 // ============================================================
 // 상수
@@ -227,19 +228,20 @@ function Clouds(): React.ReactNode {
 /** Nebula 테마 배경 컴포넌트 */
 export function ThemeBackground(): React.ReactNode {
   const isDarkMode = useThemeStore((state) => state.theme) === 'dark';
+  const showAnimations = useThemePrefsStore((s) => s.showAnimations);
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10">
       {isDarkMode ? (
         <>
           <div className="absolute inset-0 bg-gradient-to-b from-surface-dark-1 via-surface-dark-2 to-surface-dark-3" />
-          <GlowOrbs />
-          <Stars />
+          {showAnimations && <GlowOrbs />}
+          {showAnimations && <Stars />}
         </>
       ) : (
         <>
           <div className="absolute inset-0 bg-gradient-to-b from-sky-deep via-sky-mid to-sky-pale" />
-          <Clouds />
+          {showAnimations && <Clouds />}
         </>
       )}
     </div>

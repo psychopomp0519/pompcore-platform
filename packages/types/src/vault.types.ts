@@ -26,6 +26,7 @@ export interface DbUserSettings {
   display_name: string | null;
   avatar_url: string | null;
   birthday: string | null;
+  notification_enabled: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -37,6 +38,8 @@ export type DbUserSettingsUpdate = Partial<Omit<DbUserSettings, 'id' | 'user_id'
 // vault_accounts
 // ============================================================
 
+export type AccountType = 'bank' | 'credit_card' | 'savings' | 'investment';
+
 export interface DbAccount extends SoftDeletable {
   id: string;
   user_id: string;
@@ -45,6 +48,9 @@ export interface DbAccount extends SoftDeletable {
   default_currency: string;
   is_favorite: boolean;
   sort_order: number;
+  account_type: AccountType;
+  credit_limit: number | null;
+  billing_day: number | null;
   created_at: string;
   updated_at: string;
 }

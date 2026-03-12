@@ -4,6 +4,7 @@
  * - 라이트/다크 모드 대응
  */
 import { Link } from 'react-router-dom';
+import { AdUnit } from '@pompcore/ui';
 import { PROJECTS } from '../../constants/projects';
 import { DynamicIcon } from '../icons/Icons';
 import { PompCoreLogo } from '../common/BrandText';
@@ -56,6 +57,9 @@ export default function Footer() {
             </ul>
           </div>
         </div>
+
+        {/* 광고 — 푸터 상단 */}
+        <AdUnit slot="FOOTER_TOP" format="horizontal" className="mt-6" />
 
         {/* 하단 카피라이트 */}
         <div className="border-t border-slate-200 dark:border-white/10 mt-8 pt-8 text-center">

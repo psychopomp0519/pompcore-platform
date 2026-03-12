@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /auth/
+Disallow: /internal/
+
+Sitemap: https://pompcore.cc/sitemap.xml

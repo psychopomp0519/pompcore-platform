@@ -13,7 +13,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'vault-color': { DEFAULT: '#10B981', light: '#34D399' },
+        'vault-color': {
+          DEFAULT: 'rgb(var(--color-app-accent) / <alpha-value>)',
+          light: '#34D399',
+        },
       },
     },
   },

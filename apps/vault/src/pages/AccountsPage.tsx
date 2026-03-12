@@ -237,6 +237,9 @@ export function AccountsPage(): ReactNode {
               defaultCurrency: editingAccount.defaultCurrency,
               supportedCurrencies: editingAccount.supportedCurrencies,
               isFavorite: editingAccount.isFavorite,
+              accountType: editingAccount.accountType,
+              creditLimit: editingAccount.creditLimit,
+              billingDay: editingAccount.billingDay,
             }}
             onSubmit={handleEdit}
             onCancel={() => setEditingAccount(null)}

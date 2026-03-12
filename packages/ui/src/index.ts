@@ -20,6 +20,7 @@ export { PasswordStrengthBar } from './components/PasswordStrengthBar';
 export { Skeleton } from './components/Skeleton';
 export { Toast } from './components/Toast';
 export { Tooltip } from './components/Tooltip';
+export { AdUnit } from './components/AdUnit';
 
 // ============================================================
 // Icons — RPG 판타지 테마 (Nebula Design System)

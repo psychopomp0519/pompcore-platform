@@ -24,6 +24,7 @@ interface SettingsActions {
   updateProfile: (userId: string, form: ProfileFormData) => Promise<void>;
   updatePreferences: (userId: string, form: PreferencesFormData) => Promise<void>;
   updateTabOrder: (userId: string, tabOrder: string[]) => Promise<void>;
+  updateNotificationEnabled: (userId: string, enabled: boolean) => Promise<void>;
   changePassword: (newPassword: string) => Promise<void>;
   clearError: () => void;
 }
@@ -92,6 +93,19 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()((set, 
       const current = get().settings;
       if (current) {
         set({ settings: { ...current, tabOrder } });
+      }
+    } catch (err) {
+      set({ error: toUserMessage(err) });
+    }
+  },
+
+  updateNotificationEnabled: async (userId, enabled) => {
+    set({ error: null });
+    try {
+      await settingsService.updateNotificationEnabled(userId, enabled);
+      const current = get().settings;
+      if (current) {
+        set({ settings: { ...current, notificationEnabled: enabled } });
       }
     } catch (err) {
       set({ error: toUserMessage(err) });

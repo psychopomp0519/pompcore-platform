@@ -131,6 +131,23 @@ export async function updateTabOrder(
 }
 
 // ============================================================
+// 알림 설정
+// ============================================================
+
+/** 알림 활성화/비활성화 */
+export async function updateNotificationEnabled(
+  userId: string,
+  enabled: boolean,
+): Promise<void> {
+  const { error } = await supabase
+    .from(TABLE)
+    .update({ notification_enabled: enabled })
+    .eq('user_id', userId);
+
+  if (error) throw new Error(`알림 설정 수정 실패: ${error.message}`);
+}
+
+// ============================================================
 // 비밀번호 변경
 // ============================================================
 

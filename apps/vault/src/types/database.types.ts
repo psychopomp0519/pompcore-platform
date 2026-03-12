@@ -27,6 +27,7 @@ export type {
   DbAnnouncementComment, DbAnnouncementCommentInsert,
   DbAnnouncementLike,
   DbInquiry, DbInquiryInsert, DbInquiryUpdate,
+  AccountType,
   AssetType, TradeType,
   DbInvestmentPortfolio, DbInvestmentPortfolioInsert, DbInvestmentPortfolioUpdate,
   DbInvestmentTrade, DbInvestmentTradeInsert, DbInvestmentTradeUpdate,

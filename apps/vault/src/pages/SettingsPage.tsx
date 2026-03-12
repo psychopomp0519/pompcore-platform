@@ -29,12 +29,9 @@ const MENU_ITEMS: MenuItem[] = [
   { path: ROUTES.SETTINGS_MENU, icon: IconPhone, label: '메뉴 설정', description: '하단 탭 순서 커스터마이징' },
   { path: ROUTES.SETTINGS_CATEGORIES, icon: IconTag, label: '카테고리', description: '수입/지출 카테고리 관리' },
   { path: ROUTES.SETTINGS_PREFERENCES, icon: IconSliders, label: '환경설정', description: '주 통화, 정기결제 단위' },
-];
-
-const PLACEHOLDER_ITEMS: { icon: (props: { className?: string }) => ReactNode; label: string; note: string }[] = [
-  { icon: IconPalette, label: '테마', note: '준비 중' },
-  { icon: IconDocument, label: '크레딧', note: '준비 중' },
-  { icon: IconUsers, label: '친구', note: '준비 중' },
+  { path: ROUTES.SETTINGS_THEME, icon: IconPalette, label: '테마', description: '액센트 컬러, 배경 애니메이션' },
+  { path: ROUTES.SETTINGS_CREDITS, icon: IconDocument, label: '크레딧', description: '개발자 정보, 오픈소스' },
+  { path: ROUTES.SETTINGS_FRIENDS, icon: IconUsers, label: '친구', description: '가계부 공유, 초대 관리' },
 ];
 
 // ============================================================
@@ -67,22 +64,6 @@ export function SettingsPage(): ReactNode {
         ))}
       </div>
 
-      {/* 플레이스홀더 메뉴 */}
-      <div className="space-y-4">
-        {PLACEHOLDER_ITEMS.map((item) => (
-          <GlassCard key={item.label} padding="md" className="opacity-50">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-navy/5 text-navy/40 dark:bg-white/5 dark:text-gray-500">
-                <item.icon className="h-5 w-5" />
-              </div>
-              <div className="flex-1">
-                <div className="text-sm font-semibold text-navy dark:text-gray-100">{item.label}</div>
-                <div className="text-xs text-navy/50 dark:text-gray-400">{item.note}</div>
-              </div>
-            </div>
-          </GlassCard>
-        ))}
-      </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@
  * - JSON-LD(FAQPage schema) 호환 데이터 구조
  */
 import { useState } from 'react';
+import { AdUnit } from '@pompcore/ui';
 import { FAQ_ITEMS } from '../../constants/faq';
 import CloudBackground from '../../components/common/CloudBackground';
 import type { CloudConfig } from '../../components/common/CloudBackground';
@@ -134,6 +135,9 @@ export default function FaqSection() {
           })}
         </div>
         )}
+
+        {/* 광고 — FAQ 하단 */}
+        <AdUnit slot="FAQ_BOTTOM" format="horizontal" className="mt-8" />
       </div>
     </section>
   );
