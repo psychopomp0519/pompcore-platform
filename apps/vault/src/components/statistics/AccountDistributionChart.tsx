@@ -4,7 +4,7 @@
  * @module components/statistics/AccountDistributionChart
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import type { AccountBalanceInfo } from '../../services/statistics.service';
 import { GlassCard } from '../common/GlassCard';
@@ -34,7 +34,7 @@ const PIE_COLORS = [
 // ============================================================
 
 /** 통장별 자산 분포 차트 */
-export function AccountDistributionChart({
+function AccountDistributionChartInner({
   balances,
   currency,
 }: AccountDistributionChartProps): ReactNode {
@@ -87,6 +87,8 @@ export function AccountDistributionChart({
     </GlassCard>
   );
 }
+
+export const AccountDistributionChart = memo(AccountDistributionChartInner);
 
 // ============================================================
 // 공통

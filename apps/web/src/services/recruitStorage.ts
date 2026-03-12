@@ -2,6 +2,9 @@
  * 지원서 로컬스토리지 관리 서비스
  * - Recruit, RecruitAdmin 페이지에서 공통 사용
  * - 향후 Supabase 연동 시 이 파일만 수정하면 됨
+ *
+ * @warning 현재 localStorage 기반이므로 브라우저 초기화 시 데이터가 유실됩니다.
+ *          Supabase 테이블 연동 후 이 파일의 구현만 교체하면 모든 소비자에 반영됩니다.
  */
 import type { ApplicationForm } from '../constants/recruitment';
 

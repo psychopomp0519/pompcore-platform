@@ -4,7 +4,7 @@
  * @module components/investment/PortfolioCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { Portfolio, PortfolioSummary } from '../../types/investment.types';
 import type { AssetType } from '../../types/database.types';
 import { GlassCard } from '../common/GlassCard';
@@ -47,7 +47,7 @@ const ASSET_TYPE_COLOR: Record<AssetType, string> = {
 // ============================================================
 
 /** 포트폴리오 목록 카드 */
-export function PortfolioCard({
+function PortfolioCardInner({
   portfolio,
   summary,
   onClick,
@@ -110,7 +110,12 @@ export function PortfolioCard({
             </div>
           </div>
         ) : (
-          <div className="text-sm text-navy/40 dark:text-gray-500">거래 없음</div>
+          <div className="flex items-center gap-1.5 text-sm text-navy/40 dark:text-gray-500">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+            클릭하여 상세 보기
+          </div>
         )}
       </button>
 
@@ -134,3 +139,5 @@ export function PortfolioCard({
     </GlassCard>
   );
 }
+
+export const PortfolioCard = memo(PortfolioCardInner);

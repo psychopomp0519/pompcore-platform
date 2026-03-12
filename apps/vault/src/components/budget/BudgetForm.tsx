@@ -4,7 +4,7 @@
  * @module components/budget/BudgetForm
  */
 
-import { useState, type ReactNode, type FormEvent } from 'react';
+import { useState, memo, type ReactNode, type FormEvent } from 'react';
 import { Button } from '@pompcore/ui';
 import type { BudgetFormData } from '../../types/budget.types';
 import type { BudgetType } from '../../types/database.types';
@@ -34,7 +34,7 @@ const BUDGET_TYPES: BudgetType[] = ['virtual', 'actual'];
 // ============================================================
 
 /** 예산 생성/수정 폼 */
-export function BudgetForm({
+function BudgetFormInner({
   initialData,
   accounts,
   onSubmit,
@@ -104,7 +104,7 @@ export function BudgetForm({
           onChange={(e) => setName(e.target.value)}
           placeholder="예산 이름"
           maxLength={50}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           autoFocus
         />
       </div>
@@ -122,8 +122,9 @@ export function BudgetForm({
             onChange={(e) => setTargetAmount(e.target.value)}
             placeholder="0"
             min="0"
+            max="9999999999"
             step="any"
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
         <div>
@@ -134,7 +135,7 @@ export function BudgetForm({
             id="budget-currency"
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             {Object.keys(CURRENCIES).map((code) => (
               <option key={code} value={code}>{code}</option>
@@ -153,7 +154,7 @@ export function BudgetForm({
             id="budget-account"
             value={linkedAccountId}
             onChange={(e) => setLinkedAccountId(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             <option value="">통장 선택</option>
             {sortedAccounts.map((acc) => (
@@ -191,3 +192,5 @@ export function BudgetForm({
     </form>
   );
 }
+
+export const BudgetForm = memo(BudgetFormInner);

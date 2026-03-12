@@ -4,7 +4,7 @@
  * @module components/investment/TradeForm
  */
 
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useState, memo, type FormEvent, type ReactNode } from 'react';
 import type { TradeFormData } from '../../types/investment.types';
 import type { TradeType } from '../../types/database.types';
 import { getToday } from '../../utils/date';
@@ -39,14 +39,14 @@ const CURRENCY_OPTIONS = ['KRW', 'USD', 'EUR', 'JPY', 'BTC', 'ETH'] as const;
 // ============================================================
 
 const INPUT_CLASS =
-  'w-full rounded-xl border border-slate-200 bg-white/60 px-3 py-2 text-sm text-navy placeholder-navy/30 backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500';
+  'w-full rounded-xl border border-slate-200 bg-white/80 px-3 py-2 text-sm text-navy placeholder-navy/30 backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500';
 
 // ============================================================
 // TradeForm
 // ============================================================
 
 /** 거래 기록 추가 폼 */
-export function TradeForm({ portfolioCurrency, onSubmit, onCancel }: TradeFormProps): ReactNode {
+function TradeFormInner({ portfolioCurrency, onSubmit, onCancel }: TradeFormProps): ReactNode {
   const [form, setForm] = useState<TradeFormData>({
     ticker: '',
     assetName: '',
@@ -134,6 +134,7 @@ export function TradeForm({ portfolioCurrency, onSubmit, onCancel }: TradeFormPr
             type="number"
             required
             min="0"
+            max="9999999999"
             step="any"
             placeholder="0"
             value={form.quantity}
@@ -149,6 +150,7 @@ export function TradeForm({ portfolioCurrency, onSubmit, onCancel }: TradeFormPr
             type="number"
             required
             min="0"
+            max="9999999999"
             step="any"
             placeholder="0"
             value={form.price}
@@ -167,6 +169,7 @@ export function TradeForm({ portfolioCurrency, onSubmit, onCancel }: TradeFormPr
           <input
             type="number"
             min="0"
+            max="9999999999"
             step="any"
             placeholder="0"
             value={form.fee}
@@ -238,3 +241,5 @@ export function TradeForm({ portfolioCurrency, onSubmit, onCancel }: TradeFormPr
     </form>
   );
 }
+
+export const TradeForm = memo(TradeFormInner);

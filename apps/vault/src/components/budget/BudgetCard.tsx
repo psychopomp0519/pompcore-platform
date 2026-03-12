@@ -4,7 +4,7 @@
  * @module components/budget/BudgetCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { Budget } from '../../types/budget.types';
 import { BUDGET_TYPE_LABELS } from '../../types/budget.types';
 import { GlassCard } from '../common/GlassCard';
@@ -41,7 +41,7 @@ const PROGRESS_THRESHOLD_HIGH = 90;
 // ============================================================
 
 /** 예산 카드 */
-export function BudgetCard({
+function BudgetCardInner({
   budget,
   onEdit,
   onDelete,
@@ -127,6 +127,8 @@ export function BudgetCard({
     </GlassCard>
   );
 }
+
+export const BudgetCard = memo(BudgetCardInner);
 
 // ============================================================
 // 헬퍼

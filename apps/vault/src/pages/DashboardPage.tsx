@@ -4,7 +4,10 @@
  * @module pages/DashboardPage
  */
 
-import { useState, useEffect, useMemo, type ReactNode } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef, type ReactNode } from 'react';
+
+/** 캐시 유효 시간 (ms) — 60초 이내 재방문 시 재로드 방지 */
+const CACHE_TTL_MS = 60_000;
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { useAccountStore } from '../stores/accountStore';
@@ -58,35 +61,46 @@ export function DashboardPage(): ReactNode {
     return getMonthPeriod(year, month);
   }, [currentPeriod]);
 
+  /** 안정적인 함수 참조로 불필요한 재실행 방지 */
+  const loadAccountsRef = useRef(loadAccounts);
+  loadAccountsRef.current = loadAccounts;
+  const loadSettingsRef = useRef(loadSettings);
+  loadSettingsRef.current = loadSettings;
+
+  /** 마지막 로드 시각 — TTL 이내 재로드 방지 */
+  const lastLoadedAtRef = useRef<number>(0);
+
+  const loadDashboard = useCallback(async (userId: string) => {
+    const now = Date.now();
+    if (now - lastLoadedAtRef.current < CACHE_TTL_MS) return;
+
+    setIsLoading(true);
+    try {
+      const [txs, prevTxs, anns, recs] = await Promise.all([
+        txService.fetchTransactions(userId, currentPeriod.startDate, currentPeriod.endDate),
+        txService.fetchTransactions(userId, prevPeriod.startDate, prevPeriod.endDate),
+        annService.fetchAnnouncements(),
+        recurringService.fetchRecurringPayments(userId),
+        loadAccountsRef.current(userId),
+        loadSettingsRef.current(userId),
+      ]);
+      setCurrentMonthTx(txs);
+      setPrevMonthTx(prevTxs);
+      setPinnedAnnouncements(anns.filter((a) => a.isPinned));
+      setRecurringPayments(recs.filter((r) => r.isActive));
+      lastLoadedAtRef.current = Date.now();
+    } catch {
+      setLoadError('데이터를 불러오는 중 문제가 발생했습니다.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [currentPeriod, prevPeriod]);
+
   useEffect(() => {
     const uid = user?.id;
     if (!uid) return;
-
-    async function load(userId: string): Promise<void> {
-      setIsLoading(true);
-      try {
-        const [txs, prevTxs, anns, recs] = await Promise.all([
-          txService.fetchTransactions(userId, currentPeriod.startDate, currentPeriod.endDate),
-          txService.fetchTransactions(userId, prevPeriod.startDate, prevPeriod.endDate),
-          annService.fetchAnnouncements(),
-          recurringService.fetchRecurringPayments(userId),
-          loadAccounts(userId),
-          loadSettings(userId),
-        ]);
-        setCurrentMonthTx(txs);
-        setPrevMonthTx(prevTxs);
-        setPinnedAnnouncements(anns.filter((a) => a.isPinned));
-        setRecurringPayments(recs.filter((r) => r.isActive));
-      } catch {
-        setLoadError('데이터를 불러오는 중 문제가 발생했습니다.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    load(uid);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id, currentPeriod, prevPeriod, loadAccounts]);
+    loadDashboard(uid);
+  }, [user?.id, loadDashboard]);
 
   /* 총 자산 (통화별) */
   const totalByCurrency = useMemo<Map<string, number>>(() => {
@@ -380,7 +394,7 @@ function QuickAction({
     <button
       type="button"
       onClick={onClick}
-      className="flex flex-col items-center gap-1.5 rounded-2xl border border-white/20 bg-white/60 py-4 text-sm font-medium text-navy shadow-card backdrop-blur-[16px] transition-shadow hover:shadow-card-hover dark:border-white/10 dark:bg-surface-card-dark dark:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
+      className="flex flex-col items-center gap-1.5 rounded-2xl border border-white/20 bg-white/80 py-4 text-sm font-medium text-navy shadow-card backdrop-blur-[16px] transition-shadow hover:shadow-card-hover dark:border-white/10 dark:bg-surface-card-dark dark:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
     >
       <div className="text-vault-color">{icon}</div>
       <span className="text-xs">{label}</span>

@@ -23,10 +23,19 @@ function getCurrencyInfo(code: string): { symbol: string; decimals: number } {
   return { symbol: code, decimals: 2 };
 }
 
+/** 브라우저 로케일 감지 (SSR 안전) */
+function detectLocale(): string {
+  if (typeof navigator !== 'undefined' && navigator.language) {
+    return navigator.language;
+  }
+  return 'ko-KR';
+}
+
 /** 금액을 통화 형식으로 포맷팅 */
-export function formatCurrency(amount: number, currencyCode: string): string {
+export function formatCurrency(amount: number, currencyCode: string, locale?: string): string {
   const { symbol, decimals } = getCurrencyInfo(currencyCode);
-  const formatted = Math.abs(amount).toLocaleString('ko-KR', {
+  const resolvedLocale = locale ?? detectLocale();
+  const formatted = Math.abs(amount).toLocaleString(resolvedLocale, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });
@@ -35,7 +44,7 @@ export function formatCurrency(amount: number, currencyCode: string): string {
 }
 
 /** 금액을 부호 포함 통화 형식으로 포맷팅 (+/-) */
-export function formatSignedCurrency(amount: number, currencyCode: string): string {
+export function formatSignedCurrency(amount: number, currencyCode: string, locale?: string): string {
   const sign = amount > 0 ? '+' : '';
-  return `${sign}${formatCurrency(amount, currencyCode)}`;
+  return `${sign}${formatCurrency(amount, currencyCode, locale)}`;
 }

@@ -4,7 +4,7 @@
  * @module components/investment/PortfolioForm
  */
 
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useState, memo, type FormEvent, type ReactNode } from 'react';
 import type { PortfolioFormData } from '../../types/investment.types';
 import type { AssetType } from '../../types/database.types';
 
@@ -48,14 +48,14 @@ const DEFAULT_FORM: PortfolioFormData = {
 // ============================================================
 
 const INPUT_CLASS =
-  'w-full rounded-xl border border-slate-200 bg-white/60 px-3 py-2 text-sm text-navy placeholder-navy/30 backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500';
+  'w-full rounded-xl border border-slate-200 bg-white/80 px-3 py-2 text-sm text-navy placeholder-navy/30 backdrop-blur focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500';
 
 // ============================================================
 // PortfolioForm
 // ============================================================
 
 /** 포트폴리오 생성/수정 폼 */
-export function PortfolioForm({ initial, onSubmit, onCancel }: PortfolioFormProps): ReactNode {
+function PortfolioFormInner({ initial, onSubmit, onCancel }: PortfolioFormProps): ReactNode {
   const [form, setForm] = useState<PortfolioFormData>(initial ?? DEFAULT_FORM);
 
   /** 문자열 필드 변경 핸들러 */
@@ -182,3 +182,5 @@ export function PortfolioForm({ initial, onSubmit, onCancel }: PortfolioFormProp
     </form>
   );
 }
+
+export const PortfolioForm = memo(PortfolioFormInner);

@@ -4,7 +4,7 @@
  * @module components/recurring/RecurringCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { RecurringPayment } from '../../types/recurring.types';
 import type { Account } from '../../types/account.types';
 import type { Category } from '../../types/category.types';
@@ -34,7 +34,7 @@ interface RecurringCardProps {
 // ============================================================
 
 /** 정기결제 카드 */
-export function RecurringCard({
+function RecurringCardInner({
   payment,
   account,
   category,
@@ -50,17 +50,21 @@ export function RecurringCard({
   const intervalLabel = `${payment.intervalValue}${INTERVAL_LABELS[payment.intervalUnit]}`;
 
   return (
-    <div className={`rounded-xl bg-white/60 p-3 backdrop-blur-sm dark:bg-white/5 ${!payment.isActive ? 'opacity-50' : ''}`}>
+    <div className={`rounded-xl p-3 backdrop-blur-sm ${
+      !payment.isActive
+        ? 'border border-dashed border-gray-300 bg-gray-50/80 opacity-60 dark:border-gray-600 dark:bg-gray-800/30'
+        : 'bg-white/80 dark:bg-white/5'
+    }`}>
       <div className="flex items-start gap-3">
         {/* 아이콘 */}
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center text-vault-color">
+        <span className={`flex h-6 w-6 shrink-0 items-center justify-center ${!payment.isActive ? 'text-gray-400 dark:text-gray-500' : 'text-vault-color'}`}>
           {renderCategoryIcon(category?.icon, 'h-5 w-5')}
         </span>
 
         {/* 메인 정보 */}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="truncate text-sm font-medium text-navy dark:text-gray-100">
+            <span className={`truncate text-sm font-medium ${!payment.isActive ? 'line-through text-navy/40 dark:text-gray-500' : 'text-navy dark:text-gray-100'}`}>
               {payment.name}
             </span>
             {!payment.isActive && (
@@ -129,3 +133,5 @@ export function RecurringCard({
     </div>
   );
 }
+
+export const RecurringCard = memo(RecurringCardInner);

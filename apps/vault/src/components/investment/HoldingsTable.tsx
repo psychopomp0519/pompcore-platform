@@ -4,7 +4,7 @@
  * @module components/investment/HoldingsTable
  */
 
-import { useState, type ReactNode } from 'react';
+import { useState, memo, type ReactNode } from 'react';
 import type { HoldingWithPnL } from '../../types/investment.types';
 import { formatReturnRate, pnlColorClass } from '../../utils/investmentCalculator';
 
@@ -143,7 +143,7 @@ function HoldingRow({ holding, onUpdatePrice }: HoldingRowProps): ReactNode {
 // ============================================================
 
 /** 보유 종목 테이블 */
-export function HoldingsTable({ holdings, currency, onUpdatePrice }: HoldingsTableProps): ReactNode {
+function HoldingsTableInner({ holdings, currency, onUpdatePrice }: HoldingsTableProps): ReactNode {
   if (holdings.length === 0) {
     return (
       <div className="py-8 text-center text-sm text-navy/40 dark:text-gray-500">
@@ -184,3 +184,5 @@ export function HoldingsTable({ holdings, currency, onUpdatePrice }: HoldingsTab
     </div>
   );
 }
+
+export const HoldingsTable = memo(HoldingsTableInner);

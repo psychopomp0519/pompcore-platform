@@ -106,7 +106,7 @@ export function RegisterPage(): React.ReactNode {
                   onChange={(e) => setDisplayName(e.target.value)}
                   required
                   autoComplete="name"
-                  className="w-full rounded-xl border border-navy/20 bg-white/50 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
+                  className="w-full rounded-xl border border-navy/20 bg-white/80 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
                   placeholder="닉네임 입력"
                 />
               </div>
@@ -121,7 +121,7 @@ export function RegisterPage(): React.ReactNode {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
-                  className="w-full rounded-xl border border-navy/20 bg-white/50 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
+                  className="w-full rounded-xl border border-navy/20 bg-white/80 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
                   placeholder="email@example.com"
                 />
               </div>
@@ -136,7 +136,7 @@ export function RegisterPage(): React.ReactNode {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="new-password"
-                  className="w-full rounded-xl border border-navy/20 bg-white/50 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
+                  className="w-full rounded-xl border border-navy/20 bg-white/80 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
                   placeholder="영문 대/소문자, 숫자, 특수문자 포함 8자 이상"
                 />
                 <PasswordStrengthBar password={password} />
@@ -152,7 +152,7 @@ export function RegisterPage(): React.ReactNode {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   autoComplete="new-password"
-                  className="w-full rounded-xl border border-navy/20 bg-white/50 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
+                  className="w-full rounded-xl border border-navy/20 bg-white/80 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
                   placeholder="비밀번호 재입력"
                 />
               </div>
@@ -174,7 +174,7 @@ export function RegisterPage(): React.ReactNode {
             <button
               type="button"
               onClick={handleGoogleSignUp}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-navy/20 bg-white/50 px-4 py-3 text-sm font-medium text-navy transition-colors hover:bg-navy/5 dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-200 dark:hover:bg-white/5"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-navy/20 bg-white/80 px-4 py-3 text-sm font-medium text-navy transition-colors hover:bg-navy/5 dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-200 dark:hover:bg-white/5"
             >
               <svg className="h-4 w-4" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />

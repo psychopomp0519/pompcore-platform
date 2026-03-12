@@ -52,8 +52,8 @@ export default function RecruitAdmin() {
                     className={`
                       w-full text-left rounded-xl p-4 border transition-all duration-200 cursor-pointer
                       ${selectedApp === app
-                        ? 'border-[#7C3AED]/30 bg-[#7C3AED]/[0.05]'
-                        : 'border-slate-200 dark:border-white/[0.06] bg-white/80 dark:bg-white/[0.02] hover:border-[#7C3AED]/15'
+                        ? 'border-brand/30 bg-brand/[0.05]'
+                        : 'border-slate-200 dark:border-white/[0.06] bg-white/80 dark:bg-white/[0.02] hover:border-brand/15'
                       }
                     `}
                   >
@@ -126,7 +126,7 @@ function InfoRow({ label, value, isLink = false }: { label: string; value: strin
           href={value}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-[#7C3AED] dark:text-[#A78BFA] hover:underline"
+          className="text-sm text-brand dark:text-purple-400 hover:underline"
         >
           {value}
         </a>

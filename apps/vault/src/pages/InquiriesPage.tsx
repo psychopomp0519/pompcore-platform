@@ -149,9 +149,7 @@ export function InquiriesPage(): ReactNode {
         <EmptyState
           icon={<IconChat className="h-8 w-8" />}
           title="문의 내역이 없습니다"
-          description={isAdmin ? '아직 접수된 문의가 없습니다.' : '궁금한 점이 있으면 문의해주세요.'}
-          actionLabel={isAdmin ? undefined : '문의하기'}
-          onAction={isAdmin ? undefined : () => setIsFormOpen(true)}
+          description={isAdmin ? '아직 접수된 문의가 없습니다.' : '궁금한 점이 있으면 위의 문의하기 버튼을 눌러주세요.'}
         />
       ) : (
         <div className="space-y-2">
@@ -213,7 +211,7 @@ export function InquiriesPage(): ReactNode {
               onChange={(e) => setFormTitle(e.target.value)}
               placeholder="문의 제목"
               maxLength={100}
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
               autoFocus
             />
           </div>
@@ -225,7 +223,7 @@ export function InquiriesPage(): ReactNode {
               onChange={(e) => setFormContent(e.target.value)}
               placeholder="문의 내용을 상세히 작성해주세요"
               rows={5}
-              className="w-full resize-none rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+              className="w-full resize-none rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
             />
             <p className="text-xs text-navy/40 dark:text-gray-500">
               자세한 내용을 적어줄수록 정확한 답변을 드릴 수 있습니다.
@@ -285,7 +283,7 @@ export function InquiriesPage(): ReactNode {
             placeholder="답변을 작성하세요"
             aria-label="답변 내용"
             rows={4}
-            className="w-full resize-none rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            className="w-full resize-none rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
             autoFocus
           />
           <div className="flex justify-end gap-3">

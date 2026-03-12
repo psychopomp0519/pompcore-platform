@@ -4,7 +4,7 @@
  * @module components/accounts/AccountForm
  */
 
-import { useState, type ReactNode, type FormEvent } from 'react';
+import { useState, memo, type ReactNode, type FormEvent } from 'react';
 import { Button } from '@pompcore/ui';
 import type { AccountFormData } from '../../types/account.types';
 import { CURRENCIES, CURRENCY_CODES, DEFAULT_CURRENCY } from '../../constants/currencies';
@@ -27,7 +27,7 @@ interface AccountFormProps {
 // ============================================================
 
 /** 통장 생성/수정 폼 */
-export function AccountForm({
+function AccountFormInner({
   initialData,
   onSubmit,
   onCancel,
@@ -78,7 +78,7 @@ export function AccountForm({
           onChange={(e) => setName(e.target.value)}
           placeholder="통장 이름을 입력하세요"
           maxLength={30}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 backdrop-blur-sm focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 backdrop-blur-sm focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           autoFocus
         />
       </div>
@@ -120,7 +120,7 @@ export function AccountForm({
             id="default-currency"
             value={defaultCurrency}
             onChange={(e) => setDefaultCurrency(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             {selectedCurrencies.map((code) => (
               <option key={code} value={code}>
@@ -165,3 +165,5 @@ export function AccountForm({
     </form>
   );
 }
+
+export const AccountForm = memo(AccountFormInner);

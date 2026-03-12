@@ -6,6 +6,7 @@
 import type { Project } from '@pompcore/types';
 import vaultLogo from '../assets/logos/vaultlogo.svg';
 import questLogo from '../assets/logos/questlogo.svg';
+import { BRAND, BRAND_LIGHT, EMERALD, EMERALD_LIGHT } from './colors';
 
 export const PROJECTS: Project[] = [
   {
@@ -21,7 +22,7 @@ export const PROJECTS: Project[] = [
     categoryLabel: 'FINANCE · 스마트 가계부',
     accentColor: 'text-emerald-600 dark:text-emerald-400',
     accentGradient: 'from-emerald-500 to-teal-500',
-    accentGradientCSS: 'linear-gradient(90deg, #10B981, #06D6A0)',
+    accentGradientCSS: `linear-gradient(90deg, ${EMERALD}, ${EMERALD_LIGHT})`,
     logoSrc: vaultLogo,
     features: ['수입/지출 자동 분류', '월별 리포트 & 차트', '예산 설정 & 초과 알림', '절약 경험치 & 배지'],
     stats: [
@@ -43,7 +44,7 @@ export const PROJECTS: Project[] = [
     categoryLabel: 'PRODUCTIVITY · 일정 관리',
     accentColor: 'text-blue-600 dark:text-blue-400',
     accentGradient: 'from-blue-500 to-cyan-500',
-    accentGradientCSS: 'linear-gradient(90deg, #7C3AED, #A855F7)',
+    accentGradientCSS: `linear-gradient(90deg, ${BRAND}, ${BRAND_LIGHT})`,
     logoSrc: questLogo,
     features: ['경험치 & 레벨업', '캘린더 통합', '루틴 트래커 (데일리 퀘스트)', '리마인더 & 알림'],
     stats: [

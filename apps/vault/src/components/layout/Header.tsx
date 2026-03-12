@@ -50,7 +50,7 @@ export function Header(): ReactNode {
   }, [isDropdownOpen]);
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-navy/10 bg-white/60 px-4 backdrop-blur-[16px] dark:border-white/10 dark:bg-surface-dark/60 tablet:px-5 desktop:px-6">
+    <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-navy/10 bg-white/80 px-4 backdrop-blur-[16px] dark:border-white/10 dark:bg-surface-dark/60 tablet:px-5 desktop:px-6">
       {/* 모바일 메뉴 버튼 */}
       <button
         type="button"

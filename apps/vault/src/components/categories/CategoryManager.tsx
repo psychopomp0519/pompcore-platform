@@ -4,7 +4,7 @@
  * @module components/categories/CategoryManager
  */
 
-import { useState, useEffect, useMemo, type ReactNode } from 'react';
+import { useState, useEffect, useMemo, memo, type ReactNode } from 'react';
 import { useAuthStore } from '../../stores/authStore';
 import { useCategoryStore } from '../../stores/categoryStore';
 import type { Category, CategoryFormData } from '../../types/category.types';
@@ -33,7 +33,7 @@ type TabKey = (typeof TABS)[number]['key'];
 // ============================================================
 
 /** 카테고리 관리 컴포넌트 */
-export function CategoryManager(): ReactNode {
+function CategoryManagerInner(): ReactNode {
   const user = useAuthStore((s) => s.user);
   const {
     categories,
@@ -237,3 +237,5 @@ export function CategoryManager(): ReactNode {
     </div>
   );
 }
+
+export const CategoryManager = memo(CategoryManagerInner);

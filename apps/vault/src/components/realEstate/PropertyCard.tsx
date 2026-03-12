@@ -4,7 +4,7 @@
  * @module components/realEstate/PropertyCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { RealEstate, RealEstateLease, RealEstateSummary } from '../../types/realEstate.types';
 import { formatLeaseEndLabel } from '../../utils/realEstateCalculator';
 
@@ -72,7 +72,7 @@ function DayBadge({ days }: { days: number }): ReactNode {
 // ============================================================
 
 /** 부동산 물건 카드 */
-export function PropertyCard({
+function PropertyCardInner({
   property,
   activeLease,
   summary,
@@ -100,7 +100,7 @@ export function PropertyCard({
       tabIndex={0}
       onClick={onClick}
       onKeyDown={(e) => e.key === 'Enter' && onClick()}
-      className="group relative cursor-pointer rounded-2xl bg-white/60 p-5 shadow-glass backdrop-blur transition-shadow hover:shadow-glass-lg dark:bg-navy/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
+      className="group relative cursor-pointer rounded-2xl bg-white/80 p-5 shadow-glass backdrop-blur transition-shadow hover:shadow-glass-lg dark:bg-navy/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
     >
       {/* 헤더 */}
       <div className="mb-3 flex items-start justify-between gap-2">
@@ -173,3 +173,5 @@ export function PropertyCard({
     </div>
   );
 }
+
+export const PropertyCard = memo(PropertyCardInner);

@@ -198,7 +198,7 @@ export function AnnouncementDetailPage(): ReactNode {
             placeholder="댓글을 입력하세요"
             aria-label="댓글 입력"
             maxLength={300}
-            className="flex-1 rounded-xl border border-navy/10 bg-white/60 px-3 py-2 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            className="flex-1 rounded-xl border border-navy/10 bg-white/80 px-3 py-2 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
           <button
             type="submit"

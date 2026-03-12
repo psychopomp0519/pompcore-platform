@@ -4,7 +4,7 @@
  * @module components/statistics/CategoryBreakdownChart
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import type { Transaction } from '../../types/transaction.types';
 import { GlassCard } from '../common/GlassCard';
@@ -61,7 +61,7 @@ function aggregateByCategory(
 // ============================================================
 
 /** 카테고리별 지출 도넛 차트 */
-export function CategoryBreakdownChart({
+function CategoryBreakdownChartInner({
   transactions,
   currency,
   categoryMap,
@@ -112,6 +112,8 @@ export function CategoryBreakdownChart({
     </GlassCard>
   );
 }
+
+export const CategoryBreakdownChart = memo(CategoryBreakdownChartInner);
 
 // ============================================================
 // 공통

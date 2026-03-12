@@ -4,7 +4,7 @@
  * @module components/realEstate/PropertyForm
  */
 
-import { useState, type ReactNode, type FormEvent } from 'react';
+import { useState, memo, type ReactNode, type FormEvent } from 'react';
 import type { RealEstateFormData } from '../../types/realEstate.types';
 import type { PropertyType, RealEstateRole } from '../../types/database.types';
 import { getToday } from '../../utils/date';
@@ -47,7 +47,7 @@ const DEFAULT_FORM: RealEstateFormData = {
 // ============================================================
 
 const INPUT_CLASS =
-  'w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2 text-sm text-navy placeholder-navy/30 dark:border-white/10 dark:bg-navy/60 dark:text-gray-100 dark:placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color';
+  'w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2 text-sm text-navy placeholder-navy/30 dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color';
 
 const LABEL_CLASS = 'mb-1 block text-xs font-semibold text-navy/70 dark:text-gray-400';
 
@@ -66,7 +66,7 @@ interface PropertyFormProps {
 // ============================================================
 
 /** 부동산 물건 생성/수정 폼 */
-export function PropertyForm({ initial, onSubmit, onCancel }: PropertyFormProps): ReactNode {
+function PropertyFormInner({ initial, onSubmit, onCancel }: PropertyFormProps): ReactNode {
   const [form, setForm] = useState<RealEstateFormData>(initial ?? DEFAULT_FORM);
 
   const set = (patch: Partial<RealEstateFormData>): void =>
@@ -227,3 +227,5 @@ export function PropertyForm({ initial, onSubmit, onCancel }: PropertyFormProps)
     </form>
   );
 }
+
+export const PropertyForm = memo(PropertyFormInner);

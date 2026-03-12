@@ -17,6 +17,7 @@
     "build:forge": "npm run build:deps && npm run --prefix apps/forge build"
   },
   "devDependencies": {
+    "puppeteer-core": "^24.38.0",
     "tsup": "^8.5.1",
     "turbo": "^2.5.0",
     "typescript": "~5.9.3",

@@ -2,6 +2,7 @@
  * @file Web 앱 아이콘 — @pompcore/ui 공유 아이콘 re-export + 앱 전용 유틸리티
  * @description 공유 라이브러리에서 아이콘을 가져와 사용. DynamicIcon과 ICON_MAP은 Web 전용.
  */
+import { memo } from 'react';
 import type { ReactNode } from 'react';
 import type { IconProps } from '@pompcore/ui';
 
@@ -51,11 +52,11 @@ export const CodeIcon = IconCode;
  * 동적 아이콘 렌더러 — ICON_MAP에서 아이콘을 찾아 렌더링
  * - 매핑 실패 시 fallback(이모지 등)을 텍스트로 표시
  */
-export function DynamicIcon({ name, size = 24, fallback, ...props }: IconProps & { name: string; fallback?: string }): ReactNode {
+export const DynamicIcon = memo(function DynamicIcon({ name, size = 24, fallback, ...props }: IconProps & { name: string; fallback?: string }): ReactNode {
   const Icon = ICON_MAP[name];
   if (Icon) return <Icon size={size} {...props} />;
   return <span className="text-2xl">{fallback ?? name}</span>;
-}
+});
 
 /** 아이콘 이름 → 컴포넌트 매핑 (동적 렌더링용) */
 export const ICON_MAP: Record<string, React.ComponentType<IconProps>> = {

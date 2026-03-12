@@ -16,10 +16,10 @@ export default function RecruitPositions() {
         {RECRUIT_POSITIONS.map((pos) => (
           <div
             key={pos.id}
-            className="rounded-2xl p-6 bg-white/80 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.06] transition-all duration-300 hover:border-[#7C3AED]/20 hover:shadow-[0_0_30px_rgba(124,58,237,0.06)]"
+            className="rounded-2xl p-6 bg-white/80 dark:bg-white/[0.02] border border-slate-200 dark:border-white/[0.06] transition-all duration-300 hover:border-brand/20 hover:shadow-[0_0_30px_rgba(124,58,237,0.06)]"
           >
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-[#7C3AED] dark:text-[#A78BFA]">
+              <span className="text-brand dark:text-purple-400">
                 <DynamicIcon name={pos.icon} size={24} fallback={pos.icon} />
               </span>
               <h3 className="font-display text-base font-bold text-[#1A1A2E] dark:text-white">
@@ -34,7 +34,7 @@ export default function RecruitPositions() {
               <ul className="space-y-1.5">
                 {pos.tasks.map((task) => (
                   <li key={task} className="flex items-start gap-1.5 text-xs text-[#4A4270] dark:text-[#7A6A9A]">
-                    <span className="text-[#7C3AED] text-[10px] mt-0.5">•</span>
+                    <span className="text-brand text-[10px] mt-0.5">•</span>
                     {task}
                   </li>
                 ))}
@@ -48,7 +48,7 @@ export default function RecruitPositions() {
               <ul className="space-y-1.5">
                 {pos.requirements.map((req) => (
                   <li key={req} className="flex items-start gap-1.5 text-xs text-[#4A4270] dark:text-[#7A6A9A]">
-                    <span className="text-[#FFD700] text-[10px] mt-0.5">✦</span>
+                    <span className="text-accent-gold text-[10px] mt-0.5">✦</span>
                     {req}
                   </li>
                 ))}

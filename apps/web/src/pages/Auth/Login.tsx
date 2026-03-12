@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { LoginRequest } from '@pompcore/types';
-import { useAuthStore } from '@pompcore/auth';
+import { useAuthStore, getSupabase } from '@pompcore/auth';
 import { GlassCard, Button, GoogleIcon, toUserMessage } from '@pompcore/ui';
 
 export default function Login() {
@@ -37,6 +37,26 @@ export default function Login() {
       setError(toUserMessage(err, '로그인에 실패했습니다.'));
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  /** 비밀번호 재설정 요청 */
+  const handleForgotPassword = async () => {
+    if (!form.email.trim()) {
+      window.alert('비밀번호 재설정을 위해 이메일을 먼저 입력해주세요.');
+      return;
+    }
+
+    try {
+      const supabase = getSupabase();
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(form.email);
+      if (resetError) {
+        window.alert(`오류: ${toUserMessage(resetError, '비밀번호 재설정 요청에 실패했습니다.')}`);
+        return;
+      }
+      window.alert('비밀번호 재설정 이메일을 발송했습니다. 이메일을 확인해주세요.');
+    } catch (err) {
+      window.alert(toUserMessage(err, '비밀번호 재설정 요청에 실패했습니다.'));
     }
   };
 
@@ -120,6 +140,17 @@ export default function Login() {
               className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
               placeholder="••••••••"
             />
+          </div>
+
+          {/* 비밀번호 찾기 */}
+          <div className="text-right">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-xs text-brand-400 hover:text-brand-300 transition-colors cursor-pointer"
+            >
+              비밀번호를 잊으셨나요?
+            </button>
           </div>
 
           <Button type="submit" variant="primary" size="md" className="w-full" isLoading={isLoading}>

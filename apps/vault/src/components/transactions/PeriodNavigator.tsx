@@ -4,7 +4,7 @@
  * @module components/transactions/PeriodNavigator
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { MonthPeriod } from '../../types/transaction.types';
 
 // ============================================================
@@ -24,7 +24,7 @@ interface PeriodNavigatorProps {
 // ============================================================
 
 /** 월별 기간 탐색 */
-export function PeriodNavigator({
+function PeriodNavigatorInner({
   period,
   onPrev,
   onNext,
@@ -71,3 +71,5 @@ export function PeriodNavigator({
     </div>
   );
 }
+
+export const PeriodNavigator = memo(PeriodNavigatorInner);

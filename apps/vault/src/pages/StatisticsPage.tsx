@@ -230,7 +230,7 @@ export function StatisticsPage(): ReactNode {
             <select
               value={selectedCurrency}
               onChange={(e) => setSelectedCurrency(e.target.value)}
-              className="rounded-xl border border-navy/10 bg-white/60 px-3 py-1.5 text-xs text-navy focus:border-vault-color focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+              className="rounded-xl border border-navy/10 bg-white/80 px-3 py-1.5 text-xs text-navy focus:border-vault-color focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
             >
               {currencies.map((cur) => (
                 <option key={cur} value={cur}>{cur}</option>
@@ -246,7 +246,7 @@ export function StatisticsPage(): ReactNode {
               className={`rounded-xl px-3 py-1.5 text-xs font-medium transition-colors border ${
                 isUnifiedView
                   ? 'bg-vault-color text-white border-vault-color'
-                  : 'border-navy/10 bg-white/60 text-navy/60 dark:border-white/10 dark:bg-white/5 dark:text-gray-400'
+                  : 'border-navy/10 bg-white/80 text-navy/60 dark:border-white/10 dark:bg-white/5 dark:text-gray-400'
               }`}
             >
               {isUnifiedView ? `통합 (${primaryCurrency})` : '통화별'}

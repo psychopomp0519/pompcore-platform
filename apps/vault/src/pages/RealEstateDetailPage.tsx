@@ -10,56 +10,17 @@ import { useAuthStore } from '../stores/authStore';
 import { useRealEstateStore } from '../stores/realEstateStore';
 import type { RealEstate, RealEstateFormData, LeaseFormData, ExpenseFormData } from '../types/realEstate.types';
 import { PropertyForm } from '../components/realEstate/PropertyForm';
-import { LeaseCard } from '../components/realEstate/LeaseCard';
 import { LeaseForm } from '../components/realEstate/LeaseForm';
-import { ExpenseList } from '../components/realEstate/ExpenseList';
 import { ExpenseForm } from '../components/realEstate/ExpenseForm';
+import { PropertyHeader } from '../components/realEstate/PropertyHeader';
+import { SummaryGrid } from '../components/realEstate/SummaryGrid';
+import { LeasesSection } from '../components/realEstate/LeasesSection';
+import { ExpensesSection } from '../components/realEstate/ExpensesSection';
 import { Modal, ConfirmDialog, LoadingSpinner } from '@pompcore/ui';
 import {
   calcRealEstateSummary,
   calcCapitalGainRate,
 } from '../utils/realEstateCalculator';
-
-// ============================================================
-// 상수
-// ============================================================
-
-const PROPERTY_TYPE_LABEL: Record<string, string> = {
-  apartment: '아파트',
-  house: '단독주택',
-  villa: '빌라',
-  commercial: '상가',
-  land: '토지',
-  other: '기타',
-};
-
-const ROLE_LABEL: Record<string, string> = {
-  owner: '소유',
-  tenant: '임차',
-};
-
-// ============================================================
-// 서브 컴포넌트 — 요약 카드
-// ============================================================
-
-interface SummaryCardProps {
-  label: string;
-  value: string;
-  sub?: string;
-  highlight?: boolean;
-}
-
-function SummaryCard({ label, value, sub, highlight }: SummaryCardProps): ReactNode {
-  return (
-    <div className="rounded-2xl bg-white/60 p-4 backdrop-blur dark:bg-navy/40">
-      <p className="mb-1 text-xs font-semibold text-navy/60 dark:text-gray-400">{label}</p>
-      <p className={`tabular-nums text-lg font-bold ${highlight ? 'text-vault-color' : 'text-navy dark:text-gray-100'}`}>
-        {value}
-      </p>
-      {sub && <p className="mt-0.5 text-xs text-navy/50 dark:text-gray-500">{sub}</p>}
-    </div>
-  );
-}
 
 // ============================================================
 // RealEstateDetailPage
@@ -231,175 +192,36 @@ export function RealEstateDetailPage(): ReactNode {
       )}
 
       {/* 물건 헤더 */}
-      <div className="mb-6 flex items-start justify-between gap-3">
-        <div>
-          <div className="mb-2 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-vault-color/10 px-2.5 py-0.5 text-xs font-semibold text-vault-color dark:bg-vault-color/20">
-              {PROPERTY_TYPE_LABEL[property.propertyType] ?? property.propertyType}
-            </span>
-            <span className="rounded-full bg-sky-100 px-2.5 py-0.5 text-xs font-semibold text-sky-700 dark:bg-sky-900/40 dark:text-sky-300">
-              {ROLE_LABEL[property.role] ?? property.role}
-            </span>
-          </div>
-          <h1 className="font-display text-2xl font-bold text-navy dark:text-gray-100">
-            {property.name}
-          </h1>
-          {property.address && (
-            <p className="mt-1 text-sm text-navy/60 dark:text-gray-400">{property.address}</p>
-          )}
-        </div>
+      <PropertyHeader
+        property={property}
+        onEdit={() => setIsEditOpen(true)}
+        onDelete={() => setIsDeleteOpen(true)}
+      />
 
-        {/* 편집 / 삭제 */}
-        <div className="flex shrink-0 gap-2">
-          <button
-            type="button"
-            onClick={() => setIsEditOpen(true)}
-            className="rounded-xl border border-navy/10 px-3 py-1.5 text-sm font-semibold text-navy/70 hover:bg-navy/5 dark:border-white/10 dark:text-gray-400 dark:hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
-          >
-            편집
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsDeleteOpen(true)}
-            className="rounded-xl border border-red-200 px-3 py-1.5 text-sm font-semibold text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
-          >
-            삭제
-          </button>
-        </div>
-      </div>
-
-      {/* ── 요약 카드 그리드 ── */}
+      {/* 요약 카드 그리드 */}
       {summary && (
-        <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {/* 현재가 */}
-          <SummaryCard
-            label="현재가"
-            value={property.currentValue != null
-              ? `${property.currentValue.toLocaleString('ko-KR')} ${property.currency}`
-              : '-'}
-          />
-
-          {/* 취득가 */}
-          <SummaryCard
-            label={property.role === 'owner' ? '취득가' : '보증금'}
-            value={property.acquisitionPrice != null
-              ? `${property.acquisitionPrice.toLocaleString('ko-KR')} ${property.currency}`
-              : '-'}
-          />
-
-          {/* 자본 수익률 (소유자 + 두 값 모두 있을 때) */}
-          {property.role === 'owner' && capitalGainRate != null && (
-            <SummaryCard
-              label="자본 수익률"
-              value={`${capitalGainRate >= 0 ? '+' : ''}${capitalGainRate.toFixed(2)}%`}
-              highlight={capitalGainRate > 0}
-            />
-          )}
-
-          {/* 임대 수익률 */}
-          {summary.annualRentalYield != null && (
-            <SummaryCard
-              label="임대 수익률"
-              value={`${summary.annualRentalYield.toFixed(2)}%`}
-              sub="연 순수익률"
-              highlight
-            />
-          )}
-
-          {/* 전세 수익률 */}
-          {summary.jeonseYield != null && (
-            <SummaryCard
-              label="전세 수익률"
-              value={`${summary.jeonseYield.toFixed(2)}%`}
-              sub="보증금 / 현재가"
-              highlight
-            />
-          )}
-
-          {/* 계약 만료 D-day */}
-          {summary.daysUntilLeaseEnd != null && (
-            <SummaryCard
-              label="계약 만료"
-              value={
-                summary.daysUntilLeaseEnd === 0
-                  ? '오늘 만료'
-                  : summary.daysUntilLeaseEnd < 0
-                    ? `${Math.abs(summary.daysUntilLeaseEnd)}일 초과`
-                    : `D-${summary.daysUntilLeaseEnd}`
-              }
-              sub={activeLease?.endDate ?? undefined}
-              highlight={summary.daysUntilLeaseEnd >= 0 && summary.daysUntilLeaseEnd <= 30}
-            />
-          )}
-        </div>
+        <SummaryGrid
+          property={property}
+          summary={summary}
+          capitalGainRate={capitalGainRate}
+          activeLease={activeLease}
+        />
       )}
 
-      {/* ── 계약 섹션 ── */}
-      <section className="mb-8">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-display text-lg font-bold text-navy dark:text-gray-100">계약</h2>
-          <button
-            type="button"
-            onClick={() => setIsLeaseOpen(true)}
-            className="flex items-center gap-1 rounded-xl bg-vault-color/10 px-3 py-1.5 text-sm font-semibold text-vault-color hover:bg-vault-color/20 dark:bg-vault-color/20 dark:hover:bg-vault-color/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
-            계약 추가
-          </button>
-        </div>
+      {/* 계약 섹션 */}
+      <LeasesSection
+        activeLease={activeLease}
+        inactiveLeases={inactiveLeases}
+        onAddLease={() => setIsLeaseOpen(true)}
+        onCloseLease={handleCloseLease}
+      />
 
-        {/* 활성 계약 */}
-        {activeLease ? (
-          <div className="mb-3">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-navy/50 dark:text-gray-500">
-              활성 계약
-            </p>
-            <LeaseCard lease={activeLease} onClose={handleCloseLease} />
-          </div>
-        ) : (
-          <p className="mb-3 text-sm text-navy/50 dark:text-gray-500">활성 계약이 없습니다.</p>
-        )}
-
-        {/* 종료된 계약 */}
-        {inactiveLeases.length > 0 && (
-          <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-navy/50 dark:text-gray-500">
-              종료된 계약
-            </p>
-            <div className="space-y-2">
-              {inactiveLeases.map((lease) => (
-                <LeaseCard key={lease.id} lease={lease} onClose={handleCloseLease} />
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* ── 비용 섹션 ── */}
-      <section>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-display text-lg font-bold text-navy dark:text-gray-100">비용</h2>
-          <button
-            type="button"
-            onClick={() => setIsExpenseOpen(true)}
-            className="flex items-center gap-1 rounded-xl bg-vault-color/10 px-3 py-1.5 text-sm font-semibold text-vault-color hover:bg-vault-color/20 dark:bg-vault-color/20 dark:hover:bg-vault-color/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
-            비용 추가
-          </button>
-        </div>
-
-        <div className="rounded-2xl bg-white/60 backdrop-blur dark:bg-navy/40">
-          <ExpenseList
-            expenses={expenses}
-            onDelete={(expId) => setDeletingExpenseId(expId)}
-          />
-        </div>
-      </section>
+      {/* 비용 섹션 */}
+      <ExpensesSection
+        expenses={expenses}
+        onAddExpense={() => setIsExpenseOpen(true)}
+        onDeleteExpense={(expId) => setDeletingExpenseId(expId)}
+      />
 
       {/* ── 모달 ── */}
 

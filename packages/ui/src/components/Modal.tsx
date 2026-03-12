@@ -19,7 +19,14 @@ const MAX_WIDTH_MAP = {
   lg: 'max-w-lg',
 } as const;
 
-const FOCUSABLE_SELECTOR = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])' as const;
+const FOCUSABLE_SELECTOR = [
+  'a[href]:not([aria-hidden="true"]):not([hidden])',
+  'button:not(:disabled):not([aria-hidden="true"]):not([hidden])',
+  'textarea:not(:disabled):not([aria-hidden="true"]):not([hidden])',
+  'input:not(:disabled):not([type="hidden"]):not([aria-hidden="true"]):not([hidden])',
+  'select:not(:disabled):not([aria-hidden="true"]):not([hidden])',
+  '[tabindex]:not([tabindex="-1"]):not([aria-hidden="true"]):not([hidden])',
+].join(', ') as string;
 
 /** 모달 다이얼로그 */
 export function Modal({

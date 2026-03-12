@@ -2,7 +2,7 @@
  * 레이아웃 컴포넌트
  * - Header + 메인 콘텐츠 + Footer를 감싸는 공통 레이아웃
  * - 라이트 모드 기본, dark 클래스로 다크 모드 전환
- * - 홈 페이지: fullpage 모드 (Footer 숨김, overflow hidden)
+ * - 홈 페이지: fullpage 모드 (overflow hidden, Footer는 DOM에 렌더링)
  */
 import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -27,7 +27,7 @@ export default function Layout({ children }: LayoutProps) {
       <main id="main-content" className={`flex-1 ${isHome ? 'overflow-hidden' : 'pt-20'}`} role="main">
         {children}
       </main>
-      {!isHome && <Footer />}
+      <Footer />
     </div>
   );
 }

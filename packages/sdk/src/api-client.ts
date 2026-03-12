@@ -1,5 +1,5 @@
 import { getSupabase } from '@pompcore/auth';
-import type { UserProfile } from '@pompcore/types';
+import type { UserProfile, DbAccount, DbTransaction, CreateAccountInput, CreateTransactionInput, TransactionFilters } from '@pompcore/types';
 
 /**
  * Typed API client for calling the PompCore platform API.
@@ -34,23 +34,78 @@ interface ApiResponse<T> {
   code?: string;
 }
 
+// ── Retry configuration ────────────────────────────
+
+const MAX_RETRIES = 3;
+const INITIAL_DELAY_MS = 100;
+const MAX_DELAY_MS = 10_000;
+
+/** 재시도 대상 HTTP 상태 코드 */
+const RETRYABLE_STATUS_CODES = new Set([429, 500, 502, 503, 504]);
+
+/** 지수 백오프 + 지터 계산 */
+function getRetryDelay(attempt: number): number {
+  const exponential = INITIAL_DELAY_MS * Math.pow(2, attempt);
+  const jitter = Math.random() * exponential * 0.5;
+  return Math.min(exponential + jitter, MAX_DELAY_MS);
+}
+
+function isRetryable(status: number): boolean {
+  return RETRYABLE_STATUS_CODES.has(status);
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   const headers = await getAuthHeaders();
+  let lastError: Error | null = null;
 
-  const res = await fetch(`${baseUrl}${path}`, {
-    method,
-    headers,
-    credentials: 'include',
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const res = await fetch(`${baseUrl}${path}`, {
+        method,
+        headers,
+        credentials: 'include',
+        body: body ? JSON.stringify(body) : undefined,
+      });
 
-  const json: ApiResponse<T> = await res.json();
+      /** 4xx (429 제외) 클라이언트 에러는 즉시 실패 */
+      if (!res.ok && !isRetryable(res.status)) {
+        const json: ApiResponse<T> = await res.json();
+        throw new Error(json.error ?? `API error: ${res.status}`);
+      }
 
-  if (!res.ok || json.error) {
-    throw new Error(json.error ?? `API error: ${res.status}`);
+      /** 재시도 가능한 서버 에러 */
+      if (!res.ok && isRetryable(res.status)) {
+        lastError = new Error(`API error: ${res.status}`);
+        if (attempt < MAX_RETRIES) {
+          await sleep(getRetryDelay(attempt));
+          continue;
+        }
+        throw lastError;
+      }
+
+      const json: ApiResponse<T> = await res.json();
+
+      if (json.error) {
+        throw new Error(json.error);
+      }
+
+      return json.data as T;
+    } catch (error) {
+      /** 네트워크 에러 (fetch 자체 실패) — 재시도 */
+      if (error instanceof TypeError && attempt < MAX_RETRIES) {
+        lastError = error;
+        await sleep(getRetryDelay(attempt));
+        continue;
+      }
+      throw error;
+    }
   }
 
-  return json.data as T;
+  throw lastError ?? new Error('Request failed after retries');
 }
 
 // ── Auth endpoints ──────────────────────────────────
@@ -66,69 +121,16 @@ export const authApi = {
 
 // ── Vault: Accounts ─────────────────────────────────
 
-export interface Account {
-  id: string;
-  user_id: string;
-  name: string;
-  supported_currencies: string[];
-  default_currency: string;
-  is_favorite: boolean;
-  sort_order: number;
-  deleted_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface CreateAccountInput {
-  name: string;
-  supported_currencies?: string[];
-  default_currency?: string;
-}
-
 export const accountsApi = {
-  list: () => request<Account[]>('GET', '/vault/accounts'),
+  list: () => request<DbAccount[]>('GET', '/vault/accounts'),
 
   create: (input: CreateAccountInput) =>
-    request<Account>('POST', '/vault/accounts', input),
+    request<DbAccount>('POST', '/vault/accounts', input),
 
   delete: (id: string) => request<void>('DELETE', `/vault/accounts/${id}`),
 };
 
 // ── Vault: Transactions ─────────────────────────────
-
-export interface Transaction {
-  id: string;
-  user_id: string;
-  account_id: string;
-  category_id: string | null;
-  name: string;
-  type: 'income' | 'expense';
-  amount: number;
-  currency: string;
-  transaction_date: string;
-  memo: string | null;
-  deleted_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface CreateTransactionInput {
-  account_id: string;
-  category_id?: string;
-  name: string;
-  type: 'income' | 'expense';
-  amount: number;
-  currency?: string;
-  transaction_date?: string;
-  memo?: string;
-}
-
-export interface TransactionFilters {
-  month?: string;
-  account_id?: string;
-  category_id?: string;
-  type?: 'income' | 'expense';
-}
 
 export const transactionsApi = {
   list: (filters?: TransactionFilters) => {
@@ -138,11 +140,11 @@ export const transactionsApi = {
     if (filters?.category_id) params.set('category_id', filters.category_id);
     if (filters?.type) params.set('type', filters.type);
     const qs = params.toString();
-    return request<Transaction[]>('GET', `/vault/transactions${qs ? `?${qs}` : ''}`);
+    return request<DbTransaction[]>('GET', `/vault/transactions${qs ? `?${qs}` : ''}`);
   },
 
   create: (input: CreateTransactionInput) =>
-    request<Transaction>('POST', '/vault/transactions', input),
+    request<DbTransaction>('POST', '/vault/transactions', input),
 
   delete: (id: string) => request<void>('DELETE', `/vault/transactions/${id}`),
 };

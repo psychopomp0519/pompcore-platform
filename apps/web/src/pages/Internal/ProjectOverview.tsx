@@ -25,7 +25,7 @@ function SectionCard({ section }: { section: OverviewSection }) {
           {section.title}
         </h2>
         <span
-          className={`text-xs text-[#7C3AED]/50 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+          className={`text-xs text-brand/50 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
           aria-hidden="true"
         >
           ▼
@@ -51,7 +51,7 @@ function SectionCard({ section }: { section: OverviewSection }) {
 
             {/* 하위 섹션 */}
             {section.subsections?.map((sub, i) => (
-              <div key={i} className="pl-4 border-l-2 border-[#7C3AED]/10 dark:border-[#7C3AED]/20 space-y-2">
+              <div key={i} className="pl-4 border-l-2 border-brand/10 dark:border-brand/20 space-y-2">
                 <h3 className="text-sm font-semibold text-[#1A1A2E] dark:text-white/90">
                   {sub.title}
                 </h3>
@@ -107,7 +107,7 @@ export default function ProjectOverview() {
         <div className="max-w-4xl mx-auto px-6 py-24">
           {/* 페이지 헤더 */}
           <div className="text-center mb-12">
-            <p className="text-[11px] tracking-[2px] text-[#FFD700]/70 uppercase mb-3 font-display">
+            <p className="text-[11px] tracking-[2px] text-accent-gold/70 uppercase mb-3 font-display">
               INTERNAL DOCUMENT
             </p>
             <h1 className="font-display text-[28px] md:text-[32px] font-bold text-[#1A1A2E] dark:text-white mb-3">
@@ -116,8 +116,8 @@ export default function ProjectOverview() {
             <p className="text-sm text-[#4A4270] dark:text-[#6A5490]">
               PompCore — 일상을 플레이하다 | Project Overview v1.1
             </p>
-            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#7C3AED]/[0.06] dark:bg-white/[0.04] text-[11px] font-medium text-[#7C3AED] dark:text-[#A78BFA]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED]" />
+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand/[0.06] dark:bg-white/[0.04] text-[11px] font-medium text-brand dark:text-purple-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand" />
               팀원 이상 열람 가능
             </div>
           </div>

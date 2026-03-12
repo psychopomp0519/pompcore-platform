@@ -4,7 +4,7 @@
  * @module components/savings/SavingsCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { Savings } from '../../types/savings.types';
 import { SAVINGS_TYPE_LABELS } from '../../types/savings.types';
 import { GlassCard } from '../common/GlassCard';
@@ -47,7 +47,7 @@ const TYPE_ICONS: Record<string, (props: { className?: string }) => ReactNode> =
 // ============================================================
 
 /** 예/적금 카드 */
-export function SavingsCard({
+function SavingsCardInner({
   savings,
   currency,
   onEdit,
@@ -88,6 +88,7 @@ export function SavingsCard({
           <button
             type="button"
             onClick={() => onEdit(savings)}
+            title="수정"
             className="rounded-lg p-1.5 text-navy/30 transition-colors hover:text-navy/60 dark:text-gray-500 dark:hover:text-gray-300"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -97,6 +98,7 @@ export function SavingsCard({
           <button
             type="button"
             onClick={() => onDelete(savings)}
+            title="삭제"
             className="rounded-lg p-1.5 text-navy/30 transition-colors hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -156,6 +158,8 @@ export function SavingsCard({
     </GlassCard>
   );
 }
+
+export const SavingsCard = memo(SavingsCardInner);
 
 // ============================================================
 // 내부 컴포넌트

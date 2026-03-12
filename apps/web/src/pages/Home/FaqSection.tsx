@@ -6,6 +6,55 @@
  */
 import { useState } from 'react';
 import { FAQ_ITEMS } from '../../constants/faq';
+import CloudBackground from '../../components/common/CloudBackground';
+import type { CloudConfig } from '../../components/common/CloudBackground';
+import Starfield from '../../components/common/Starfield';
+
+/** FAQ 섹션 구름 배치 데이터 */
+const FAQ_CLOUDS: CloudConfig[] = [
+  {
+    type: 'composite',
+    position: 'top-[8%] right-[10%]',
+    outerSize: 'w-[180px] md:w-[300px] h-[52px] md:h-[76px]',
+    innerSize: 'w-[120px] md:w-[210px] h-[36px] md:h-[54px]',
+    outerBlur: 'blur-[24px]',
+    innerBlur: 'blur-[10px]',
+    outerOpacity: 'bg-white/40',
+    innerOpacity: 'bg-white/76',
+    animation: 'animate-cloud-drift-slow',
+    delay: '5s',
+  },
+  {
+    type: 'composite',
+    position: 'bottom-[12%] left-[6%]',
+    outerSize: 'w-[160px] md:w-[270px] h-[48px] md:h-[68px]',
+    innerSize: 'w-[110px] md:w-[190px] h-[34px] md:h-[48px]',
+    outerBlur: 'blur-[22px]',
+    innerBlur: 'blur-[9px]',
+    outerOpacity: 'bg-white/38',
+    innerOpacity: 'bg-white/74',
+    animation: 'animate-cloud-drift',
+    delay: '12s',
+  },
+  {
+    type: 'simple',
+    position: 'top-[40%] left-[15%]',
+    size: 'w-[85px] md:w-[140px] h-[28px] md:h-[42px]',
+    blur: 'blur-[7px]',
+    opacity: 'bg-white/78',
+    animation: 'animate-cloud-drift',
+    delay: '8s',
+  },
+  {
+    type: 'simple',
+    position: 'bottom-[35%] right-[18%]',
+    size: 'w-[80px] md:w-[130px] h-[26px] md:h-[38px]',
+    blur: 'blur-[7px]',
+    opacity: 'bg-white/76',
+    animation: 'animate-cloud-drift-slow',
+    delay: '17s',
+  },
+];
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -16,32 +65,10 @@ export default function FaqSection() {
 
   return (
     <section className="snap-section bg-gradient-to-b from-sky-mist to-sky-faint dark:from-surface-dark-1 dark:to-surface-dark-1 relative overflow-hidden py-12 flex flex-col justify-center">
-      {/* 구름 (라이트 전용) — 복합 구름 + 애니메이션 */}
-      <div className="dark:hidden absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* 복합 구름 1 */}
-        <div className="animate-cloud-drift-slow" style={{ animationDelay: '5s' }}>
-          <div className="absolute top-[8%] right-[10%] w-[180px] md:w-[300px] h-[52px] md:h-[76px] bg-white/40 rounded-full blur-[24px]" />
-          <div className="absolute top-[8.5%] right-[12%] w-[120px] md:w-[210px] h-[36px] md:h-[54px] bg-white/76 rounded-full blur-[10px]" />
-        </div>
-        {/* 복합 구름 2 */}
-        <div className="animate-cloud-drift" style={{ animationDelay: '12s' }}>
-          <div className="absolute bottom-[12%] left-[6%] w-[160px] md:w-[270px] h-[48px] md:h-[68px] bg-white/38 rounded-full blur-[22px]" />
-          <div className="absolute bottom-[12.5%] left-[8%] w-[110px] md:w-[190px] h-[34px] md:h-[48px] bg-white/74 rounded-full blur-[9px]" />
-        </div>
-        {/* 작은 구름 */}
-        <div className="animate-cloud-drift" style={{ animationDelay: '8s' }}>
-          <div className="absolute top-[40%] left-[15%] w-[85px] md:w-[140px] h-[28px] md:h-[42px] bg-white/78 rounded-full blur-[7px]" />
-        </div>
-        <div className="animate-cloud-drift-slow" style={{ animationDelay: '17s' }}>
-          <div className="absolute bottom-[35%] right-[18%] w-[80px] md:w-[130px] h-[26px] md:h-[38px] bg-white/76 rounded-full blur-[7px]" />
-        </div>
-      </div>
+      {/* 구름 (라이트 전용) */}
+      <CloudBackground clouds={FAQ_CLOUDS} />
       {/* 별 (다크 전용) */}
-      <div className="hidden dark:block absolute inset-0 pointer-events-none" aria-hidden="true">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <span key={i} className="absolute w-[2px] h-[2px] bg-white rounded-full animate-twinkle" style={{ top: `${8 + (i * 10.5) % 82}%`, left: `${6 + (i * 11.3) % 87}%`, animationDelay: `${(i * 0.35).toFixed(2)}s`, opacity: 0.2 + (i % 3) * 0.15 }} />
-        ))}
-      </div>
+      <Starfield count={8} spreadY={10.5} spreadX={11.3} delayStep={0.35} />
       <div className="max-w-[640px] mx-auto px-4 sm:px-6 relative z-10">
         {/* 헤더 */}
         <div className="text-center mb-12">
@@ -65,7 +92,7 @@ export default function FaqSection() {
             return (
               <div
                 key={index}
-                className="rounded-xl bg-[#7C3AED]/[0.025] dark:bg-[#7C3AED]/[0.025] border border-[#7C3AED]/[0.07] dark:border-[#7C3AED]/[0.07] overflow-hidden transition-colors"
+                className="rounded-xl bg-brand/[0.025] dark:bg-brand/[0.025] border border-brand/[0.07] dark:border-brand/[0.07] overflow-hidden transition-colors"
               >
                 <button
                   onClick={() => toggle(index)}
@@ -73,7 +100,7 @@ export default function FaqSection() {
                   className="w-full flex items-center gap-3 p-4 text-left min-h-[44px] cursor-pointer"
                 >
                   {/* Q 아이콘 */}
-                  <span className="font-display text-sm font-bold text-[#B8860B] dark:text-[#FFD700]/70 shrink-0">
+                  <span className="font-display text-sm font-bold text-[#B8860B] dark:text-accent-gold/70 shrink-0">
                     Q
                   </span>
                   {/* 질문 텍스트 */}
@@ -82,7 +109,7 @@ export default function FaqSection() {
                   </span>
                   {/* 화살표 */}
                   <span
-                    className={`text-xs text-[#7C3AED]/50 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`text-xs text-brand/50 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                     aria-hidden="true"
                   >
                     ▼

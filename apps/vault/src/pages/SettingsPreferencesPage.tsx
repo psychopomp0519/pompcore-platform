@@ -88,7 +88,7 @@ export function SettingsPreferencesPage(): ReactNode {
               id="pref-currency"
               value={primaryCurrency}
               onChange={(e) => setCurrencyOverride(e.target.value)}
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
             >
               {Object.values(CURRENCIES).map((cur) => (
                 <option key={cur.code} value={cur.code}>
@@ -110,7 +110,7 @@ export function SettingsPreferencesPage(): ReactNode {
               id="pref-avg-period"
               value={recurringAvgPeriod}
               onChange={(e) => setPeriodOverride(e.target.value as typeof recurringAvgPeriod)}
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
             >
               {AVG_PERIOD_OPTIONS.map((period) => (
                 <option key={period} value={period}>

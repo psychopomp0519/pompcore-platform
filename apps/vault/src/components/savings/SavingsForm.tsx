@@ -4,7 +4,7 @@
  * @module components/savings/SavingsForm
  */
 
-import { useState, type ReactNode, type FormEvent } from 'react';
+import { useState, memo, type ReactNode, type FormEvent } from 'react';
 import { Button } from '@pompcore/ui';
 import type { SavingsFormData } from '../../types/savings.types';
 import { SAVINGS_TYPE_LABELS, SAVINGS_TYPES } from '../../types/savings.types';
@@ -29,7 +29,7 @@ interface SavingsFormProps {
 // ============================================================
 
 /** 예/적금 생성/수정 폼 */
-export function SavingsForm({
+function SavingsFormInner({
   initialData,
   accounts,
   fixedType,
@@ -113,7 +113,7 @@ export function SavingsForm({
           onChange={(e) => setName(e.target.value)}
           placeholder="예/적금 이름"
           maxLength={50}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           autoFocus
         />
       </div>
@@ -130,7 +130,7 @@ export function SavingsForm({
             placeholder="3.5"
             step="0.01"
             min="0"
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
         <div>
@@ -142,7 +142,7 @@ export function SavingsForm({
             onChange={(e) => setDurationMonths(e.target.value)}
             placeholder="12"
             min="1"
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
       </div>
@@ -158,7 +158,8 @@ export function SavingsForm({
             onChange={(e) => setPrincipal(e.target.value)}
             placeholder="0"
             min="0"
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            max="9999999999"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
       )}
@@ -173,7 +174,8 @@ export function SavingsForm({
             onChange={(e) => setInstallmentAmount(e.target.value)}
             placeholder="0"
             min="0"
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            max="9999999999"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
       )}
@@ -186,7 +188,7 @@ export function SavingsForm({
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
         />
       </div>
 
@@ -197,7 +199,7 @@ export function SavingsForm({
           id="sav-account"
           value={linkedAccountId}
           onChange={(e) => setLinkedAccountId(e.target.value)}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
         >
           <option value="">선택 안 함</option>
           {sortedAccounts.map((acc) => (
@@ -240,3 +242,5 @@ export function SavingsForm({
     </form>
   );
 }
+
+export const SavingsForm = memo(SavingsFormInner);

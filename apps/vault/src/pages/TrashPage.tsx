@@ -14,7 +14,7 @@ import {
   type TrashItem,
 } from '../services/trash.service';
 import { GlassCard, ConfirmDialog, LoadingSpinner, EmptyState, toUserMessage } from '@pompcore/ui';
-import { IconBank, IconTag, IconReceipt, IconRepeat, IconGem, IconWallet, IconTrash } from '@pompcore/ui';
+import { IconBank, IconTag, IconReceipt, IconRepeat, IconGem, IconWallet, IconTrash, IconChart, IconRealEstate } from '@pompcore/ui';
 
 // ============================================================
 // 타입 아이콘 매핑
@@ -27,6 +27,8 @@ const TYPE_ICONS: Record<TrashItem['type'], (props: { className?: string }) => R
   recurring: IconRepeat,
   savings: IconGem,
   budget: IconWallet,
+  portfolio: IconChart,
+  real_estate: IconRealEstate,
 };
 
 // ============================================================

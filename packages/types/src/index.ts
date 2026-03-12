@@ -15,3 +15,31 @@ export type {
   ServiceFeatures, ServiceConfig, Service, ServiceSubscription,
   PlatformEvent, UsageCounters, ServiceUsage,
 } from './service.types';
+
+// ── Vault DB entity types ──────────────────────────────────
+export type {
+  DbUserSettings, DbUserSettingsInsert, DbUserSettingsUpdate,
+  DbAccount, DbAccountInsert, DbAccountUpdate,
+  DbAccountBalance, DbAccountBalanceInsert, DbAccountBalanceUpdate,
+  DbCategory, DbCategoryInsert, DbCategoryUpdate,
+  DbTransaction, DbTransactionInsert, DbTransactionUpdate,
+  DbTransfer, DbTransferInsert,
+  DbRecurringPayment, DbRecurringPaymentInsert, DbRecurringPaymentUpdate,
+  DbRecurringOverride, DbRecurringOverrideInsert,
+  DbSavings, DbSavingsInsert, DbSavingsUpdate,
+  DbSavingsDeposit, DbSavingsDepositInsert,
+  DbBudget, DbBudgetInsert, DbBudgetUpdate,
+  DbAnnouncement, DbAnnouncementInsert, DbAnnouncementUpdate,
+  DbAnnouncementComment, DbAnnouncementCommentInsert,
+  DbAnnouncementLike,
+  DbInquiry, DbInquiryInsert, DbInquiryUpdate,
+  DbInvestmentPortfolio, DbInvestmentPortfolioInsert, DbInvestmentPortfolioUpdate,
+  DbInvestmentTrade, DbInvestmentTradeInsert, DbInvestmentTradeUpdate,
+  DbInvestmentPriceSnapshot,
+  DbRealEstate, DbRealEstateInsert, DbRealEstateUpdate,
+  DbRealEstateLease, DbRealEstateLeaseInsert, DbRealEstateLeaseUpdate,
+  DbRealEstateExpense, DbRealEstateExpenseInsert,
+  TransactionSourceType, BudgetAction, DbIntervalUnit, SavingsType, BudgetType,
+  AssetType, TradeType, PropertyType, RealEstateRole, LeaseType, ExpenseType,
+  CreateAccountInput, CreateTransactionInput, TransactionFilters,
+} from './vault.types';

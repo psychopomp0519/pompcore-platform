@@ -4,7 +4,7 @@
  * @module components/statistics/AssetTrendChart
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import type { Transaction } from '../../types/transaction.types';
 import { GlassCard } from '../common/GlassCard';
@@ -62,7 +62,7 @@ function calculateAssetTrend(
 // ============================================================
 
 /** 총 자산 변동 추이 라인 차트 */
-export function AssetTrendChart({
+function AssetTrendChartInner({
   transactions,
   currency,
   initialBalance,
@@ -132,4 +132,6 @@ export function AssetTrendChart({
     </GlassCard>
   );
 }
+
+export const AssetTrendChart = memo(AssetTrendChartInner);
 

@@ -24,7 +24,7 @@ function AnnouncementCard({ announcement }: { announcement: Announcement }) {
     >
       <div className="flex items-start gap-4">
         {/* 카테고리 아이콘 */}
-        <span className="flex-shrink-0 mt-0.5 text-[#7C3AED] dark:text-[#A78BFA]">
+        <span className="flex-shrink-0 mt-0.5 text-brand dark:text-purple-400">
           <DynamicIcon name={categoryConfig.icon} size={24} fallback={categoryConfig.icon} />
         </span>
 

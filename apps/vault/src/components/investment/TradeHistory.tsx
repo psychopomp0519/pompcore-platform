@@ -4,7 +4,7 @@
  * @module components/investment/TradeHistory
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { InvestmentTrade } from '../../types/investment.types';
 import type { TradeType } from '../../types/database.types';
 import { formatDisplayDate } from '../../utils/date';
@@ -41,7 +41,7 @@ const TRADE_TYPE_COLOR: Record<TradeType, string> = {
 // ============================================================
 
 /** 거래 기록 목록 */
-export function TradeHistory({ trades, onDelete }: TradeHistoryProps): ReactNode {
+function TradeHistoryInner({ trades, onDelete }: TradeHistoryProps): ReactNode {
   if (trades.length === 0) {
     return (
       <div className="py-8 text-center text-sm text-navy/40 dark:text-gray-500">
@@ -58,6 +58,8 @@ export function TradeHistory({ trades, onDelete }: TradeHistoryProps): ReactNode
     </ul>
   );
 }
+
+export const TradeHistory = memo(TradeHistoryInner);
 
 // ============================================================
 // TradeItem

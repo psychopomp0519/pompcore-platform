@@ -4,7 +4,7 @@
  * @module components/statistics/IncomeExpenseChart
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 import type { Transaction } from '../../types/transaction.types';
 import { GlassCard } from '../common/GlassCard';
@@ -62,7 +62,7 @@ function aggregateByMonth(transactions: Transaction[], currency: string): MonthD
 // ============================================================
 
 /** 월별 수입/지출 비교 막대 차트 */
-export function IncomeExpenseChart({
+function IncomeExpenseChartInner({
   transactions,
   months,
   currency,
@@ -116,4 +116,6 @@ export function IncomeExpenseChart({
     </GlassCard>
   );
 }
+
+export const IncomeExpenseChart = memo(IncomeExpenseChartInner);
 

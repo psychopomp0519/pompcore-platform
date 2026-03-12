@@ -50,6 +50,8 @@ export function TransactionsPage(): ReactNode {
   const [editingTx, setEditingTx] = useState<Transaction | null>(null);
   const [deletingTx, setDeletingTx] = useState<Transaction | null>(null);
   const [filterType, setFilterType] = useState<'income' | 'expense' | ''>('');
+  const [filterCategoryId, setFilterCategoryId] = useState('');
+  const [filterAccountId, setFilterAccountId] = useState('');
 
   /* 데이터 로드 */
   useEffect(() => {
@@ -120,9 +122,9 @@ export function TransactionsPage(): ReactNode {
       <div className="flex items-center justify-between">
         <PeriodNavigator
           period={period}
-          onPrev={() => user?.id && goToPrevMonth(user.id)}
-          onNext={() => user?.id && goToNextMonth(user.id)}
-          onToday={() => user?.id && goToCurrentMonth(user.id)}
+          onPrev={() => { if (user?.id) { setFilterType(''); setFilterCategoryId(''); setFilterAccountId(''); goToPrevMonth(user.id); } }}
+          onNext={() => { if (user?.id) { setFilterType(''); setFilterCategoryId(''); setFilterAccountId(''); goToNextMonth(user.id); } }}
+          onToday={() => { if (user?.id) { setFilterType(''); setFilterCategoryId(''); setFilterAccountId(''); goToCurrentMonth(user.id); } }}
           isCurrentMonth={isCurrentMonth}
         />
 
@@ -171,7 +173,8 @@ export function TransactionsPage(): ReactNode {
       </GlassCard>
 
       {/* 필터 */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        {/* 수입/지출 타입 필터 */}
         <div className="flex gap-1 rounded-lg bg-navy/5 p-0.5 dark:bg-white/5">
           {[
             { key: '', label: '전체' },
@@ -185,7 +188,11 @@ export function TransactionsPage(): ReactNode {
                 const newType = opt.key as 'income' | 'expense' | '';
                 setFilterType(newType);
                 if (user?.id) {
-                  setFilters(user.id, { type: newType || undefined });
+                  setFilters(user.id, {
+                    type: newType || undefined,
+                    categoryId: filterCategoryId || undefined,
+                    accountId: filterAccountId || undefined,
+                  });
                 }
               }}
               className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
@@ -198,6 +205,50 @@ export function TransactionsPage(): ReactNode {
             </button>
           ))}
         </div>
+
+        {/* 카테고리 필터 */}
+        <select
+          value={filterCategoryId}
+          onChange={(e) => {
+            const val = e.target.value;
+            setFilterCategoryId(val);
+            if (user?.id) {
+              setFilters(user.id, {
+                type: filterType || undefined,
+                categoryId: val || undefined,
+                accountId: filterAccountId || undefined,
+              });
+            }
+          }}
+          className="rounded-lg border border-navy/10 bg-white/80 px-2.5 py-1 text-xs text-navy transition-colors focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+        >
+          <option value="">모든 카테고리</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>{cat.name}</option>
+          ))}
+        </select>
+
+        {/* 통장 필터 */}
+        <select
+          value={filterAccountId}
+          onChange={(e) => {
+            const val = e.target.value;
+            setFilterAccountId(val);
+            if (user?.id) {
+              setFilters(user.id, {
+                type: filterType || undefined,
+                categoryId: filterCategoryId || undefined,
+                accountId: val || undefined,
+              });
+            }
+          }}
+          className="rounded-lg border border-navy/10 bg-white/80 px-2.5 py-1 text-xs text-navy transition-colors focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+        >
+          <option value="">모든 통장</option>
+          {accounts.map((acc) => (
+            <option key={acc.id} value={acc.id}>{acc.name}</option>
+          ))}
+        </select>
       </div>
 
       {/* 거래내역 목록 */}

@@ -4,7 +4,7 @@
  * @module components/recurring/RecurringForm
  */
 
-import { useState, type ReactNode, type FormEvent } from 'react';
+import { useState, memo, type ReactNode, type FormEvent } from 'react';
 import { Button } from '@pompcore/ui';
 import type { RecurringFormData } from '../../types/recurring.types';
 import type { Account } from '../../types/account.types';
@@ -38,7 +38,7 @@ const INTERVAL_UNITS: DbIntervalUnit[] = ['day', 'week', 'month', 'year'];
 // ============================================================
 
 /** 정기결제 생성/수정 폼 */
-export function RecurringForm({
+function RecurringFormInner({
   initialData,
   accounts,
   categories,
@@ -146,7 +146,7 @@ export function RecurringForm({
           placeholder={type === 'income' ? '수입' : '지출'}
           maxLength={50}
           autoComplete="off"
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           autoFocus
         />
       </div>
@@ -161,9 +161,10 @@ export function RecurringForm({
           onChange={(e) => setAmount(e.target.value)}
           placeholder="0"
           min="0"
+          max="9999999999"
           step="any"
           autoComplete="off"
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
         />
       </div>
 
@@ -177,7 +178,7 @@ export function RecurringForm({
             value={intervalValue}
             onChange={(e) => setIntervalValue(e.target.value)}
             min="1"
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           />
         </div>
         <div>
@@ -186,7 +187,7 @@ export function RecurringForm({
             id="rec-interval-unit"
             value={intervalUnit}
             onChange={(e) => setIntervalUnit(e.target.value as DbIntervalUnit)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             {INTERVAL_UNITS.map((unit) => (
               <option key={unit} value={unit}>{INTERVAL_LABELS[unit]}</option>
@@ -203,7 +204,7 @@ export function RecurringForm({
             id="rec-account"
             value={accountId}
             onChange={(e) => handleAccountChange(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             <option value="">선택</option>
             {sortedAccounts.map((acc) => (
@@ -217,7 +218,7 @@ export function RecurringForm({
             id="rec-currency"
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             <option value="">선택</option>
             {(selectedAccount?.supportedCurrencies ?? Object.keys(CURRENCIES)).map((code) => (
@@ -234,7 +235,7 @@ export function RecurringForm({
           id="rec-category"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
         >
           <option value="">선택 안 함</option>
           {filteredCategories.map((cat) => (
@@ -251,7 +252,7 @@ export function RecurringForm({
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+          className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus-visible:border-vault-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
         />
       </div>
 
@@ -278,3 +279,5 @@ export function RecurringForm({
     </form>
   );
 }
+
+export const RecurringForm = memo(RecurringFormInner);

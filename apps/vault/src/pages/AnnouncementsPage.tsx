@@ -229,7 +229,7 @@ export function AnnouncementsPage(): ReactNode {
               onChange={(e) => setFormTitle(e.target.value)}
               placeholder="공지사항 제목"
               maxLength={100}
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
               autoFocus
             />
           </div>
@@ -241,7 +241,7 @@ export function AnnouncementsPage(): ReactNode {
               onChange={(e) => setFormContent(e.target.value)}
               placeholder="공지 내용을 입력하세요"
               rows={6}
-              className="w-full resize-none rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+              className="w-full resize-none rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div className="flex items-center gap-4">
@@ -262,7 +262,7 @@ export function AnnouncementsPage(): ReactNode {
                 placeholder="순서 (1~3)"
                 min="1"
                 max="3"
-                className="w-24 rounded-xl border border-navy/10 bg-white/60 px-3 py-1.5 text-sm text-navy focus:border-vault-color focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+                className="w-24 rounded-xl border border-navy/10 bg-white/80 px-3 py-1.5 text-sm text-navy focus:border-vault-color focus:outline-none dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
               />
             )}
           </div>

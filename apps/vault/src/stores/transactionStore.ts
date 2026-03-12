@@ -88,19 +88,19 @@ export const useTransactionStore = create<TransactionState & TransactionActions>
   goToPrevMonth: async (userId) => {
     const { period } = get();
     const { year, month } = getPrevMonth(period.year, period.month);
-    set({ period: getMonthPeriod(year, month) });
+    set({ period: getMonthPeriod(year, month), filters: {} });
     await get().loadTransactions(userId);
   },
 
   goToNextMonth: async (userId) => {
     const { period } = get();
     const { year, month } = getNextMonth(period.year, period.month);
-    set({ period: getMonthPeriod(year, month) });
+    set({ period: getMonthPeriod(year, month), filters: {} });
     await get().loadTransactions(userId);
   },
 
   goToCurrentMonth: async (userId) => {
-    set({ period: getCurrentMonthPeriod() });
+    set({ period: getCurrentMonthPeriod(), filters: {} });
     await get().loadTransactions(userId);
   },
 

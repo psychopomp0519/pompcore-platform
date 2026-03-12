@@ -4,7 +4,7 @@
  * @module components/realEstate/LeaseCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { RealEstateLease } from '../../types/realEstate.types';
 import { getDaysUntilLeaseEnd, formatLeaseEndLabel } from '../../utils/realEstateCalculator';
 
@@ -40,7 +40,7 @@ function formatAmount(amount: number, currency: string): string {
 // ============================================================
 
 /** 임대·임차 계약 카드 */
-export function LeaseCard({ lease, onClose }: LeaseCardProps): ReactNode {
+function LeaseCardInner({ lease, onClose }: LeaseCardProps): ReactNode {
   const days = lease.endDate ? getDaysUntilLeaseEnd(lease.endDate) : null;
   const isUrgent = days != null && days >= 0 && days <= 30;
   const isExpired = days != null && days < 0;
@@ -52,7 +52,7 @@ export function LeaseCard({ lease, onClose }: LeaseCardProps): ReactNode {
       : 'bg-vault-color/10 text-vault-color dark:bg-vault-color/20';
 
   return (
-    <div className="rounded-2xl border border-navy/8 bg-white/60 p-4 backdrop-blur dark:border-white/8 dark:bg-navy/40">
+    <div className="rounded-2xl border border-navy/8 bg-white/80 p-4 backdrop-blur dark:border-white/8 dark:bg-navy/40">
       {/* 상단 배지 행 */}
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <span className="rounded-full bg-vault-color/10 px-2.5 py-0.5 text-xs font-semibold text-vault-color dark:bg-vault-color/20">
@@ -119,3 +119,5 @@ export function LeaseCard({ lease, onClose }: LeaseCardProps): ReactNode {
     </div>
   );
 }
+
+export const LeaseCard = memo(LeaseCardInner);

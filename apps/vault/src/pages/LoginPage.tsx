@@ -9,6 +9,7 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { ROUTES } from '../constants/routes';
 import { useAuthStore } from '../stores/authStore';
 import { signInWithEmail, signInWithGoogle } from '../services/auth.service';
+import { getSupabase } from '@pompcore/auth';
 import { toUserMessage } from '@pompcore/ui';
 import { ThemeBackground } from '../components/layout/ThemeBackground';
 
@@ -43,6 +44,25 @@ export function LoginPage(): React.ReactNode {
       setError(toUserMessage(err, '로그인에 실패했습니다.'));
     } finally {
       setIsSubmitting(false);
+    }
+  }
+
+  async function handleForgotPassword(): Promise<void> {
+    if (!email.trim()) {
+      window.alert('비밀번호 재설정을 위해 이메일을 먼저 입력해주세요.');
+      return;
+    }
+
+    try {
+      const supabase = getSupabase();
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email);
+      if (resetError) {
+        window.alert(`오류: ${toUserMessage(resetError, '비밀번호 재설정 요청에 실패했습니다.')}`);
+        return;
+      }
+      window.alert('비밀번호 재설정 이메일을 발송했습니다. 이메일을 확인해주세요.');
+    } catch (err) {
+      window.alert(toUserMessage(err, '비밀번호 재설정 요청에 실패했습니다.'));
     }
   }
 
@@ -85,7 +105,7 @@ export function LoginPage(): React.ReactNode {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="w-full rounded-xl border border-navy/20 bg-white/50 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
+              className="w-full rounded-xl border border-navy/20 bg-white/80 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
               placeholder="email@example.com"
             />
           </div>
@@ -100,9 +120,18 @@ export function LoginPage(): React.ReactNode {
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete="current-password"
-              className="w-full rounded-xl border border-navy/20 bg-white/50 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
+              className="w-full rounded-xl border border-navy/20 bg-white/80 px-4 py-2.5 text-sm text-navy placeholder:text-navy/40 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-100 dark:placeholder:text-gray-500"
               placeholder="비밀번호 입력"
             />
+          </div>
+          <div className="text-right">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-xs text-vault-color hover:underline"
+            >
+              비밀번호를 잊으셨나요?
+            </button>
           </div>
           <button
             type="submit"
@@ -122,7 +151,7 @@ export function LoginPage(): React.ReactNode {
         <button
           type="button"
           onClick={handleGoogleLogin}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-navy/20 bg-white/50 px-4 py-3 text-sm font-medium text-navy transition-colors hover:bg-navy/5 dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-200 dark:hover:bg-white/5"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-navy/20 bg-white/80 px-4 py-3 text-sm font-medium text-navy transition-colors hover:bg-navy/5 dark:border-white/20 dark:bg-surface-dark/50 dark:text-gray-200 dark:hover:bg-white/5"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />

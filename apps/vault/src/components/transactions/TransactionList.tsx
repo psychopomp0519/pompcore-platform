@@ -4,7 +4,7 @@
  * @module components/transactions/TransactionList
  */
 
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, memo, type ReactNode } from 'react';
 import type { Transaction } from '../../types/transaction.types';
 import type { Category } from '../../types/category.types';
 import type { Account } from '../../types/account.types';
@@ -37,7 +37,7 @@ interface DateGroup {
 // ============================================================
 
 /** 거래내역 목록 (날짜별 그룹핑) */
-export function TransactionList({
+function TransactionListInner({
   transactions,
   categories,
   accounts,
@@ -94,7 +94,7 @@ export function TransactionList({
                   key={tx.id}
                   type="button"
                   onClick={() => onEdit(tx)}
-                  className={`flex w-full items-center gap-3 rounded-xl bg-white/60 px-3 py-2.5 text-left backdrop-blur-sm transition-colors hover:bg-white/80 dark:bg-white/5 dark:hover:bg-white/10${
+                  className={`flex w-full items-center gap-3 rounded-xl bg-white/80 px-3 py-2.5 text-left backdrop-blur-sm transition-colors hover:bg-white/80 dark:bg-white/5 dark:hover:bg-white/10${
                     tx.transactionDate > todayStr ? ' opacity-50' : ''
                   }`}
                 >
@@ -167,3 +167,5 @@ export function TransactionList({
     </div>
   );
 }
+
+export const TransactionList = memo(TransactionListInner);

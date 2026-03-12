@@ -26,12 +26,12 @@ const BRAND_CONFIG: Record<string, { logo?: string; label: string; textStyle: st
   vault: {
     logo: vaultLogo,
     label: 'VAULT',
-    textStyle: 'text-[#10B981] dark:text-[#34D399]',
+    textStyle: 'text-emerald-500 dark:text-emerald-400',
   },
   quest: {
     logo: questLogo,
     label: 'QUEST',
-    textStyle: 'text-[#7C3AED] dark:text-[#C084FC]',
+    textStyle: 'text-brand dark:text-purple-300',
   },
   academy: {
     label: 'ACADEMY',

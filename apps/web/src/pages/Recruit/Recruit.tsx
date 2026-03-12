@@ -68,7 +68,7 @@ export default function Recruit() {
         </div>
 
         {/* AI 네이티브 개발 안내 */}
-        <div className="rounded-2xl p-4 sm:p-6 md:p-8 bg-[#7C3AED]/[0.03] border border-[#7C3AED]/[0.08] mb-12">
+        <div className="rounded-2xl p-4 sm:p-6 md:p-8 bg-brand/[0.03] border border-brand/[0.08] mb-12">
           <h2 className="font-display text-lg font-bold text-[#1A1A2E] dark:text-white mb-3">
             AI 네이티브 개발이란?
           </h2>
@@ -84,7 +84,7 @@ export default function Recruit() {
               '결과물의 품질 관리와 통합',
             ].map((item) => (
               <li key={item} className="flex items-center gap-2 text-xs text-[#4A4270] dark:text-[#7A6A9A]">
-                <span className="text-[#FFD700] text-[10px]">✦</span>
+                <span className="text-accent-gold text-[10px]">✦</span>
                 {item}
               </li>
             ))}
@@ -95,7 +95,7 @@ export default function Recruit() {
         <RecruitPositions />
 
         {/* 함께하면 좋은 점 */}
-        <div className="rounded-2xl p-6 md:p-8 bg-[#FFD700]/[0.04] border border-[#FFD700]/10 mb-16">
+        <div className="rounded-2xl p-6 md:p-8 bg-accent-gold/[0.04] border border-accent-gold/10 mb-16">
           <h2 className="font-display text-lg font-bold text-[#1A1A2E] dark:text-white mb-4">
             함께하면 이런 점이 좋아요
           </h2>
@@ -107,7 +107,7 @@ export default function Recruit() {
               '포트폴리오에 차별화된 프로젝트를 추가할 수 있어요',
             ].map((benefit) => (
               <li key={benefit} className="flex items-center gap-2 text-sm text-[#4A4270] dark:text-[#7A6A9A]">
-                <span className="text-[#10B981] text-xs">✓</span>
+                <span className="text-emerald-500 text-xs">✓</span>
                 {benefit}
               </li>
             ))}
@@ -149,7 +149,7 @@ export default function Recruit() {
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   placeholder="홍길동"
                   required
                 />
@@ -166,7 +166,7 @@ export default function Recruit() {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   placeholder="email@example.com"
                   required
                 />
@@ -182,7 +182,7 @@ export default function Recruit() {
                   name="position"
                   value={formData.position}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   required
                 >
                   <option value="">선택해주세요</option>
@@ -202,7 +202,7 @@ export default function Recruit() {
                   name="interestedService"
                   value={formData.interestedService}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                 >
                   <option value="">선택해주세요</option>
                   <option value="Vault">Vault (가계부)</option>
@@ -222,7 +222,7 @@ export default function Recruit() {
                   value={formData.introduction}
                   onChange={handleChange}
                   rows={5}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-colors resize-none"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-brand focus:ring-1 focus:ring-brand transition-colors resize-none"
                   placeholder="본인의 경험, 관심 분야, 지원 동기 등을 자유롭게 작성해주세요."
                   required
                 />
@@ -239,7 +239,7 @@ export default function Recruit() {
                   type="url"
                   value={formData.portfolio}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-colors"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-4 py-2.5 text-sm text-[#1A1A2E] dark:text-white placeholder-slate-400 dark:placeholder-[#6A5490] focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   placeholder="https://"
                 />
               </div>
@@ -247,7 +247,7 @@ export default function Recruit() {
               {/* 제출 버튼 */}
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center px-8 py-3 text-base rounded-xl min-h-[48px] font-medium transition-all duration-300 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white shadow-[0_4px_20px_rgba(124,58,237,0.2)] dark:shadow-[0_0_24px_rgba(124,58,237,0.25)] hover:from-[#6D28D9] hover:to-[#9333EA] cursor-pointer"
+                className="w-full inline-flex items-center justify-center px-8 py-3 text-base rounded-xl min-h-[48px] font-medium transition-all duration-300 bg-gradient-to-r from-brand to-purple-500 text-white shadow-[0_4px_20px_rgba(124,58,237,0.2)] dark:shadow-[0_0_24px_rgba(124,58,237,0.25)] hover:from-brand-600 hover:to-purple-600 cursor-pointer"
               >
                 ✦ 지원서 제출하기
               </button>

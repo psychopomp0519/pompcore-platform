@@ -54,7 +54,7 @@ export default function About() {
       {/* 비전 & 미션 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-16">
         <GlassCard padding="lg">
-          <p className="text-[11px] tracking-[2px] text-[#FFD700] dark:text-[#FFD700]/70 uppercase mb-3">VISION</p>
+          <p className="text-[11px] tracking-[2px] text-accent-gold dark:text-accent-gold/70 uppercase mb-3">VISION</p>
           <h2 className="text-lg font-semibold text-[#1A1A2E] dark:text-white mb-2">일상을 플레이하다</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
             서브컬쳐 게임의 몰입감과 감성을 일상 도구에 접목하여,
@@ -63,23 +63,23 @@ export default function About() {
           </p>
         </GlassCard>
         <GlassCard padding="lg">
-          <p className="text-[11px] tracking-[2px] text-[#7C3AED] dark:text-[#A78BFA] uppercase mb-3">MISSION</p>
+          <p className="text-[11px] tracking-[2px] text-brand dark:text-purple-400 uppercase mb-3">MISSION</p>
           <h2 className="text-lg font-semibold text-[#1A1A2E] dark:text-white mb-2">게임 감성의 생활 도구</h2>
           <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
             <li className="flex items-start gap-2">
-              <span className="text-[#FFD700] text-[10px] mt-1 shrink-0">✦</span>
+              <span className="text-accent-gold text-[10px] mt-1 shrink-0">✦</span>
               생활 필수 도구를 서브컬쳐 게임 감성 UI로 제공
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFD700] text-[10px] mt-1 shrink-0">✦</span>
+              <span className="text-accent-gold text-[10px] mt-1 shrink-0">✦</span>
               무료 사용자도 핵심 기능에 불편함 없이 접근
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFD700] text-[10px] mt-1 shrink-0">✦</span>
+              <span className="text-accent-gold text-[10px] mt-1 shrink-0">✦</span>
               AI 네이티브 개발로 소규모 팀의 고품질 서비스
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-[#FFD700] text-[10px] mt-1 shrink-0">✦</span>
+              <span className="text-accent-gold text-[10px] mt-1 shrink-0">✦</span>
               사용자 피드백을 적극 수용하여 함께 성장
             </li>
           </ul>
@@ -92,7 +92,7 @@ export default function About() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {VALUES.map((value) => (
             <GlassCard key={value.title} padding="lg">
-              <span className="text-[#7C3AED] dark:text-[#A78BFA] mb-4 block"><value.IconComponent size={32} /></span>
+              <span className="text-brand dark:text-purple-400 mb-4 block"><value.IconComponent size={32} /></span>
               <h3 className="text-lg font-semibold text-[#1A1A2E] dark:text-white mb-0.5">{value.title}</h3>
               <p className="text-[11px] tracking-wide text-[#5C5C7A] dark:text-[#6A5490] uppercase mb-2">{value.subtitle}</p>
               <p className="text-sm text-slate-500 dark:text-slate-400">{value.description}</p>

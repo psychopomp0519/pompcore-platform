@@ -16,7 +16,7 @@ import type { ReactNode } from 'react';
 export function NotFoundPage(): ReactNode {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-surface-light px-4 dark:bg-surface-dark">
-      <div className="rounded-3xl border border-white/20 bg-white/60 p-10 text-center shadow-card backdrop-blur-[16px] dark:border-white/10 dark:bg-surface-card-dark">
+      <div className="rounded-3xl border border-white/20 bg-white/80 p-10 text-center shadow-card backdrop-blur-[16px] dark:border-white/10 dark:bg-surface-card-dark">
         {/* 404 텍스트 */}
         <div className="mb-4 font-display text-7xl font-extrabold text-vault-color">
           404

@@ -4,7 +4,7 @@
  * @module components/accounts/TransferDialog
  */
 
-import { useState, useMemo, type ReactNode, type FormEvent } from 'react';
+import { useState, useMemo, memo, type ReactNode, type FormEvent } from 'react';
 import { Button } from '@pompcore/ui';
 import type { Account } from '../../types/account.types';
 import type { TransferFormData } from '../../types/account.types';
@@ -27,7 +27,7 @@ interface TransferDialogProps {
 // ============================================================
 
 /** 이체 다이얼로그 */
-export function TransferDialog({
+function TransferDialogInner({
   isOpen,
   onClose,
   onSubmit,
@@ -133,7 +133,7 @@ export function TransferDialog({
             id="from-account"
             value={fromAccountId}
             onChange={(e) => handleFromAccountChange(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             <option value="">선택하세요</option>
             {sortedAccounts.map((acc) => (
@@ -153,7 +153,7 @@ export function TransferDialog({
               value={fromCurrency}
               onChange={(e) => setFromCurrency(e.target.value)}
               disabled={fromAccount.supportedCurrencies.length <= 1}
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color disabled:opacity-60 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color disabled:opacity-60 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
             >
               {fromAccount.supportedCurrencies.map((c) => (
                 <option key={c} value={c}>{CURRENCIES[c as keyof typeof CURRENCIES]?.name ?? c} ({c})</option>
@@ -171,7 +171,7 @@ export function TransferDialog({
             id="to-account"
             value={toAccountId}
             onChange={(e) => handleToAccountChange(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           >
             <option value="">선택하세요</option>
             {sortedAccounts.map((acc) => (
@@ -191,7 +191,7 @@ export function TransferDialog({
               value={toCurrency}
               onChange={(e) => setToCurrency(e.target.value)}
               disabled={toAccount.supportedCurrencies.length <= 1}
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color disabled:opacity-60 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color disabled:opacity-60 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
             >
               {toAccount.supportedCurrencies.map((c) => (
                 <option key={c} value={c}>{CURRENCIES[c as keyof typeof CURRENCIES]?.name ?? c} ({c})</option>
@@ -223,8 +223,9 @@ export function TransferDialog({
               }}
               placeholder="0"
               min="0"
+              max="9999999999"
               step="any"
-              className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+              className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           {isCrossCurrency && (
@@ -239,8 +240,9 @@ export function TransferDialog({
                 onChange={(e) => setToAmount(e.target.value)}
                 placeholder="0"
                 min="0"
+                max="9999999999"
                 step="any"
-                className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+                className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
           )}
@@ -256,7 +258,7 @@ export function TransferDialog({
             type="date"
             value={transferDate}
             onChange={(e) => setTransferDate(e.target.value)}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
           />
         </div>
 
@@ -272,7 +274,7 @@ export function TransferDialog({
             onChange={(e) => setMemo(e.target.value)}
             placeholder="메모를 입력하세요"
             maxLength={100}
-            className="w-full rounded-xl border border-navy/10 bg-white/60 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
+            className="w-full rounded-xl border border-navy/10 bg-white/80 px-3 py-2.5 text-sm text-navy placeholder-navy/30 focus:border-vault-color focus:outline-none focus:ring-1 focus:ring-vault-color dark:border-white/10 dark:bg-white/5 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
 
@@ -300,3 +302,5 @@ export function TransferDialog({
     </Modal>
   );
 }
+
+export const TransferDialog = memo(TransferDialogInner);

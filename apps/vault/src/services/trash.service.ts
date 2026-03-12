@@ -13,7 +13,7 @@ import { supabase } from './supabase';
 /** 휴지통 항목 */
 export interface TrashItem {
   id: string;
-  type: 'account' | 'category' | 'transaction' | 'recurring' | 'savings' | 'budget';
+  type: 'account' | 'category' | 'transaction' | 'recurring' | 'savings' | 'budget' | 'portfolio' | 'real_estate';
   name: string;
   deletedAt: string;
 }
@@ -26,6 +26,8 @@ const TRASH_TABLES = [
   { table: 'recurring_payments', type: 'recurring' as const, nameField: 'name' },
   { table: 'savings', type: 'savings' as const, nameField: 'name' },
   { table: 'budgets', type: 'budget' as const, nameField: 'name' },
+  { table: 'vault_investment_portfolios', type: 'portfolio' as const, nameField: 'name' },
+  { table: 'vault_real_estate', type: 'real_estate' as const, nameField: 'name' },
 ] as const;
 
 /** 타입 라벨 */
@@ -36,6 +38,8 @@ export const TRASH_TYPE_LABELS: Record<TrashItem['type'], string> = {
   recurring: '정기결제',
   savings: '예/적금',
   budget: '예산',
+  portfolio: '투자 포트폴리오',
+  real_estate: '부동산',
 };
 
 // ============================================================

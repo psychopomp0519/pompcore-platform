@@ -66,7 +66,7 @@ export function Sidebar(): ReactNode {
 
   return (
     <aside
-      className={`sticky top-0 h-screen hidden tablet:flex desktop:flex flex-col border-r border-navy/10 bg-white/60 backdrop-blur-[16px] dark:border-white/10 dark:bg-surface-dark/60 transition-[width] duration-300 ${
+      className={`sticky top-0 h-screen hidden tablet:flex desktop:flex flex-col border-r border-navy/10 bg-white/80 backdrop-blur-[16px] dark:border-white/10 dark:bg-surface-dark/60 transition-[width] duration-300 ${
         isExpanded ? 'w-60' : 'w-16'
       }`}
     >

@@ -4,7 +4,7 @@
  * @module components/accounts/AccountCard
  */
 
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import type { Account } from '../../types/account.types';
 import { GlassCard } from '../common/GlassCard';
 import { formatCurrency } from '../../utils/currency';
@@ -31,7 +31,7 @@ interface AccountCardProps {
 // ============================================================
 
 /** 통장 카드 */
-export function AccountCard({
+function AccountCardInner({
   account,
   onEdit,
   onDelete,
@@ -138,3 +138,5 @@ export function AccountCard({
     </GlassCard>
   );
 }
+
+export const AccountCard = memo(AccountCardInner);
