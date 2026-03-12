@@ -8,6 +8,7 @@ import {
   formatLeaseEndLabel,
   calcAnnualExpenses,
 } from './realEstateCalculator';
+import type { RealEstateExpense } from '../types/realEstate.types';
 
 describe('calcAnnualRentalYield', () => {
   it('월세 100만원, 현재가 3억 → 4%', () => {
@@ -95,17 +96,17 @@ describe('calcAnnualExpenses', () => {
     const recentDate = new Date(now);
     recentDate.setMonth(recentDate.getMonth() - 3);
 
-    const expenses = [
-      { id: '1', propertyId: 'p1', category: '관리비', amount: 100_000, currency: 'KRW', expenseDate: recentDate.toISOString().slice(0, 10), memo: '', createdAt: '' },
-      { id: '2', propertyId: 'p1', category: '수리비', amount: 200_000, currency: 'KRW', expenseDate: recentDate.toISOString().slice(0, 10), memo: '', createdAt: '' },
-      { id: '3', propertyId: 'p1', category: '기타', amount: 50_000, currency: 'USD', expenseDate: recentDate.toISOString().slice(0, 10), memo: '', createdAt: '' },
+    const expenses: RealEstateExpense[] = [
+      { id: '1', realEstateId: 'p1', userId: 'u1', expenseType: 'maintenance', amount: 100_000, currency: 'KRW', expenseDate: recentDate.toISOString().slice(0, 10), memo: '', createdAt: '' },
+      { id: '2', realEstateId: 'p1', userId: 'u1', expenseType: 'repair', amount: 200_000, currency: 'KRW', expenseDate: recentDate.toISOString().slice(0, 10), memo: '', createdAt: '' },
+      { id: '3', realEstateId: 'p1', userId: 'u1', expenseType: 'other', amount: 50_000, currency: 'USD', expenseDate: recentDate.toISOString().slice(0, 10), memo: '', createdAt: '' },
     ];
     expect(calcAnnualExpenses(expenses, 'KRW')).toBe(300_000);
   });
 
   it('1년 이전 비용은 제외', () => {
-    const expenses = [
-      { id: '1', propertyId: 'p1', category: '관리비', amount: 100_000, currency: 'KRW', expenseDate: '2020-01-01', memo: '', createdAt: '' },
+    const expenses: RealEstateExpense[] = [
+      { id: '1', realEstateId: 'p1', userId: 'u1', expenseType: 'maintenance', amount: 100_000, currency: 'KRW', expenseDate: '2020-01-01', memo: '', createdAt: '' },
     ];
     expect(calcAnnualExpenses(expenses, 'KRW')).toBe(0);
   });

@@ -14,6 +14,7 @@ const makeTrade = (
   overrides: Partial<InvestmentTrade> & Pick<InvestmentTrade, 'tradeType' | 'ticker' | 'quantity' | 'price'>,
 ): InvestmentTrade => ({
   id: 'test',
+  userId: 'u1',
   portfolioId: 'p1',
   assetName: overrides.ticker,
   tradeDate: '2026-01-01',
@@ -21,6 +22,7 @@ const makeTrade = (
   fee: 0,
   memo: '',
   createdAt: '',
+  updatedAt: '',
   ...overrides,
 });
 
@@ -105,7 +107,7 @@ describe('calcTotalRealizedPnL', () => {
 describe('enrichHoldingsWithPnL', () => {
   it('현재가와 미실현 손익 추가', () => {
     const holdings = [{ ticker: 'AAPL', assetName: 'Apple', quantity: 10, avgPrice: 100, currency: 'USD', totalCost: 1000 }];
-    const snapshots: PriceSnapshot[] = [{ ticker: 'AAPL', currentPrice: 150, updatedAt: '' }];
+    const snapshots: PriceSnapshot[] = [{ portfolioId: 'p1', ticker: 'AAPL', currentPrice: 150, currency: 'KRW', updatedAt: '' }];
     const result = enrichHoldingsWithPnL(holdings, snapshots);
     expect(result[0].currentPrice).toBe(150);
     expect(result[0].marketValue).toBe(1500);

@@ -20,11 +20,16 @@ import { getCurrentMonthPeriod, getPrevMonth, getMonthPeriod } from '../utils/da
 import type { Transaction } from '../types/transaction.types';
 import type { Announcement } from '../types/announcement.types';
 import type { RecurringPayment } from '../types/recurring.types';
+import type { Portfolio } from '../types/investment.types';
+import type { RealEstate } from '../types/realEstate.types';
 import * as txService from '../services/transaction.service';
 import * as annService from '../services/announcement.service';
 import * as recurringService from '../services/recurring.service';
+import * as investmentService from '../services/investment.service';
+import * as realEstateService from '../services/realEstate.service';
 import { getNextOccurrence } from '../utils/recurringCalculator';
-import { IconMegaphone, IconChart, IconBank } from '@pompcore/ui';
+import { computeHoldings, enrichHoldingsWithPnL } from '../utils/investmentCalculator';
+import { IconMegaphone, IconChart, IconBank, IconInvestment, IconRealEstate } from '@pompcore/ui';
 import { IconPlus, IconTransfer } from '@pompcore/ui';
 
 // ============================================================
@@ -52,6 +57,10 @@ export function DashboardPage(): ReactNode {
   const [prevMonthTx, setPrevMonthTx] = useState<Transaction[]>([]);
   const [pinnedAnnouncements, setPinnedAnnouncements] = useState<Announcement[]>([]);
   const [recurringPayments, setRecurringPayments] = useState<RecurringPayment[]>([]);
+  /** 투자 포트폴리오별 시가 합산 (통화 → 금액) */
+  const [investmentByCurrency, setInvestmentByCurrency] = useState<Map<string, number>>(new Map());
+  /** 부동산 자산 합산 (통화 → 금액) */
+  const [realEstateByCurrency, setRealEstateByCurrency] = useState<Map<string, number>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -76,11 +85,13 @@ export function DashboardPage(): ReactNode {
 
     setIsLoading(true);
     try {
-      const [txs, prevTxs, anns, recs] = await Promise.all([
+      const [txs, prevTxs, anns, recs, portfolios, properties] = await Promise.all([
         txService.fetchTransactions(userId, currentPeriod.startDate, currentPeriod.endDate),
         txService.fetchTransactions(userId, prevPeriod.startDate, prevPeriod.endDate),
         annService.fetchAnnouncements(),
         recurringService.fetchRecurringPayments(userId),
+        investmentService.fetchPortfolios(userId),
+        realEstateService.fetchProperties(userId),
         loadAccountsRef.current(userId),
         loadSettingsRef.current(userId),
       ]);
@@ -88,6 +99,15 @@ export function DashboardPage(): ReactNode {
       setPrevMonthTx(prevTxs);
       setPinnedAnnouncements(anns.filter((a) => a.isPinned));
       setRecurringPayments(recs.filter((r) => r.isActive));
+
+      /* 투자 포트폴리오 시가 합산 */
+      const invMap = await calcInvestmentTotals(portfolios);
+      setInvestmentByCurrency(invMap);
+
+      /* 부동산 자산 합산 (소유자만) */
+      const reMap = calcRealEstateTotals(properties);
+      setRealEstateByCurrency(reMap);
+
       lastLoadedAtRef.current = Date.now();
     } catch {
       setLoadError('데이터를 불러오는 중 문제가 발생했습니다.');
@@ -102,8 +122,8 @@ export function DashboardPage(): ReactNode {
     loadDashboard(uid);
   }, [user?.id, loadDashboard]);
 
-  /* 총 자산 (통화별) */
-  const totalByCurrency = useMemo<Map<string, number>>(() => {
+  /* 통장 잔액 (통화별) */
+  const accountByCurrency = useMemo<Map<string, number>>(() => {
     const map = new Map<string, number>();
     for (const acc of accounts) {
       for (const bal of acc.balances) {
@@ -112,6 +132,23 @@ export function DashboardPage(): ReactNode {
     }
     return map;
   }, [accounts]);
+
+  /* 총 자산 = 통장 + 투자 + 부동산 (통화별) */
+  const totalByCurrency = useMemo<Map<string, number>>(() => {
+    const map = new Map<string, number>();
+    const merge = (src: Map<string, number>): void => {
+      for (const [c, v] of src.entries()) {
+        map.set(c, (map.get(c) ?? 0) + v);
+      }
+    };
+    merge(accountByCurrency);
+    merge(investmentByCurrency);
+    merge(realEstateByCurrency);
+    return map;
+  }, [accountByCurrency, investmentByCurrency, realEstateByCurrency]);
+
+  /** 자산 구성 존재 여부 (구분 표시용) */
+  const hasMultipleAssetTypes = investmentByCurrency.size > 0 || realEstateByCurrency.size > 0;
 
   /* 주 통화 기준 환산 합산 (복수 통화일 때만 표시) */
   const unifiedTotal = useMemo(() => {
@@ -261,6 +298,40 @@ export function DashboardPage(): ReactNode {
                 </div>
               </div>
             )}
+
+            {/* 자산 유형별 구분 (투자/부동산 있을 때만) */}
+            {hasMultipleAssetTypes && (
+              <div className="mt-3 border-t border-navy/5 pt-3 dark:border-white/5">
+                <div className="mb-2 text-xs font-medium text-navy/40 dark:text-gray-500">자산 구성</div>
+                <div className="grid grid-cols-2 gap-2 tablet:grid-cols-3">
+                  <AssetTypeCard
+                    icon={<IconBank className="h-4 w-4" />}
+                    label="통장"
+                    amounts={accountByCurrency}
+                    primaryCurrency={primaryCurrency}
+                    convert={convert}
+                  />
+                  {investmentByCurrency.size > 0 && (
+                    <AssetTypeCard
+                      icon={<IconInvestment className="h-4 w-4" />}
+                      label="투자"
+                      amounts={investmentByCurrency}
+                      primaryCurrency={primaryCurrency}
+                      convert={convert}
+                    />
+                  )}
+                  {realEstateByCurrency.size > 0 && (
+                    <AssetTypeCard
+                      icon={<IconRealEstate className="h-4 w-4" />}
+                      label="부동산"
+                      amounts={realEstateByCurrency}
+                      primaryCurrency={primaryCurrency}
+                      convert={convert}
+                    />
+                  )}
+                </div>
+              </div>
+            )}
           </>
         )}
       </GlassCard>
@@ -400,4 +471,78 @@ function QuickAction({
       <span className="text-xs">{label}</span>
     </button>
   );
+}
+
+/** 자산 유형별 요약 카드 */
+function AssetTypeCard({
+  icon,
+  label,
+  amounts,
+  primaryCurrency,
+  convert,
+}: {
+  icon: ReactNode;
+  label: string;
+  amounts: Map<string, number>;
+  primaryCurrency: string;
+  convert: (amount: number, from: string, to: string) => number;
+}): ReactNode {
+  let total = 0;
+  for (const [currency, amount] of amounts.entries()) {
+    total += convert(amount, currency, primaryCurrency);
+  }
+  return (
+    <div className="rounded-lg bg-navy/5 px-3 py-2 dark:bg-white/5">
+      <div className="mb-1 flex items-center gap-1.5 text-navy/50 dark:text-gray-500">
+        {icon}
+        <span className="text-xs font-medium">{label}</span>
+      </div>
+      <div className="text-sm font-semibold tabular-nums text-navy dark:text-gray-200">
+        {formatCurrency(total, primaryCurrency)}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// 대시보드 자산 계산 헬퍼
+// ============================================================
+
+/** 투자 포트폴리오 전체 시가 합산 (통화별) */
+async function calcInvestmentTotals(portfolios: Portfolio[]): Promise<Map<string, number>> {
+  const map = new Map<string, number>();
+  if (portfolios.length === 0) return map;
+
+  /* 각 포트폴리오의 trades + snapshots를 병렬 로드 */
+  const details = await Promise.all(
+    portfolios.map(async (p) => {
+      const [trades, snapshots] = await Promise.all([
+        investmentService.fetchTrades(p.id),
+        investmentService.fetchSnapshots(p.id),
+      ]);
+      return { portfolio: p, trades, snapshots };
+    }),
+  );
+
+  for (const { portfolio, trades, snapshots } of details) {
+    const holdings = computeHoldings(trades);
+    const enriched = enrichHoldingsWithPnL(holdings, snapshots);
+    const marketValue = enriched.reduce((sum, h) => sum + h.marketValue, 0);
+    if (marketValue > 0) {
+      map.set(portfolio.baseCurrency, (map.get(portfolio.baseCurrency) ?? 0) + marketValue);
+    }
+  }
+
+  return map;
+}
+
+/** 부동산 자산 합산 (소유자 물건의 currentValue, 통화별) */
+function calcRealEstateTotals(properties: RealEstate[]): Map<string, number> {
+  const map = new Map<string, number>();
+  for (const prop of properties) {
+    if (prop.role === 'owner' && prop.currentValue && prop.currentValue > 0) {
+      map.set(prop.currency, (map.get(prop.currency) ?? 0) + prop.currentValue);
+    }
+  }
+  return map;
 }
