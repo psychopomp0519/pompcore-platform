@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist node_modules/.tmp"
+    "clean": "rm -rf dist node_modules/.tmp",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nivo/bar": "^0.99.0",

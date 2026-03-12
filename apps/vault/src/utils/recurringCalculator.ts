@@ -74,23 +74,19 @@ export function addInterval(
 
     case 'month': {
       const originalDay = baseDate.getDate();
+      result.setDate(1); /* overflow 방지: 먼저 1일로 설정 */
       result.setMonth(result.getMonth() + value);
-      /* 월말 보정: 원래 날짜가 해당 월의 마지막 날보다 크면 보정 */
       const lastDay = getLastDayOfMonth(result.getFullYear(), result.getMonth());
-      if (originalDay > lastDay) {
-        result.setDate(lastDay);
-      }
+      result.setDate(Math.min(originalDay, lastDay));
       break;
     }
 
     case 'year': {
       const originalDay = baseDate.getDate();
+      result.setDate(1); /* overflow 방지: 먼저 1일로 설정 */
       result.setFullYear(result.getFullYear() + value);
-      /* 윤년 보정 */
       const lastDay = getLastDayOfMonth(result.getFullYear(), result.getMonth());
-      if (originalDay > lastDay) {
-        result.setDate(lastDay);
-      }
+      result.setDate(Math.min(originalDay, lastDay));
       break;
     }
   }

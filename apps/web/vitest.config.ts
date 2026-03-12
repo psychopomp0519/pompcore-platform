@@ -1,0 +1,12 @@
+import { defineProject } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+
+export default defineProject({
+  plugins: [react()],
+  test: {
+    name: '@pompcore/web',
+    environment: 'happy-dom',
+    include: ['src/**/*.test.{ts,tsx}'],
+    setupFiles: ['../../tests/setup.ts'],
+  },
+});
