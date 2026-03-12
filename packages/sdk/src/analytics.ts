@@ -96,10 +96,15 @@ function initGA4(measurementId: string): void {
 
 /**
  * AdSense 라이브러리 스크립트를 <head>에 주입한다.
- * 실제 광고 단위는 AdUnit 컴포넌트로 수동 배치한다.
+ * index.html에 정적 <script>가 이미 존재하면 중복 주입을 건너뛴다.
  * @see https://support.google.com/adsense/answer/9274634
  */
 function initAdSense(clientId: string): void {
+  const alreadyLoaded = document.querySelector(
+    `script[src*="adsbygoogle.js?client=${clientId}"]`,
+  );
+  if (alreadyLoaded) return;
+
   injectScript(
     `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`,
     { crossorigin: 'anonymous' },

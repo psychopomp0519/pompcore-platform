@@ -134,3 +134,45 @@ docs/
 - 새 페이지: `src/router/index.tsx`
 - 새 아이콘: `src/components/icons/Icons.tsx`
 - 디자인 토큰: `tailwind.config.ts`
+
+## 세션 자동 시작 (Session Auto-Start)
+
+**새 세션이 시작되면 사용자의 첫 메시지에 응답하기 전에 반드시 아래 절차를 수행하세요.**
+
+### 1단계: 할 일 목록 확인
+- `docs/todo.md` 파일을 읽고 미완료 항목을 파악합니다.
+
+### 2단계: 세션 시작 배너 출력
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PompCore AI Development Team -- Session Ready
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[미완료 작업] (todo.md에서 읽은 항목 수)건
+  > 상위 항목 요약 (최대 5개)
+
+[Skills]
+  /plan-first ...... 계획 수립      /vault ......... Vault 작업
+  /clean-code ...... 코드 품질      /forge ......... Forge 작업
+  /code-verifier ... 코드 검증      /quest ......... Quest 작업
+  /project-docs .... 문서 업데이트   /supabase ...... DB 설계
+  /ui-system ....... Nebula UI     /seo-geo-adsense  SEO 최적화
+  /frontend-design . 디자인 작업    /error-tracking .. Sentry 설정
+
+[Agents]
+  planner / plan-reviewer / code-architecture-reviewer
+  code-refactor-master / auto-error-resolver
+  frontend-error-fixer / documentation-architect
+
+[Quick Commands]
+  "프로젝트 검증해줘"  > 8단계 QA 파이프라인
+  "세션 요약해줘"      > 현재 프로젝트 현황
+  "미수정 사항 알려줘" > 남은 이슈 목록
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### 3단계: 사용자 요청 처리
+- 배너 출력 후 사용자의 첫 메시지에 대한 응답을 이어서 진행합니다.
+- 사용자가 단순 인사("안녕", "시작" 등)만 했다면 배너만 출력하고 지시를 기다립니다.
