@@ -17,6 +17,7 @@ import { TransferDialog } from '../components/accounts/TransferDialog';
 import { BalanceEditDialog } from '../components/accounts/BalanceEditDialog';
 import { formatCurrency } from '../utils/currency';
 import { IconBank } from '@pompcore/ui';
+import { exportAccounts } from '../utils/exportHelpers';
 
 // ============================================================
 // AccountsPage
@@ -154,6 +155,20 @@ export function AccountsPage(): ReactNode {
         </div>
 
         <div className="flex gap-2">
+          {accounts.length > 0 && (
+            <Button
+              type="button"
+              onClick={() => exportAccounts(accounts)}
+              variant="outline"
+              size="sm"
+              className="gap-1.5 rounded-xl border-vault-color/30 bg-none text-vault-color hover:bg-vault-color/10 dark:text-vault-color"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              내보내기
+            </Button>
+          )}
           {accounts.length >= 2 && (
             <Button
               type="button"

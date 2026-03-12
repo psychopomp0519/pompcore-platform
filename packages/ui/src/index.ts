@@ -76,3 +76,4 @@ export { getToday, formatDateKr, getMonthPeriod, getCurrentMonthPeriod, getPrevM
 export type { MonthPeriod } from './utils/date';
 export { formatCurrency, formatSignedCurrency, CURRENCIES } from './utils/currency';
 export type { CurrencyCode } from './utils/currency';
+export { generateCSV, generateCSVFromObjects, downloadCSV } from './utils/csv';

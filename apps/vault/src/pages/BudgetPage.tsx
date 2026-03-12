@@ -13,6 +13,7 @@ import { Modal, ConfirmDialog, LoadingSpinner, EmptyState, Button } from '@pompc
 import { BudgetCard } from '../components/budget/BudgetCard';
 import { BudgetForm } from '../components/budget/BudgetForm';
 import { formatCurrency } from '../utils/currency';
+import { exportBudgets } from '../utils/exportHelpers';
 import { IconChart } from '@pompcore/ui';
 
 // ============================================================
@@ -106,17 +107,33 @@ export function BudgetPage(): ReactNode {
       {/* 헤더 */}
       <div className="flex items-center justify-between">
         <h1 className="font-display text-xl font-bold text-navy dark:text-gray-100">예산</h1>
-        <Button
-          type="button"
-          onClick={() => setIsFormOpen(true)}
-          size="sm"
-          className="gap-1.5 rounded-xl bg-none bg-vault-color text-sm font-semibold text-white shadow-none hover:bg-vault-color/90"
-        >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
-          추가
-        </Button>
+        <div className="flex gap-2">
+          {budgets.length > 0 && (
+            <Button
+              type="button"
+              onClick={() => exportBudgets(budgets)}
+              variant="outline"
+              size="sm"
+              className="gap-1.5 rounded-xl border-vault-color/30 bg-none text-vault-color hover:bg-vault-color/10 dark:text-vault-color"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              내보내기
+            </Button>
+          )}
+          <Button
+            type="button"
+            onClick={() => setIsFormOpen(true)}
+            size="sm"
+            className="gap-1.5 rounded-xl bg-none bg-vault-color text-sm font-semibold text-white shadow-none hover:bg-vault-color/90"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            추가
+          </Button>
+        </div>
       </div>
 
       {/* 통화별 요약 */}

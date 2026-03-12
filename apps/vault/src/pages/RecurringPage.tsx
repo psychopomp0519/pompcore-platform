@@ -17,6 +17,7 @@ import { formatCurrency } from '../utils/currency';
 import { getDailyAverage, getDaysUntilNext } from '../utils/recurringCalculator';
 import { INTERVAL_LABELS, type IntervalUnit } from '../constants/intervals';
 import { IconRepeat } from '@pompcore/ui';
+import { exportRecurring } from '../utils/exportHelpers';
 
 // ============================================================
 // 상수
@@ -174,16 +175,36 @@ export function RecurringPage(): ReactNode {
       {/* 헤더 */}
       <div className="flex items-center justify-between">
         <h1 className="font-display text-xl font-bold text-navy dark:text-gray-100">정기결제</h1>
-        <button
-          type="button"
-          onClick={() => setIsFormOpen(true)}
-          className="flex items-center gap-1.5 rounded-xl bg-vault-color px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-vault-color/90"
-        >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
-          추가
-        </button>
+        <div className="flex gap-2">
+          {payments.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                const catMap: Record<string, string> = {};
+                for (const c of categories) catMap[c.id] = c.name;
+                const accMap: Record<string, string> = {};
+                for (const a of accounts) accMap[a.id] = a.name;
+                exportRecurring(payments, catMap, accMap);
+              }}
+              className="flex items-center gap-1.5 rounded-xl border border-vault-color/30 px-3 py-2 text-sm font-medium text-vault-color transition-colors hover:bg-vault-color/10"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              내보내기
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setIsFormOpen(true)}
+            className="flex items-center gap-1.5 rounded-xl bg-vault-color px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-vault-color/90"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            추가
+          </button>
+        </div>
       </div>
 
       {/* 월 평균 요약 */}
