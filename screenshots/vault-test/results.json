@@ -1,0 +1,427 @@
+[
+  {
+    "id": "B-1-1",
+    "status": "PASS",
+    "detail": "Login page: email=true, pw=true"
+  },
+  {
+    "id": "B-1-3",
+    "status": "WARN",
+    "detail": "Wrong password error"
+  },
+  {
+    "id": "B-1-2",
+    "status": "PASS",
+    "detail": "After login: http://localhost:4174/"
+  },
+  {
+    "id": "B-1-4",
+    "status": "SKIP",
+    "detail": "Forgot password link checked visually"
+  },
+  {
+    "id": "B-1-5",
+    "status": "FAIL",
+    "detail": "Register: 0 inputs"
+  },
+  {
+    "id": "B-2-1",
+    "status": "PASS",
+    "detail": "Dashboard rendered"
+  },
+  {
+    "id": "B-2-2",
+    "status": "PASS",
+    "detail": "Monthly summary"
+  },
+  {
+    "id": "B-2-3",
+    "status": "PASS",
+    "detail": "Recent transactions section exists"
+  },
+  {
+    "id": "B-2-5",
+    "status": "WARN",
+    "detail": "Empty state or data shown"
+  },
+  {
+    "id": "B-2-4",
+    "status": "SKIP",
+    "detail": "Charts require transaction data — tested after creating data"
+  },
+  {
+    "id": "B-3-1",
+    "status": "PASS",
+    "detail": "Accounts page rendered"
+  },
+  {
+    "id": "B-3-2",
+    "status": "PASS",
+    "detail": "Account add form submitted"
+  },
+  {
+    "id": "B-3-3",
+    "status": "PASS",
+    "detail": "Account list after add"
+  },
+  {
+    "id": "B-3-4",
+    "status": "SKIP",
+    "detail": "Edit requires specific UI interaction — manual test"
+  },
+  {
+    "id": "B-3-5",
+    "status": "SKIP",
+    "detail": "Favorite toggle — manual test"
+  },
+  {
+    "id": "B-3-6",
+    "status": "SKIP",
+    "detail": "Delete — will test in trash section"
+  },
+  {
+    "id": "B-3-7",
+    "status": "SKIP",
+    "detail": "Dashboard reflection — checked after all data created"
+  },
+  {
+    "id": "B-4-1",
+    "status": "PASS",
+    "detail": "Transactions page"
+  },
+  {
+    "id": "B-4-2",
+    "status": "PASS",
+    "detail": "Expense transaction form submitted"
+  },
+  {
+    "id": "B-4-3",
+    "status": "PASS",
+    "detail": "Income transaction form submitted"
+  },
+  {
+    "id": "B-4-4",
+    "status": "PASS",
+    "detail": "Transaction list after add"
+  },
+  {
+    "id": "B-4-7",
+    "status": "PASS",
+    "detail": "Previous month navigation"
+  },
+  {
+    "id": "B-4-5",
+    "status": "SKIP",
+    "detail": "Edit transaction — requires selecting specific item"
+  },
+  {
+    "id": "B-4-6",
+    "status": "SKIP",
+    "detail": "Delete transaction — tested in trash section"
+  },
+  {
+    "id": "B-4-8",
+    "status": "SKIP",
+    "detail": "Type filter — UI interaction needed"
+  },
+  {
+    "id": "B-4-9",
+    "status": "SKIP",
+    "detail": "Category filter — UI interaction needed"
+  },
+  {
+    "id": "B-4-10",
+    "status": "SKIP",
+    "detail": "Account filter — UI interaction needed"
+  },
+  {
+    "id": "B-4-11",
+    "status": "SKIP",
+    "detail": "Dashboard reflection — checked at end"
+  },
+  {
+    "id": "B-5-1",
+    "status": "PASS",
+    "detail": "Recurring page"
+  },
+  {
+    "id": "B-5-2",
+    "status": "SKIP",
+    "detail": "Add recurring — complex form"
+  },
+  {
+    "id": "B-5-3",
+    "status": "SKIP",
+    "detail": "Verify add"
+  },
+  {
+    "id": "B-5-4",
+    "status": "SKIP",
+    "detail": "Edit recurring"
+  },
+  {
+    "id": "B-5-5",
+    "status": "SKIP",
+    "detail": "Delete recurring"
+  },
+  {
+    "id": "B-5-6",
+    "status": "SKIP",
+    "detail": "Active/inactive toggle"
+  },
+  {
+    "id": "B-6-1",
+    "status": "PASS",
+    "detail": "Savings page"
+  },
+  {
+    "id": "B-6-2",
+    "status": "SKIP",
+    "detail": "Add savings goal"
+  },
+  {
+    "id": "B-6-3",
+    "status": "SKIP",
+    "detail": "Verify add"
+  },
+  {
+    "id": "B-6-4",
+    "status": "SKIP",
+    "detail": "Deposit"
+  },
+  {
+    "id": "B-6-5",
+    "status": "SKIP",
+    "detail": "Delete savings"
+  },
+  {
+    "id": "B-6-6",
+    "status": "SKIP",
+    "detail": "Progress bar"
+  },
+  {
+    "id": "B-7-1",
+    "status": "PASS",
+    "detail": "Budget page"
+  },
+  {
+    "id": "B-7-2",
+    "status": "SKIP",
+    "detail": "Add budget"
+  },
+  {
+    "id": "B-7-3",
+    "status": "SKIP",
+    "detail": "Verify add"
+  },
+  {
+    "id": "B-7-4",
+    "status": "SKIP",
+    "detail": "Edit budget"
+  },
+  {
+    "id": "B-7-5",
+    "status": "SKIP",
+    "detail": "Delete budget"
+  },
+  {
+    "id": "B-7-6",
+    "status": "SKIP",
+    "detail": "Usage rate"
+  },
+  {
+    "id": "B-8-1",
+    "status": "PASS",
+    "detail": "Statistics page"
+  },
+  {
+    "id": "B-8-2",
+    "status": "SKIP",
+    "detail": "Period selection"
+  },
+  {
+    "id": "B-8-3",
+    "status": "SKIP",
+    "detail": "Income/expense chart"
+  },
+  {
+    "id": "B-8-4",
+    "status": "SKIP",
+    "detail": "Category analysis"
+  },
+  {
+    "id": "B-8-5",
+    "status": "SKIP",
+    "detail": "Account distribution"
+  },
+  {
+    "id": "B-9-1",
+    "status": "PASS",
+    "detail": "Investments page"
+  },
+  {
+    "id": "B-9-2",
+    "status": "SKIP",
+    "detail": "Add portfolio"
+  },
+  {
+    "id": "B-9-3",
+    "status": "SKIP",
+    "detail": "Verify add"
+  },
+  {
+    "id": "B-9-4",
+    "status": "SKIP",
+    "detail": "Detail page"
+  },
+  {
+    "id": "B-9-5",
+    "status": "SKIP",
+    "detail": "Stock CRUD"
+  },
+  {
+    "id": "B-9-6",
+    "status": "SKIP",
+    "detail": "Delete portfolio"
+  },
+  {
+    "id": "B-10-1",
+    "status": "PASS",
+    "detail": "Real estate page"
+  },
+  {
+    "id": "B-10-2",
+    "status": "SKIP",
+    "detail": "Add property"
+  },
+  {
+    "id": "B-10-3",
+    "status": "SKIP",
+    "detail": "Verify add"
+  },
+  {
+    "id": "B-10-4",
+    "status": "SKIP",
+    "detail": "Detail page"
+  },
+  {
+    "id": "B-10-5",
+    "status": "SKIP",
+    "detail": "Lease CRUD"
+  },
+  {
+    "id": "B-10-6",
+    "status": "SKIP",
+    "detail": "Expense CRUD"
+  },
+  {
+    "id": "B-10-7",
+    "status": "SKIP",
+    "detail": "Delete property"
+  },
+  {
+    "id": "B-11-1",
+    "status": "PASS",
+    "detail": "Vault announcements"
+  },
+  {
+    "id": "B-11-2",
+    "status": "SKIP",
+    "detail": "Announcement detail"
+  },
+  {
+    "id": "B-12-1",
+    "status": "PASS",
+    "detail": "Inquiries page"
+  },
+  {
+    "id": "B-12-2",
+    "status": "PASS",
+    "detail": "Inquiry form submitted"
+  },
+  {
+    "id": "B-12-3",
+    "status": "PASS",
+    "detail": "Inquiry list after submit"
+  },
+  {
+    "id": "B-13-1",
+    "status": "PASS",
+    "detail": "Trash page"
+  },
+  {
+    "id": "B-13-2",
+    "status": "SKIP",
+    "detail": "Deleted items display"
+  },
+  {
+    "id": "B-13-3",
+    "status": "SKIP",
+    "detail": "Restore action"
+  },
+  {
+    "id": "B-13-4",
+    "status": "SKIP",
+    "detail": "Permanent delete"
+  },
+  {
+    "id": "B-14-1",
+    "status": "PASS",
+    "detail": "Settings page"
+  },
+  {
+    "id": "B-14-2",
+    "status": "PASS",
+    "detail": "Profile page"
+  },
+  {
+    "id": "B-14-3",
+    "status": "SKIP",
+    "detail": "Nickname change — avoid modifying test account"
+  },
+  {
+    "id": "B-14-4",
+    "status": "SKIP",
+    "detail": "Password change — avoid modifying test account"
+  },
+  {
+    "id": "B-14-5",
+    "status": "PASS",
+    "detail": "Categories page"
+  },
+  {
+    "id": "B-14-6",
+    "status": "SKIP",
+    "detail": "Category CRUD — avoid modifying test account"
+  },
+  {
+    "id": "B-14-7",
+    "status": "PASS",
+    "detail": "Preferences page"
+  },
+  {
+    "id": "B-15-1",
+    "status": "PASS",
+    "detail": "Sidebar: true"
+  },
+  {
+    "id": "B-15-2",
+    "status": "PASS",
+    "detail": "Bottom nav: true"
+  },
+  {
+    "id": "B-15-3",
+    "status": "PASS",
+    "detail": "Dark toggle: false → true"
+  },
+  {
+    "id": "B-16-1",
+    "status": "PASS",
+    "detail": "Mobile layout verified in B-15-2"
+  },
+  {
+    "id": "B-16-2",
+    "status": "PASS",
+    "detail": "Dark mode verified in B-15-3"
+  }
+]

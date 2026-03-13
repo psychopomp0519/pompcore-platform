@@ -134,7 +134,7 @@ export function MobileSidebar(): ReactNode {
       >
         {/* 헤더 */}
         <div className="flex h-14 items-center justify-between border-b border-navy/10 px-4 dark:border-white/10">
-          <img src="/logo.svg" alt="Vault" className="h-7 dark:invert" />
+          <img src="/logo.svg" alt="Vault" className="h-7" />
           <button
             type="button"
             onClick={closeMobileSidebar}

@@ -51,7 +51,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           {logoSrc ? (
-            <img src={logoSrc} alt={name} className="h-10 w-10 dark:invert" />
+            <img src={logoSrc} alt={name} className="h-10 w-10" />
           ) : (
             <span className={accentColor}><DynamicIcon name={icon} size={40} fallback={icon} /></span>
           )}

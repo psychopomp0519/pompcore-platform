@@ -1,0 +1,147 @@
+[
+  {
+    "id": "B-3-4",
+    "status": "PASS",
+    "detail": "통장 수정 모달 열기/닫기 성공"
+  },
+  {
+    "id": "B-3-5",
+    "status": "PASS",
+    "detail": "즐겨찾기 토글 클릭 성공"
+  },
+  {
+    "id": "B-3-6",
+    "status": "PASS",
+    "detail": "통장 삭제 완료"
+  },
+  {
+    "id": "B-4-5",
+    "status": "PASS",
+    "detail": "거래 수정 모달 열기 성공"
+  },
+  {
+    "id": "B-4-6",
+    "status": "WARN",
+    "detail": "테스트 거래 추가 실패"
+  },
+  {
+    "id": "B-4-8",
+    "status": "PASS",
+    "detail": "수입 필터 적용"
+  },
+  {
+    "id": "B-4-9",
+    "status": "WARN",
+    "detail": "카테고리 필터 select 미발견"
+  },
+  {
+    "id": "B-4-10",
+    "status": "WARN",
+    "detail": "통장 필터 select 미발견"
+  },
+  {
+    "id": "B-5-4",
+    "status": "PASS",
+    "detail": "정기결제 수정 모달 열기 성공"
+  },
+  {
+    "id": "B-5-6",
+    "status": "PASS",
+    "detail": "활성/비활성 토글 성공"
+  },
+  {
+    "id": "B-5-5",
+    "status": "PASS",
+    "detail": "정기결제 삭제 완료"
+  },
+  {
+    "id": "B-6-4",
+    "status": "WARN",
+    "detail": "납입 버튼 미발견 — 자유적금 없을 수 있음"
+  },
+  {
+    "id": "B-6-6",
+    "status": "WARN",
+    "detail": "진행률 바: 0개"
+  },
+  {
+    "id": "B-6-5",
+    "status": "WARN",
+    "detail": "삭제 버튼 미발견"
+  },
+  {
+    "id": "B-7-4",
+    "status": "PASS",
+    "detail": "예산 수정 (아이콘)"
+  },
+  {
+    "id": "B-7-6",
+    "status": "PASS",
+    "detail": "사용률: %=true, 남음=true"
+  },
+  {
+    "id": "B-7-5",
+    "status": "PASS",
+    "detail": "예산 삭제 완료"
+  },
+  {
+    "id": "B-8-2",
+    "status": "PASS",
+    "detail": "6개월 기간 선택"
+  },
+  {
+    "id": "B-8-4",
+    "status": "PASS",
+    "detail": "차트 36개 (카테고리 포함)"
+  },
+  {
+    "id": "B-8-5",
+    "status": "PASS",
+    "detail": "통장 분배 차트 포함 총 36개"
+  },
+  {
+    "id": "B-9-5",
+    "status": "PASS",
+    "detail": "종목 거래 추가 폼 제출"
+  },
+  {
+    "id": "B-9-6",
+    "status": "PASS",
+    "detail": "포트폴리오 삭제 완료"
+  },
+  {
+    "id": "B-10-4",
+    "status": "PASS",
+    "detail": "상세 페이지 이동: http://localhost:4174/real-estate/48a18519-12bb-469f-8996-110d1ad54e41"
+  },
+  {
+    "id": "B-10-5",
+    "status": "PASS",
+    "detail": "임대 추가 모달 열기 성공"
+  },
+  {
+    "id": "B-10-6",
+    "status": "PASS",
+    "detail": "비용 추가 모달 열기 성공"
+  },
+  {
+    "id": "B-10-7",
+    "status": "PASS",
+    "detail": "매물 삭제 완료"
+  },
+  {
+    "id": "B-11-2",
+    "status": "PASS",
+    "detail": "공지 상세 (아코디언 또는 인라인)"
+  },
+  {
+    "id": "B-13-3",
+    "status": "PASS",
+    "detail": "휴지통 복원 클릭 성공"
+  },
+  {
+    "id": "B-13-4",
+    "status": "PASS",
+    "detail": "영구 삭제 실행"
+  }
+]

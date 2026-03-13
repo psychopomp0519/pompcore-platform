@@ -1,4 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M3 18l3-12 3 6 3-8 3 8 3-6 3 12H3z"/>
-  <path d="M12 2l.8 2.4 2.4.4-1.8 1.6.5 2.4L12 7.5 10.1 8.8l.5-2.4-1.8-1.6 2.4-.4L12 2z" fill="#FFD700" stroke="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="pompcore-favicon-gradient" x1="10" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7C3AED"/>
+      <stop offset="0.55" stop-color="#FFD700"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+    <filter id="pompcore-favicon-glow" x="-18%" y="-18%" width="136%" height="136%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#A855F7" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <g filter="url(#pompcore-favicon-glow)">
+    <path fill="url(#pompcore-favicon-gradient)" d="M14 8h22l12 12v14L38 44H28v12H14zM28 22v10h8l4-4v-2l-4-4z"/>
+    <path d="M35 14c7-3 14 0 17 6" stroke="#F8ECFF" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M40 18c4 0 8 3 9 7" stroke="#F8ECFF" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="52" cy="20" r="3" fill="#FFD700"/>
+  </g>
 </svg>

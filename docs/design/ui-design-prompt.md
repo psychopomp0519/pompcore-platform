@@ -2,7 +2,7 @@
 
 > AI 도구에 입력하여 메인 사이트 + Vault의 UI를 서브컬쳐 오픈월드 RPG 감성으로 리디자인하기 위한 프롬프트
 >
-> 최종 업데이트: 2026-03-12
+> 최종 업데이트: 2026-03-13
 
 ---
 
@@ -99,6 +99,15 @@ PompCore는 **"실용적인 판타지"**를 지향한다. 서브컬쳐 오픈월
 - RPG 강화: 주요 제목에 text-gradient 클래스 (brand→gold→pink 그라디언트)
 ```
 
+### 2.6 로고/워드마크 자산 규칙
+
+```
+- UI 목업에 등장하는 PompCore 및 서비스 로고는 모두 "커스텀 타이포그래피 로고"로 취급한다
+- 로고 파일은 일반 텍스트 레이어나 기본 폰트 타이핑으로 만들지 않는다
+- 최종 로고 자산은 글자를 직접 그린 SVG path/outline 기반 워드마크 또는 이니셜이어야 한다
+- 헤더, 히어로, 카드에 로고를 배치할 때도 "폰트로 적은 브랜드명"처럼 보이지 않게 한다
+```
+
 ---
 
 ## 3. 메인 사이트 (apps/web) UI 디자인 프롬프트
@@ -126,7 +135,7 @@ Design the hero section of an RPG-themed lifestyle platform landing page.
 Current layout:
 - Full viewport height (100vh - header)
 - Centered content with decorative frame
-- Logo emblem at top
+- Custom-drawn logo emblem or compact monogram at top (outlined vector lettering, not typed text)
 - Main heading with gradient text
 - Gold divider line
 - Tagline + CTA buttons
@@ -135,6 +144,8 @@ Current layout:
 RPG Enhancement Direction:
 - The decorative frame should feel like a "quest notification" or "system message" border
   in an RPG game — L-corner marks, diamond accents, subtle gradient lines
+- If the hero includes the PompCore logo or wordmark, it should look like bespoke SVG lettering
+  drawn for the brand, not a default font typed into the mockup
 - The heading "모험가여, 당신의 일상이 모험이 됩니다" should use gradient text
   (brand violet → gold → pink) like a game's main title screen
 - CTA buttons should look like RPG action buttons:
@@ -160,6 +171,7 @@ Layout: 2-column card grid (1 col mobile)
 
 Each service card:
 - Service logo/icon in a circular container with service accent color
+  - Prefer a custom-drawn initial mark or wordmark fragment, not a typed letter placeholder
 - Service name (large, bold) + sub-name below
 - Category label badge (e.g., "FINANCE · 모험가의 금고")
 - Description paragraph
@@ -255,7 +267,7 @@ RPG feel: The final "Accept Quest?" confirmation screen in an RPG
 Design a sticky navigation header.
 
 - Transparent on scroll=0, gains bg + blur on scroll
-- Logo (PompCore wordmark) on left
+- Logo (PompCore custom-drawn wordmark SVG) on left, never plain typed text
 - Navigation links: 소개, 프로젝트, 공지사항, 채용, 내부
 - Active link: Brand color with subtle underline indicator
 - Right side: Theme toggle (sun/moon) + Login button

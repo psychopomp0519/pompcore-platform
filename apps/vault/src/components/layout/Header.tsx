@@ -101,7 +101,7 @@ export function Header(): ReactNode {
       </button>
 
       {/* 로고 (데스크톱 숨김) */}
-      <img src="/logo.svg" alt="Vault" className="h-5 tablet:hidden desktop:hidden dark:invert" />
+      <img src="/logo.svg" alt="Vault" className="h-5 tablet:hidden desktop:hidden" />
 
       {/* 우측 영역 */}
       <div className="ml-auto flex items-center gap-3">

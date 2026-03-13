@@ -59,7 +59,7 @@ export default function BrandText({ brand, size = 'text-lg', className = '' }: B
       <img
         src={config.logo}
         alt={config.label}
-        className={`inline-block dark:invert ${className}`}
+        className={`inline-block ${className}`}
         style={{ height: `${height}px`, width: 'auto' }}
       />
     );
@@ -84,7 +84,7 @@ export function PompCoreLogo({ size = 'text-xl', className = '' }: { size?: stri
     <img
       src={pompcoreLogo}
       alt="POMPCORE"
-      className={`inline-block dark:invert ${className}`}
+      className={`inline-block ${className}`}
       style={{ height: `${height}px`, width: 'auto' }}
     />
   );

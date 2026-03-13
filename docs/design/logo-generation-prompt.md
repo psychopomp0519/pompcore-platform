@@ -2,7 +2,7 @@
 
 > AI 이미지 생성 도구에 입력하기 위한 체계적 로고 제작 프롬프트 문서
 >
-> 최종 업데이트: 2026-03-12
+> 최종 업데이트: 2026-03-13
 
 ---
 
@@ -36,10 +36,11 @@ PompCore는 **서브컬쳐 오픈월드 RPG 게임 감성**을 일상 도구에 
 
 | 항목 | 규칙 |
 |------|------|
-| **형태** | 타이포그래피 워드마크 (텍스트 중심, 아이콘 없음) |
+| **형태** | 타이포그래피 워드마크 (아이콘 없음, 커스텀 레터링 중심) |
 | **세트** | 서비스당 2벌: 풀 워드마크 + 컴팩트(이니셜) |
 | **배경** | 투명 배경 (transparent) |
-| **포맷** | 순수 벡터 SVG (래스터/PNG 임베드 금지) |
+| **제작 방식** | 텍스트를 타이핑하지 않고 각 글자를 직접 그린 벡터 레터링으로 설계 |
+| **포맷** | 순수 벡터 SVG (`path`/`shape` 중심, 래스터/PNG 임베드 금지) |
 | **크기** | 워드마크: 가로 400×120 기준 / 컴팩트: 64×64 기준 |
 
 ### 2.2 타이포그래피 원칙
@@ -51,8 +52,19 @@ PompCore는 **서브컬쳐 오픈월드 RPG 게임 감성**을 일상 도구에 
 | **굵기** | 서비스명: Bold~Black / 서브네임: Medium~SemiBold |
 | **간격** | 자간(letter-spacing) 넓게 — 고급스럽고 여유로운 느낌 |
 | **장식** | 서비스별 RPG 모티프를 글자 일부에 미세하게 반영 (과하지 않게) |
+| **출력 규칙** | 최종 SVG에서 모든 글자는 라이브 텍스트가 아니라 윤곽선(outline) 또는 path로 존재해야 함 |
 
-### 2.3 글자 장식 가이드라인
+### 2.3 텍스트 사용 금지 규칙
+
+최종 로고 파일에서는 일반 텍스트 객체를 사용하지 않는다. 생성 결과는 **"폰트를 적용한 텍스트"**가 아니라 **"직접 그린 레터링"**이어야 한다.
+
+필수 규칙:
+- SVG `text`, `tspan`, `textPath`, `foreignObject` 사용 금지
+- 웹폰트/시스템 폰트 참조 금지
+- 메인 워드마크와 서브네임 모두 path 또는 outline 기반으로 변환
+- 글자 비례와 장식은 커스텀 제작하되, 가독성은 유지
+
+### 2.4 글자 장식 가이드라인
 
 각 서비스의 RPG 모티프를 글자에 **미세하게** 녹여넣되, 가독성을 해치지 않아야 한다.
 
@@ -68,7 +80,7 @@ PompCore는 **서브컬쳐 오픈월드 RPG 게임 감성**을 일상 도구에 
 - 3D 효과, 그림자 과다, 엠보싱
 - 사진/비트맵 텍스처
 
-### 2.4 컬러 적용 규칙
+### 2.5 컬러 적용 규칙
 
 | 용도 | 다크 모드 | 라이트 모드 |
 |------|-----------|-------------|
@@ -104,6 +116,7 @@ Create a typographic wordmark logo for "PompCore".
 
 Style: Fantasy RPG game-inspired typography. Think Genshin Impact title aesthetics
 meets modern tech branding. Elegant serif or semi-serif typeface with wide letter-spacing.
+Draw every visible letter as bespoke vector lettering, not editable text objects or font-based text.
 
 Color: Gradient from #7C3AED (violet) to #A855F7 (light purple), flowing left to right.
 
@@ -115,12 +128,13 @@ Typographic details:
   — not sharp/aggressive, but elegant and mystical
 - Subtle glow effect around the text (violet, soft, 8px blur) for dark background version
 
-Below the main wordmark, the sub-name "일상을 플레이하다" in clean sans-serif (Pretendard-style),
-medium weight, #A855F7 at 50% opacity, letter-spacing slightly wider than normal.
+Below the main wordmark, render the sub-name "일상을 플레이하다" as custom outlined sans-serif lettering
+(Pretendard-inspired, but not typed live text), medium weight, #A855F7 at 50% opacity,
+letter-spacing slightly wider than normal.
 
 Layout: Horizontal wordmark. Total aspect ratio approximately 400:120.
 Background: Transparent.
-Format: Pure vector SVG paths only. No embedded images, no raster elements.
+Format: Pure vector SVG paths only. No embedded images, no raster elements, no SVG text nodes.
 
 Mood: Mystical, premium, cosmic — like a portal to another world.
 ```
@@ -133,6 +147,7 @@ Create a compact typographic logo using the letter "P" for "PompCore".
 Style: The same fantasy RPG serif style as the full wordmark. The "P" should be
 decorative but recognizable — think of an illuminated manuscript initial letter
 crossed with modern game UI.
+The letter must be custom drawn as a vector glyph, not a typed font character.
 
 Color: #7C3AED to #A855F7 gradient (top to bottom).
 
@@ -144,7 +159,7 @@ Details:
 
 Size: Square, 64×64 base grid.
 Background: Transparent.
-Format: Pure vector SVG paths. No embedded images.
+Format: Pure vector SVG paths. No embedded images, no live text.
 ```
 
 ---
@@ -171,6 +186,7 @@ Create a typographic wordmark logo for "Vault".
 Style: Fantasy RPG game-inspired typography with a treasure/vault motif.
 Imagine the nameplate on an ancient treasure vault in a fantasy RPG world.
 Serif or semi-serif typeface, bold, with wide letter-spacing.
+Render the whole mark as custom vector lettering rather than typed text.
 
 Color: Gradient from #10B981 (emerald) to #06D6A0 (teal), left to right.
 
@@ -182,12 +198,12 @@ Typographic details:
 - The overall feel should be "precious but strong" — guarding wealth
 - All letters should maintain clear legibility despite decorative touches
 
-Below the wordmark: "모험가의 금고" in clean sans-serif, medium weight,
-#10B981 at 50% opacity, slightly wider letter-spacing.
+Below the wordmark: render "모험가의 금고" as custom outlined sans-serif lettering,
+medium weight, #10B981 at 50% opacity, slightly wider letter-spacing.
 
 Layout: Horizontal. Aspect ratio approximately 400:120.
 Background: Transparent.
-Format: Pure vector SVG paths only.
+Format: Pure vector SVG paths only. No SVG text nodes.
 
 Mood: Secure, precious, adventurous — like opening a chest of emeralds.
 ```
@@ -199,6 +215,7 @@ Create a compact typographic logo using the letter "V" for "Vault".
 
 Style: Fantasy RPG serif, matching the full wordmark. The "V" should subtly
 evoke a keyhole or gemstone facet shape while remaining clearly the letter V.
+The letter must be hand-drawn as vector lettering, not typed text.
 
 Color: #10B981 to #06D6A0 gradient (top to bottom).
 
@@ -210,7 +227,7 @@ Details:
 
 Size: Square, 64×64 base grid.
 Background: Transparent.
-Format: Pure vector SVG paths.
+Format: Pure vector SVG paths. No live text.
 ```
 
 ---
@@ -237,6 +254,7 @@ Create a typographic wordmark logo for "Quest".
 Style: Fantasy RPG game-inspired typography with an adventure/exploration motif.
 Think of the quest log title in an open-world RPG. Dynamic yet legible serif
 or semi-serif typeface with wide letter-spacing.
+Build the entire wordmark as bespoke vector lettering, not editable text objects.
 
 Color: Gradient from #3B82F6 (blue) to #06B6D4 (cyan), left to right.
 
@@ -249,12 +267,12 @@ Typographic details:
 - Stroke endings should feel sharp and decisive — like cutting through wind
 - The overall typography should convey motion and discovery
 
-Below the wordmark: "일상이 곧 모험" in clean sans-serif, medium weight,
-#3B82F6 at 50% opacity, slightly wider letter-spacing.
+Below the wordmark: render "일상이 곧 모험" as custom outlined sans-serif lettering,
+medium weight, #3B82F6 at 50% opacity, slightly wider letter-spacing.
 
 Layout: Horizontal. Aspect ratio approximately 400:120.
 Background: Transparent.
-Format: Pure vector SVG paths only.
+Format: Pure vector SVG paths only. No SVG text nodes.
 
 Mood: Adventurous, dynamic, hopeful — like standing at the edge of a vast world.
 ```
@@ -266,6 +284,7 @@ Create a compact typographic logo using the letter "Q" for "Quest".
 
 Style: Fantasy RPG serif matching the full wordmark. The "Q" should be
 bold with its tail extending into a subtle compass needle or arrow motif.
+The letter must be drawn as a custom vector glyph, not typed from a font.
 
 Color: #3B82F6 to #06B6D4 gradient (top to bottom).
 
@@ -277,7 +296,7 @@ Details:
 
 Size: Square, 64×64 base grid.
 Background: Transparent.
-Format: Pure vector SVG paths.
+Format: Pure vector SVG paths. No live text.
 ```
 
 ---
@@ -304,6 +323,7 @@ Create a typographic wordmark logo for "Forge".
 Style: Fantasy RPG game-inspired typography with a blacksmith/forge motif.
 Imagine the sign above a master blacksmith's workshop in a fantasy world.
 Bold, heavy serif or slab-serif typeface with strong presence and wide letter-spacing.
+Construct the mark as custom vector lettering, not as editable text.
 
 Color: Gradient from #F97316 (orange) to #FB923C (light orange), left to right.
 The gradient should feel like heated metal — from deep orange to glowing amber.
@@ -317,12 +337,12 @@ Typographic details:
 - The "o" could have a subtle inner glow suggesting a furnace opening
 - The overall feel should be powerful and purposeful — strength through effort
 
-Below the wordmark: "의지의 대장간" in clean sans-serif, medium weight,
-#F97316 at 50% opacity, slightly wider letter-spacing.
+Below the wordmark: render "의지의 대장간" as custom outlined sans-serif lettering,
+medium weight, #F97316 at 50% opacity, slightly wider letter-spacing.
 
 Layout: Horizontal. Aspect ratio approximately 400:120.
 Background: Transparent.
-Format: Pure vector SVG paths only.
+Format: Pure vector SVG paths only. No SVG text nodes.
 
 Mood: Powerful, determined, fiery — like steel being tempered in flame.
 ```
@@ -334,6 +354,7 @@ Create a compact typographic logo using the letter "F" for "Forge".
 
 Style: Fantasy RPG heavy serif/slab-serif matching the full wordmark.
 The "F" should feel like it was forged from metal — strong, angular, bold.
+The letter must be hand-drawn as vector lettering, not typed text.
 
 Color: #F97316 to #FB923C gradient (top to bottom), like heated metal.
 
@@ -346,7 +367,7 @@ Details:
 
 Size: Square, 64×64 base grid.
 Background: Transparent.
-Format: Pure vector SVG paths.
+Format: Pure vector SVG paths. No live text.
 ```
 
 ---
@@ -374,6 +395,7 @@ Style: Fantasy RPG game-inspired typography with a magical knowledge/guild motif
 Think of the inscription above a wizard's academy or mage guild entrance.
 Elegant, scholarly serif typeface — more refined than Forge's heavy style.
 Wide letter-spacing with a sense of ancient wisdom.
+Render all visible letters as custom vector lettering, not editable text objects.
 
 Color: Gradient from #FBBF24 (amber) to #FCD34D (gold), left to right.
 The gradient should feel like golden ink on parchment.
@@ -387,12 +409,12 @@ Typographic details:
 - The "y" at the end could have a descender that subtly curves like a scroll unfurling
 - The feel should be wise, learned, and magical — knowledge as power
 
-Below the wordmark: "지식의 길드홀" in clean sans-serif, medium weight,
-#FBBF24 at 50% opacity, slightly wider letter-spacing.
+Below the wordmark: render "지식의 길드홀" as custom outlined sans-serif lettering,
+medium weight, #FBBF24 at 50% opacity, slightly wider letter-spacing.
 
 Layout: Horizontal. Aspect ratio approximately 400:120.
 Background: Transparent.
-Format: Pure vector SVG paths only.
+Format: Pure vector SVG paths only. No SVG text nodes.
 
 Mood: Wise, scholarly, magical — like entering an ancient library of arcane knowledge.
 ```
@@ -404,6 +426,7 @@ Create a compact typographic logo using the letter "A" for "Academy".
 
 Style: Fantasy RPG elegant serif matching the full wordmark. The "A" should
 feel scholarly and magical — like an illuminated manuscript capital letter.
+The letter must be custom drawn as a vector glyph, not typed from a font.
 
 Color: #FBBF24 to #FCD34D gradient (top to bottom), golden ink effect.
 
@@ -416,7 +439,7 @@ Details:
 
 Size: Square, 64×64 base grid.
 Background: Transparent.
-Format: Pure vector SVG paths.
+Format: Pure vector SVG paths. No live text.
 ```
 
 ---
@@ -438,9 +461,10 @@ they belong to the same universe.
 - Style: Fantasy RPG-inspired serif/semi-serif typography (Cinzel-like base)
 - Format: Pure vector SVG, transparent background
 - No icons, no emblems — typography only with subtle motif integrations
+- No live text objects, no font references, no SVG `text`/`tspan`; every letter must be drawn as vector paths
 - Wide letter-spacing, premium feel
 - Each logo needs: full wordmark (400×120) + compact initial (64×64)
-- Sub-names in clean sans-serif below the wordmark, 50% opacity of primary color
+- Sub-names in clean sans-serif below the wordmark, 50% opacity of primary color, also outlined as vector lettering
 - Dark mode version: light color variant + subtle outer glow
 - Light mode version: primary color, no glow
 - Mono version: white (#FFFFFF) or dark navy (#2B3442)
@@ -536,6 +560,7 @@ apps/web/src/assets/logos/mono/
 로고를 받았을 때 아래 항목을 확인한다.
 
 - [ ] 순수 벡터 SVG인가? (base64 이미지 임베드 없음)
+- [ ] SVG `text` / `tspan` / 폰트 참조 없이 모든 글자가 path 또는 outline으로 구성되어 있는가?
 - [ ] 투명 배경인가?
 - [ ] 32px에서도 이니셜이 식별 가능한가?
 - [ ] 400px 워드마크에서 서브네임이 읽히는가?

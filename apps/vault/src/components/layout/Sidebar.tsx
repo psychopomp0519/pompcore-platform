@@ -73,9 +73,9 @@ export function Sidebar(): ReactNode {
       {/* 로고 */}
       <div className="flex h-14 items-center border-b border-navy/10 px-4 dark:border-white/10">
         {isExpanded ? (
-          <img src="/logo.svg" alt="Vault" className="h-6 dark:invert" />
+          <img src="/logo.svg" alt="Vault" className="h-6" />
         ) : (
-          <img src="/icon.svg" alt="Vault" className="h-6 w-6 dark:invert" />
+          <img src="/icon.svg" alt="Vault" className="h-6 w-6" />
         )}
       </div>
 

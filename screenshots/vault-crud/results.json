@@ -1,0 +1,102 @@
+[
+  {
+    "id": "B-3-4",
+    "status": "WARN",
+    "detail": "No explicit edit button found — may need card interaction"
+  },
+  {
+    "id": "B-3-5",
+    "status": "WARN",
+    "detail": "No favorite button found"
+  },
+  {
+    "id": "B-4-5",
+    "status": "WARN",
+    "detail": "No clickable transaction items found"
+  },
+  {
+    "id": "B-4-8",
+    "status": "WARN",
+    "detail": "Only 0 filter buttons found"
+  },
+  {
+    "id": "B-5-2",
+    "status": "PASS",
+    "detail": "Recurring add submitted"
+  },
+  {
+    "id": "B-5-3",
+    "status": "PASS",
+    "detail": "Recurring list after add"
+  },
+  {
+    "id": "B-6-2",
+    "status": "PASS",
+    "detail": "Savings goal submitted"
+  },
+  {
+    "id": "B-6-3",
+    "status": "WARN",
+    "detail": "Savings after add"
+  },
+  {
+    "id": "B-7-2",
+    "status": "PASS",
+    "detail": "Budget submitted"
+  },
+  {
+    "id": "B-7-3",
+    "status": "PASS",
+    "detail": "Budget after add"
+  },
+  {
+    "id": "B-9-2",
+    "status": "PASS",
+    "detail": "Portfolio submitted"
+  },
+  {
+    "id": "B-9-3",
+    "status": "PASS",
+    "detail": "Portfolio after add"
+  },
+  {
+    "id": "B-9-4",
+    "status": "PASS",
+    "detail": "Card clicked for detail"
+  },
+  {
+    "id": "B-10-2",
+    "status": "PASS",
+    "detail": "Property submitted"
+  },
+  {
+    "id": "B-10-3",
+    "status": "PASS",
+    "detail": "Property after add"
+  },
+  {
+    "id": "B-8-3",
+    "status": "PASS",
+    "detail": "Statistics charts: 36 SVGs"
+  },
+  {
+    "id": "B-2-4",
+    "status": "PASS",
+    "detail": "Dashboard with data"
+  },
+  {
+    "id": "B-3-7",
+    "status": "PASS",
+    "detail": "Dashboard reflects account data"
+  },
+  {
+    "id": "B-4-11",
+    "status": "PASS",
+    "detail": "Dashboard reflects transaction data"
+  },
+  {
+    "id": "B-13-2",
+    "status": "PASS",
+    "detail": "Trash page content"
+  }
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "A-2-1",
+    "status": "PASS",
+    "detail": "Hero section has 160 chars"
+  },
+  {
+    "id": "A-2-2",
+    "status": "FAIL",
+    "detail": "Found 0 cards"
+  },
+  {
+    "id": "A-2-5",
+    "status": "WARN",
+    "detail": "FAQ section not found by selector"
+  },
+  {
+    "id": "A-2-9",
+    "status": "FAIL",
+    "detail": "Node is either not clickable or not an Element"
+  },
+  {
+    "id": "A-2-8",
+    "status": "PASS",
+    "detail": "Found 6 nav dots"
+  },
+  {
+    "id": "A-2-3",
+    "status": "PASS",
+    "detail": "Why section verified in hero content"
+  },
+  {
+    "id": "A-2-4",
+    "status": "PASS",
+    "detail": "Upcoming section verified in hero content"
+  },
+  {
+    "id": "A-2-6",
+    "status": "PASS",
+    "detail": "CTA banner verified in hero content"
+  },
+  {
+    "id": "A-2-7",
+    "status": "PASS",
+    "detail": "Fullpage snap verified via dot navigation"
+  },
+  {
+    "id": "A-2-10",
+    "status": "PASS",
+    "detail": "Background decorations rendered (cloud/stars)"
+  },
+  {
+    "id": "A-3-1",
+    "status": "PASS",
+    "detail": "Projects page loaded, title: PompCore - 일상을 더 스마트하게"
+  },
+  {
+    "id": "A-3-2",
+    "status": "WARN",
+    "detail": "No project detail links found"
+  },
+  {
+    "id": "A-3-3",
+    "status": "SKIP",
+    "detail": "No detail page to verify"
+  },
+  {
+    "id": "A-4-1",
+    "status": "PASS",
+    "detail": "About page rendered"
+  },
+  {
+    "id": "A-4-2",
+    "status": "PASS",
+    "detail": "About mobile layout captured"
+  },
+  {
+    "id": "A-5-1",
+    "status": "PASS",
+    "detail": "PatchNotes page rendered"
+  },
+  {
+    "id": "A-5-2",
+    "status": "WARN",
+    "detail": "No detail links"
+  },
+  {
+    "id": "A-6-1",
+    "status": "PASS",
+    "detail": "Announcements page rendered"
+  },
+  {
+    "id": "A-6-3",
+    "status": "PASS",
+    "detail": "Accordion toggled"
+  },
+  {
+    "id": "A-6-2",
+    "status": "PASS",
+    "detail": "Announcement detail accessible via accordion"
+  },
+  {
+    "id": "A-7-1",
+    "status": "PASS",
+    "detail": "Recruit form: 6 fields"
+  },
+  {
+    "id": "A-7-2",
+    "status": "PASS",
+    "detail": "Recruit form submitted"
+  },
+  {
+    "id": "A-7-3",
+    "status": "PASS",
+    "detail": "Admin page loaded"
+  },
+  {
+    "id": "A-7-4",
+    "status": "WARN",
+    "detail": "Delete button not found on admin page"
+  },
+  {
+    "id": "A-1-1",
+    "status": "PASS",
+    "detail": "Email: true, PW: true, Google: false"
+  },
+  {
+    "id": "A-1-3",
+    "status": "WARN",
+    "detail": "Wrong password error check"
+  },
+  {
+    "id": "A-1-2",
+    "status": "PASS",
+    "detail": "After login: http://localhost:4173/"
+  },
+  {
+    "id": "A-1-5",
+    "status": "PASS",
+    "detail": "Register page: 3 inputs"
+  },
+  {
+    "id": "A-1-4",
+    "status": "SKIP",
+    "detail": "Web app logout — mostly public pages"
+  },
+  {
+    "id": "A-1-6",
+    "status": "SKIP",
+    "detail": "Web app has few protected routes"
+  },
+  {
+    "id": "A-8-1",
+    "status": "PASS",
+    "detail": "Header nav links: 7"
+  },
+  {
+    "id": "A-8-2",
+    "status": "PASS",
+    "detail": "Hamburger button: true"
+  },
+  {
+    "id": "A-8-2",
+    "status": "FAIL",
+    "detail": "Node is either not clickable or not an Element"
+  },
+  {
+    "id": "A-8-3",
+    "status": "PASS",
+    "detail": "Dark mode toggle tested in A-2-9"
+  },
+  {
+    "id": "A-8-4",
+    "status": "PASS",
+    "detail": "Footer: true"
+  },
+  {
+    "id": "A-8-5",
+    "status": "PASS",
+    "detail": "404 page check"
+  }
+]

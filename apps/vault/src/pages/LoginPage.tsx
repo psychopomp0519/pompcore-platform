@@ -81,7 +81,7 @@ export function LoginPage(): React.ReactNode {
 
       <div className="mx-4 w-full max-w-sm rounded-2xl bg-white/80 p-8 shadow-glass backdrop-blur-[16px] dark:bg-surface-card-dark">
         <div className="mb-1 flex justify-center">
-          <img src="/logo.svg" alt="Vault" className="h-10 dark:invert" />
+          <img src="/logo.svg" alt="Vault" className="h-10" />
         </div>
         <p className="mb-6 text-center text-sm text-navy/60 dark:text-gray-400">
           개인 재무 관리의 시작

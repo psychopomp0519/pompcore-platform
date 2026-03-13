@@ -88,7 +88,7 @@ export default function ServicesSection() {
               >
                 <div className="flex items-center gap-3 mb-3">
                   {project.logoSrc ? (
-                    <img src={project.logoSrc} alt={project.name} className="h-10 w-10 dark:invert" />
+                    <img src={project.logoSrc} alt={project.name} className="h-10 w-10" />
                   ) : (
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center"
